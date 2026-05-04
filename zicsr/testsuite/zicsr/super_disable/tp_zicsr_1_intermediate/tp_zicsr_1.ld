@@ -12,23 +12,6 @@ PHDRS
 	seg7 PT_LOAD;
 	seg8 PT_LOAD;
 	seg9 PT_LOAD;
-	seg10 PT_LOAD;
-	seg11 PT_LOAD;
-	seg12 PT_LOAD;
-	seg13 PT_LOAD;
-	seg14 PT_LOAD;
-	seg15 PT_LOAD;
-	seg16 PT_LOAD;
-	seg17 PT_LOAD;
-	seg18 PT_LOAD;
-	seg19 PT_LOAD;
-	seg20 PT_LOAD;
-	seg21 PT_LOAD;
-	seg22 PT_LOAD;
-	seg23 PT_LOAD;
-	seg24 PT_LOAD;
-	seg25 PT_LOAD;
-	seg26 PT_LOAD;
 }
 SECTIONS
 {
@@ -92,8 +75,8 @@ SECTIONS
 	. = 0x41013000;
 	 .runtime_s_3 : AT(0x41013000 + ADDR(.runtime_s_3) - 0x41013000) { *(.runtime_s_3) } :seg0
 
-	. = 0x41014110;
-	 .code : AT(0x41014110 + ADDR(.code) - 0x41014110) { *(.code) } :seg1
+	. = 0x41014050;
+	 .code : AT(0x41014050 + ADDR(.code) - 0x41014050) { *(.code) } :seg1
 
 	. = 0x41015000;
 	 .__section__code_1 : AT(0x41015000 + ADDR(.__section__code_1) - 0x41015000) { *(.__section__code_1) } :seg2
@@ -1634,85 +1617,31 @@ SECTIONS
 	. = 0x41215000;
 	 .csr_super_0 : AT(0x41215000 + ADDR(.csr_super_0) - 0x41215000) { *(.csr_super_0) } :seg2
 
-	. = 0x41216000;
-	 .data : AT(0x41216000 + ADDR(.data) - 0x41216000) { *(.data) } :seg2
+	. = 0x4431c000;
+	 .data : AT(0x4431c000 + ADDR(.data) - 0x4431c000) { *(.data) } :seg3
 
-	. = 0x41217000;
-	 .__section_data_1 : AT(0x41217000 + ADDR(.__section_data_1) - 0x41217000) { *(.__section_data_1) } :seg2
+	. = 0x4431d000;
+	 .__section_data_1 : AT(0x4431d000 + ADDR(.__section_data_1) - 0x4431d000) { *(.__section_data_1) } :seg3
 
-	. = 0x4328c000;
-	 .os_data : AT(0x4328c000 + ADDR(.os_data) - 0x4328c000) { *(.os_data) } :seg3
+	. = 0x448cc000;
+	 .os_data : AT(0x448cc000 + ADDR(.os_data) - 0x448cc000) { *(.os_data) } :seg4
 
-	. = 0x4328d000;
-	 .__section_os_data_1 : AT(0x4328d000 + ADDR(.__section_os_data_1) - 0x4328d000) { *(.__section_os_data_1) } :seg3
+	. = 0x448cd000;
+	 .__section_os_data_1 : AT(0x448cd000 + ADDR(.__section_os_data_1) - 0x448cd000) { *(.__section_os_data_1) } :seg4
 
-	. = 0x41890000;
-	 .hart_context : AT(0x41890000 + ADDR(.hart_context) - 0x41890000) { *(.hart_context) } :seg4
+	. = 0x44736000;
+	 .hart_context : AT(0x44736000 + ADDR(.hart_context) - 0x44736000) { *(.hart_context) } :seg5
 
-	. = 0x42b1a000;
-	 .hart_stack_0 : AT(0x42b1a000 + ADDR(.hart_stack_0) - 0x42b1a000) { *(.hart_stack_0) } :seg5
+	. = 0x44908000;
+	 .hart_stack_0 : AT(0x44908000 + ADDR(.hart_stack_0) - 0x44908000) { *(.hart_stack_0) } :seg6
 
 	. = 0x41040000;
-	 .io_htif : AT(0x41040000 + ADDR(.io_htif) - 0x41040000) { *(.io_htif) } :seg6
+	 .io_htif : AT(0x41040000 + ADDR(.io_htif) - 0x41040000) { *(.io_htif) } :seg7
 
-	. = 0x4124b000;
-	 .tp_csr_storage : AT(0x4124b000 + ADDR(.tp_csr_storage) - 0x4124b000) { *(.tp_csr_storage) } :seg7
+	. = 0x44905000;
+	 .tp_csr_storage : AT(0x44905000 + ADDR(.tp_csr_storage) - 0x44905000) { *(.tp_csr_storage) } :seg8
 
-	. = 0x4233b000;
-	 .SID_ZICSR_01_stack : AT(0x4233b000 + ADDR(.SID_ZICSR_01_stack) - 0x4233b000) { *(.SID_ZICSR_01_stack) } :seg8
-
-	. = 0x43063000;
-	 .SID_ZICSR_02_stack : AT(0x43063000 + ADDR(.SID_ZICSR_02_stack) - 0x43063000) { *(.SID_ZICSR_02_stack) } :seg9
-
-	. = 0x42b1b000;
-	 .SID_ZICSR_03_stack : AT(0x42b1b000 + ADDR(.SID_ZICSR_03_stack) - 0x42b1b000) { *(.SID_ZICSR_03_stack) } :seg10
-
-	. = 0x4124c000;
-	 .SID_ZICSR_04_stack : AT(0x4124c000 + ADDR(.SID_ZICSR_04_stack) - 0x4124c000) { *(.SID_ZICSR_04_stack) } :seg11
-
-	. = 0x43233000;
-	 .SID_ZICSR_05_stack : AT(0x43233000 + ADDR(.SID_ZICSR_05_stack) - 0x43233000) { *(.SID_ZICSR_05_stack) } :seg12
-
-	. = 0x4299b000;
-	 .SID_ZICSR_06_stack : AT(0x4299b000 + ADDR(.SID_ZICSR_06_stack) - 0x4299b000) { *(.SID_ZICSR_06_stack) } :seg13
-
-	. = 0x43245000;
-	 .SID_ZICSR_07_stack : AT(0x43245000 + ADDR(.SID_ZICSR_07_stack) - 0x43245000) { *(.SID_ZICSR_07_stack) } :seg14
-
-	. = 0x4124d000;
-	 .SID_ZICSR_08_stack : AT(0x4124d000 + ADDR(.SID_ZICSR_08_stack) - 0x4124d000) { *(.SID_ZICSR_08_stack) } :seg15
-
-	. = 0x444e2000;
-	 .SID_ZICSR_09_stack : AT(0x444e2000 + ADDR(.SID_ZICSR_09_stack) - 0x444e2000) { *(.SID_ZICSR_09_stack) } :seg16
-
-	. = 0x44b98000;
-	 .SID_ZICSR_10_stack : AT(0x44b98000 + ADDR(.SID_ZICSR_10_stack) - 0x44b98000) { *(.SID_ZICSR_10_stack) } :seg17
-
-	. = 0x412f6000;
-	 .SID_ZICSR_11_stack : AT(0x412f6000 + ADDR(.SID_ZICSR_11_stack) - 0x412f6000) { *(.SID_ZICSR_11_stack) } :seg18
-
-	. = 0x415f7000;
-	 .SID_ZICSR_12_stack : AT(0x415f7000 + ADDR(.SID_ZICSR_12_stack) - 0x415f7000) { *(.SID_ZICSR_12_stack) } :seg19
-
-	. = 0x4328a000;
-	 .SID_ZICSR_13_stack : AT(0x4328a000 + ADDR(.SID_ZICSR_13_stack) - 0x4328a000) { *(.SID_ZICSR_13_stack) } :seg20
-
-	. = 0x4122f000;
-	 .SID_ZICSR_14_stack : AT(0x4122f000 + ADDR(.SID_ZICSR_14_stack) - 0x4122f000) { *(.SID_ZICSR_14_stack) } :seg21
-
-	. = 0x412d7000;
-	 .SID_ZICSR_15_stack : AT(0x412d7000 + ADDR(.SID_ZICSR_15_stack) - 0x412d7000) { *(.SID_ZICSR_15_stack) } :seg22
-
-	. = 0x42dc0000;
-	 .SID_ZICSR_16_stack : AT(0x42dc0000 + ADDR(.SID_ZICSR_16_stack) - 0x42dc0000) { *(.SID_ZICSR_16_stack) } :seg23
-
-	. = 0x4187b000;
-	 .SID_ZICSR_17_stack : AT(0x4187b000 + ADDR(.SID_ZICSR_17_stack) - 0x4187b000) { *(.SID_ZICSR_17_stack) } :seg24
-
-	. = 0x42b70000;
-	 .SID_ZICSR_19_stack : AT(0x42b70000 + ADDR(.SID_ZICSR_19_stack) - 0x42b70000) { *(.SID_ZICSR_19_stack) } :seg25
-
-	. = 0x42b66000;
-	 .SID_ZICSR_20_stack : AT(0x42b66000 + ADDR(.SID_ZICSR_20_stack) - 0x42b66000) { *(.SID_ZICSR_20_stack) } :seg26
+	. = 0x44f67000;
+	 .SID_ZICSR_07_stack : AT(0x44f67000 + ADDR(.SID_ZICSR_07_stack) - 0x44f67000) { *(.SID_ZICSR_07_stack) } :seg9
 
 }

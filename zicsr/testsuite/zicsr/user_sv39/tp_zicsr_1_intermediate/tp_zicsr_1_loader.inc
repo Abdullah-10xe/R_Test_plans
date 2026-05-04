@@ -69,8 +69,8 @@ loader__setup_tvec:
 
 loader__enable_paging:
 # Enable paging by writing CSR SATP.MODE = Sv39 (1)
-;os_sptbr = 0x44c42000
-	li x1, 0x800c200000044c42
+;os_sptbr = 0x44202000
+	li x1, 0x800dd00000044202
 	csrw satp, x1
 	RVMODEL_IO_INIT(t0, t1, t2)
 

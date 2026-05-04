@@ -9,7 +9,7 @@ scheduler__init:
 	csrrw t0, mtvec, t0
 	sd t0, 384(tp)       # scheduler__saved_stvec
 
-	li t0, 58 # setting num_runs to 58
+	li t0, 4 # setting num_runs to 4
 	sd t0, 400(tp)                     # num_runs
 	li t0, 0xFFFFFFFE  # test_setup special index
 	sd t0, 392(tp)           # current_test_index
@@ -30,22 +30,21 @@ scheduler__dispatch:
 
 
 scheduler__csr_read_randomization:
-	csrr t0, sie
-	csrr t0, mtvec
-	csrr t0, marchid
 	csrr t0, stvec
-	csrr t0, mideleg
-	csrr t0, stval
-	csrr t0, scounteren
-	csrr t0, mimpid
-	csrr t0, menvcfg
-	csrr t0, senvcfg
-	csrr t0, scounteren
-	csrr t0, sscratch
-	csrr t0, minstret
-	csrr t0, mhartid
-	csrr t0, medeleg
+	csrr t0, marchid
+	csrr t0, mip
 	csrr t0, sie
+	csrr t0, mtval
+	csrr t0, medeleg
+	csrr t0, mimpid
+	csrr t0, sscratch
+	csrr t0, mepc
+	csrr t0, sscratch
+	csrr t0, sscratch
+	csrr t0, mvendorid
+	csrr t0, scounteren
+	csrr t0, mtvec
+	csrr t0, senvcfg
 
 
 # (num_runs == 0) goto scheduler__finished
@@ -115,173 +114,29 @@ scheduler__panic:
 
 	.balign 8, 0
 num_runs:
-	.dword 58
+	.dword 4
 
 	.balign 8, 0
 os_test_sequence:
 	.dword test_cleanup
-	.dword SID_ZICSR_09
-	.dword SID_ZICSR_20
-	.dword SID_ZICSR_08
-	.dword SID_ZICSR_04
-	.dword SID_ZICSR_01
-	.dword SID_ZICSR_02
-	.dword SID_ZICSR_13
-	.dword SID_ZICSR_16
-	.dword SID_ZICSR_08
-	.dword SID_ZICSR_14
-	.dword SID_ZICSR_19
-	.dword SID_ZICSR_20
 	.dword SID_ZICSR_07
-	.dword SID_ZICSR_04
-	.dword SID_ZICSR_02
-	.dword SID_ZICSR_04
 	.dword SID_ZICSR_07
-	.dword SID_ZICSR_06
-	.dword SID_ZICSR_12
-	.dword SID_ZICSR_17
-	.dword SID_ZICSR_17
-	.dword SID_ZICSR_09
-	.dword SID_ZICSR_15
-	.dword SID_ZICSR_12
-	.dword SID_ZICSR_08
-	.dword SID_ZICSR_05
-	.dword SID_ZICSR_10
-	.dword SID_ZICSR_12
-	.dword SID_ZICSR_11
-	.dword SID_ZICSR_16
-	.dword SID_ZICSR_13
-	.dword SID_ZICSR_14
 	.dword SID_ZICSR_07
-	.dword SID_ZICSR_15
-	.dword SID_ZICSR_05
-	.dword SID_ZICSR_06
-	.dword SID_ZICSR_16
-	.dword SID_ZICSR_01
-	.dword SID_ZICSR_10
-	.dword SID_ZICSR_15
-	.dword SID_ZICSR_01
-	.dword SID_ZICSR_19
-	.dword SID_ZICSR_03
-	.dword SID_ZICSR_05
-	.dword SID_ZICSR_09
-	.dword SID_ZICSR_14
-	.dword SID_ZICSR_11
-	.dword SID_ZICSR_10
-	.dword SID_ZICSR_11
-	.dword SID_ZICSR_03
-	.dword SID_ZICSR_06
-	.dword SID_ZICSR_02
-	.dword SID_ZICSR_17
-	.dword SID_ZICSR_19
-	.dword SID_ZICSR_20
-	.dword SID_ZICSR_13
-	.dword SID_ZICSR_03
 
 	.balign 8, 0
 dtest_descriptor_table:
 	.dword dtest_name_0
-	.dword dtest_name_1
-	.dword dtest_name_2
-	.dword dtest_name_3
-	.dword dtest_name_4
-	.dword dtest_name_5
-	.dword dtest_name_6
-	.dword dtest_name_7
-	.dword dtest_name_8
-	.dword dtest_name_9
-	.dword dtest_name_10
-	.dword dtest_name_11
-	.dword dtest_name_12
-	.dword dtest_name_13
-	.dword dtest_name_14
-	.dword dtest_name_15
-	.dword dtest_name_16
-	.dword dtest_name_17
-	.dword dtest_name_18
 
 # Test name strings
-	dtest_name_0: .asciz "SID_ZICSR_01"
-	dtest_name_1: .asciz "SID_ZICSR_02"
-	dtest_name_2: .asciz "SID_ZICSR_03"
-	dtest_name_3: .asciz "SID_ZICSR_04"
-	dtest_name_4: .asciz "SID_ZICSR_05"
-	dtest_name_5: .asciz "SID_ZICSR_06"
-	dtest_name_6: .asciz "SID_ZICSR_07"
-	dtest_name_7: .asciz "SID_ZICSR_08"
-	dtest_name_8: .asciz "SID_ZICSR_09"
-	dtest_name_9: .asciz "SID_ZICSR_10"
-	dtest_name_10: .asciz "SID_ZICSR_11"
-	dtest_name_11: .asciz "SID_ZICSR_12"
-	dtest_name_12: .asciz "SID_ZICSR_13"
-	dtest_name_13: .asciz "SID_ZICSR_14"
-	dtest_name_14: .asciz "SID_ZICSR_15"
-	dtest_name_15: .asciz "SID_ZICSR_16"
-	dtest_name_16: .asciz "SID_ZICSR_17"
-	dtest_name_17: .asciz "SID_ZICSR_19"
-	dtest_name_18: .asciz "SID_ZICSR_20"
+	dtest_name_0: .asciz "SID_ZICSR_07"
 
 # Lookup table: os_test_sequence position -> discrete test index
 	.balign 4, 0
 dtest_index_map:
 	.word 0xFFFFFFFF  # Position 0 = test_cleanup
-	.word 8  # SID_ZICSR_09
-	.word 18  # SID_ZICSR_20
-	.word 7  # SID_ZICSR_08
-	.word 3  # SID_ZICSR_04
-	.word 0  # SID_ZICSR_01
-	.word 1  # SID_ZICSR_02
-	.word 12  # SID_ZICSR_13
-	.word 15  # SID_ZICSR_16
-	.word 7  # SID_ZICSR_08
-	.word 13  # SID_ZICSR_14
-	.word 17  # SID_ZICSR_19
-	.word 18  # SID_ZICSR_20
-	.word 6  # SID_ZICSR_07
-	.word 3  # SID_ZICSR_04
-	.word 1  # SID_ZICSR_02
-	.word 3  # SID_ZICSR_04
-	.word 6  # SID_ZICSR_07
-	.word 5  # SID_ZICSR_06
-	.word 11  # SID_ZICSR_12
-	.word 16  # SID_ZICSR_17
-	.word 16  # SID_ZICSR_17
-	.word 8  # SID_ZICSR_09
-	.word 14  # SID_ZICSR_15
-	.word 11  # SID_ZICSR_12
-	.word 7  # SID_ZICSR_08
-	.word 4  # SID_ZICSR_05
-	.word 9  # SID_ZICSR_10
-	.word 11  # SID_ZICSR_12
-	.word 10  # SID_ZICSR_11
-	.word 15  # SID_ZICSR_16
-	.word 12  # SID_ZICSR_13
-	.word 13  # SID_ZICSR_14
-	.word 6  # SID_ZICSR_07
-	.word 14  # SID_ZICSR_15
-	.word 4  # SID_ZICSR_05
-	.word 5  # SID_ZICSR_06
-	.word 15  # SID_ZICSR_16
-	.word 0  # SID_ZICSR_01
-	.word 9  # SID_ZICSR_10
-	.word 14  # SID_ZICSR_15
-	.word 0  # SID_ZICSR_01
-	.word 17  # SID_ZICSR_19
-	.word 2  # SID_ZICSR_03
-	.word 4  # SID_ZICSR_05
-	.word 8  # SID_ZICSR_09
-	.word 13  # SID_ZICSR_14
-	.word 10  # SID_ZICSR_11
-	.word 9  # SID_ZICSR_10
-	.word 10  # SID_ZICSR_11
-	.word 2  # SID_ZICSR_03
-	.word 5  # SID_ZICSR_06
-	.word 1  # SID_ZICSR_02
-	.word 16  # SID_ZICSR_17
-	.word 17  # SID_ZICSR_19
-	.word 18  # SID_ZICSR_20
-	.word 12  # SID_ZICSR_13
-	.word 2  # SID_ZICSR_03
+	.word 0  # SID_ZICSR_07
+	.word 0  # SID_ZICSR_07
+	.word 0  # SID_ZICSR_07
 
 
 # test pointers

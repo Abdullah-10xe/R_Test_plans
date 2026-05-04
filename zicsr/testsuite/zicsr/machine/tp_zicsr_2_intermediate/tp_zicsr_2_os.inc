@@ -312,117 +312,19 @@ hart_stack_0_end:
 	ld x31, (x31) # machine_csr_jump_table_flags
 
 	li t0, 2
-	beq x31, t0, csr_access_mtvec_machine_key_2_write
+	beq x31, t0, csr_access_medeleg_machine_key_2_write
 	li t0, 1
-	beq x31, t0, csr_access_mtvec_machine_key_1_read
-	li t0, 4
-	beq x31, t0, csr_access_mcause_machine_key_4_write
-	li t0, 3
-	beq x31, t0, csr_access_mcause_machine_key_3_read
-	li t0, 6
-	beq x31, t0, csr_access_mepc_machine_key_6_write
-	li t0, 5
-	beq x31, t0, csr_access_mepc_machine_key_5_read
-	li t0, 8
-	beq x31, t0, csr_access_mscratch_machine_key_8_write
-	li t0, 7
-	beq x31, t0, csr_access_mscratch_machine_key_7_read
-	li t0, 12
-	beq x31, t0, csr_access_mtval_machine_key_12_write
-	li t0, 11
-	beq x31, t0, csr_access_mtval_machine_key_11_read
-	li t0, 16
-	beq x31, t0, csr_access_menvcfg_machine_key_16_write
-	li t0, 15
-	beq x31, t0, csr_access_menvcfg_machine_key_15_read
-	li t0, 22
-	beq x31, t0, csr_access_minstret_machine_key_22_write
-	li t0, 21
-	beq x31, t0, csr_access_minstret_machine_key_21_read
-	li t0, 26
-	beq x31, t0, csr_access_fcsr_user_key_26_write
-	li t0, 25
-	beq x31, t0, csr_access_fcsr_user_key_25_read
+	beq x31, t0, csr_access_medeleg_machine_key_1_read
 	j end_machine_label
 
-# Machine Write: mtvec, label: csr_access_mtvec_machine_key_2_write
-csr_access_mtvec_machine_key_2_write:
-	csrw mtvec, t2
+# Machine Write: medeleg, label: csr_access_medeleg_machine_key_2_write
+csr_access_medeleg_machine_key_2_write:
+	csrw medeleg, t2
 	j end_machine_label
 
-# Machine Read: mtvec, label: csr_access_mtvec_machine_key_1_read
-csr_access_mtvec_machine_key_1_read:
-	csrr t2, mtvec
-	j end_machine_label
-
-# Machine Write: mcause, label: csr_access_mcause_machine_key_4_write
-csr_access_mcause_machine_key_4_write:
-	csrw mcause, t2
-	j end_machine_label
-
-# Machine Read: mcause, label: csr_access_mcause_machine_key_3_read
-csr_access_mcause_machine_key_3_read:
-	csrr t2, mcause
-	j end_machine_label
-
-# Machine Write: mepc, label: csr_access_mepc_machine_key_6_write
-csr_access_mepc_machine_key_6_write:
-	csrw mepc, t2
-	j end_machine_label
-
-# Machine Read: mepc, label: csr_access_mepc_machine_key_5_read
-csr_access_mepc_machine_key_5_read:
-	csrr t2, mepc
-	j end_machine_label
-
-# Machine Write: mscratch, label: csr_access_mscratch_machine_key_8_write
-csr_access_mscratch_machine_key_8_write:
-	csrw mscratch, t2
-	j end_machine_label
-
-# Machine Read: mscratch, label: csr_access_mscratch_machine_key_7_read
-csr_access_mscratch_machine_key_7_read:
-	csrr t2, mscratch
-	j end_machine_label
-
-# Machine Write: mtval, label: csr_access_mtval_machine_key_12_write
-csr_access_mtval_machine_key_12_write:
-	csrw mtval, t2
-	j end_machine_label
-
-# Machine Read: mtval, label: csr_access_mtval_machine_key_11_read
-csr_access_mtval_machine_key_11_read:
-	csrr t2, mtval
-	j end_machine_label
-
-# Machine Write: menvcfg, label: csr_access_menvcfg_machine_key_16_write
-csr_access_menvcfg_machine_key_16_write:
-	csrw menvcfg, t2
-	j end_machine_label
-
-# Machine Read: menvcfg, label: csr_access_menvcfg_machine_key_15_read
-csr_access_menvcfg_machine_key_15_read:
-	csrr t2, menvcfg
-	j end_machine_label
-
-# Machine Write: minstret, label: csr_access_minstret_machine_key_22_write
-csr_access_minstret_machine_key_22_write:
-	csrw minstret, t2
-	j end_machine_label
-
-# Machine Read: minstret, label: csr_access_minstret_machine_key_21_read
-csr_access_minstret_machine_key_21_read:
-	csrr t2, minstret
-	j end_machine_label
-
-# Machine Write: fcsr, label: csr_access_fcsr_user_key_26_write
-csr_access_fcsr_user_key_26_write:
-	csrw fcsr, t2
-	j end_machine_label
-
-# Machine Read: fcsr, label: csr_access_fcsr_user_key_25_read
-csr_access_fcsr_user_key_25_read:
-	csrr t2, fcsr
+# Machine Read: medeleg, label: csr_access_medeleg_machine_key_1_read
+csr_access_medeleg_machine_key_1_read:
+	csrr t2, medeleg
 	j end_machine_label
 
 end_machine_label:

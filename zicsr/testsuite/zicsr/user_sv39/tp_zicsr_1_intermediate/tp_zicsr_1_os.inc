@@ -312,22 +312,14 @@ hart_stack_0_end:
 	beq x31, t0, csr_access_fflags_user_key_2_write
 	li t0, 1
 	beq x31, t0, csr_access_fflags_user_key_1_read
-	li t0, 4
-	beq x31, t0, csr_access_frm_user_key_4_write
+	li t0, 5
+	beq x31, t0, csr_access_mstatus_machine_key_5_set
 	li t0, 3
-	beq x31, t0, csr_access_frm_user_key_3_read
-	li t0, 12
-	beq x31, t0, csr_access_fcsr_user_key_12_write
-	li t0, 11
-	beq x31, t0, csr_access_fcsr_user_key_11_read
-	li t0, 27
-	beq x31, t0, csr_access_mstatus_machine_key_27_set
-	li t0, 25
-	beq x31, t0, csr_access_mstatus_machine_key_25_clear
-	li t0, 30
-	beq x31, t0, csr_access_mtvec_machine_key_30_set
-	li t0, 29
-	beq x31, t0, csr_access_mtvec_machine_key_29_clear
+	beq x31, t0, csr_access_mstatus_machine_key_3_clear
+	li t0, 8
+	beq x31, t0, csr_access_mtvec_machine_key_8_set
+	li t0, 7
+	beq x31, t0, csr_access_mtvec_machine_key_7_clear
 	j end_machine_label
 
 # Machine Write: fflags, label: csr_access_fflags_user_key_2_write
@@ -340,43 +332,23 @@ csr_access_fflags_user_key_1_read:
 	csrr t2, fflags
 	j end_machine_label
 
-# Machine Write: frm, label: csr_access_frm_user_key_4_write
-csr_access_frm_user_key_4_write:
-	csrw frm, t2
-	j end_machine_label
-
-# Machine Read: frm, label: csr_access_frm_user_key_3_read
-csr_access_frm_user_key_3_read:
-	csrr t2, frm
-	j end_machine_label
-
-# Machine Write: fcsr, label: csr_access_fcsr_user_key_12_write
-csr_access_fcsr_user_key_12_write:
-	csrw fcsr, t2
-	j end_machine_label
-
-# Machine Read: fcsr, label: csr_access_fcsr_user_key_11_read
-csr_access_fcsr_user_key_11_read:
-	csrr t2, fcsr
-	j end_machine_label
-
-# Machine Set: mstatus, label: csr_access_mstatus_machine_key_27_set
-csr_access_mstatus_machine_key_27_set:
+# Machine Set: mstatus, label: csr_access_mstatus_machine_key_5_set
+csr_access_mstatus_machine_key_5_set:
 	csrs mstatus, t2
 	j end_machine_label
 
-# Machine Clear: mstatus, label: csr_access_mstatus_machine_key_25_clear
-csr_access_mstatus_machine_key_25_clear:
+# Machine Clear: mstatus, label: csr_access_mstatus_machine_key_3_clear
+csr_access_mstatus_machine_key_3_clear:
 	csrc mstatus, t2
 	j end_machine_label
 
-# Machine Set: mtvec, label: csr_access_mtvec_machine_key_30_set
-csr_access_mtvec_machine_key_30_set:
+# Machine Set: mtvec, label: csr_access_mtvec_machine_key_8_set
+csr_access_mtvec_machine_key_8_set:
 	csrs mtvec, t2
 	j end_machine_label
 
-# Machine Clear: mtvec, label: csr_access_mtvec_machine_key_29_clear
-csr_access_mtvec_machine_key_29_clear:
+# Machine Clear: mtvec, label: csr_access_mtvec_machine_key_7_clear
+csr_access_mtvec_machine_key_7_clear:
 	csrc mtvec, t2
 	j end_machine_label
 
@@ -388,33 +360,33 @@ end_machine_label:
 	li x31, super_csr_jump_table_flags
 	ld x31, (x31)   # super_csr_jump_table_flags
 
-	li t0, 28
-	beq x31, t0, csr_access_sstatus_supervisor_key_28_set
-	li t0, 26
-	beq x31, t0, csr_access_sstatus_supervisor_key_26_clear
-	li t0, 32
-	beq x31, t0, csr_access_stvec_supervisor_key_32_set
-	li t0, 31
-	beq x31, t0, csr_access_stvec_supervisor_key_31_clear
+	li t0, 6
+	beq x31, t0, csr_access_sstatus_supervisor_key_6_set
+	li t0, 4
+	beq x31, t0, csr_access_sstatus_supervisor_key_4_clear
+	li t0, 10
+	beq x31, t0, csr_access_stvec_supervisor_key_10_set
+	li t0, 9
+	beq x31, t0, csr_access_stvec_supervisor_key_9_clear
 	j end_super_label
 
-# Supervisor Set: sstatus, label: csr_access_sstatus_supervisor_key_28_set
-csr_access_sstatus_supervisor_key_28_set:
+# Supervisor Set: sstatus, label: csr_access_sstatus_supervisor_key_6_set
+csr_access_sstatus_supervisor_key_6_set:
 	csrs sstatus, t2
 	j end_super_label
 
-# Supervisor Clear: sstatus, label: csr_access_sstatus_supervisor_key_26_clear
-csr_access_sstatus_supervisor_key_26_clear:
+# Supervisor Clear: sstatus, label: csr_access_sstatus_supervisor_key_4_clear
+csr_access_sstatus_supervisor_key_4_clear:
 	csrc sstatus, t2
 	j end_super_label
 
-# Supervisor Set: stvec, label: csr_access_stvec_supervisor_key_32_set
-csr_access_stvec_supervisor_key_32_set:
+# Supervisor Set: stvec, label: csr_access_stvec_supervisor_key_10_set
+csr_access_stvec_supervisor_key_10_set:
 	csrs stvec, t2
 	j end_super_label
 
-# Supervisor Clear: stvec, label: csr_access_stvec_supervisor_key_31_clear
-csr_access_stvec_supervisor_key_31_clear:
+# Supervisor Clear: stvec, label: csr_access_stvec_supervisor_key_9_clear
+csr_access_stvec_supervisor_key_9_clear:
 	csrc stvec, t2
 	j end_super_label
 

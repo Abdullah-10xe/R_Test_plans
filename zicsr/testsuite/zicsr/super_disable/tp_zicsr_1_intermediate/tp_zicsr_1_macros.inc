@@ -531,7 +531,7 @@
 .macro DISABLE_MIE
 	li t2, (1<<3)
 	li x31, machine_csr_jump_table_flags
-	li t0, 27
+	li t0, 3
 	sd t0, 0(x31)
 	li x31, 0xf0001005
 	ecall
@@ -542,7 +542,7 @@
 .macro ENABLE_MIE
 	li t2, (1<<3)
 	li x31, machine_csr_jump_table_flags
-	li t0, 28
+	li t0, 4
 	sd t0, 0(x31)
 	li x31, 0xf0001005
 	ecall
@@ -553,7 +553,7 @@
 .macro SET_DIRECT_INTERRUPTS
 	li t2, 0x1
 	li x31, machine_csr_jump_table_flags
-	li t0, 29
+	li t0, 5
 	sd t0, 0(x31)
 	li x31, 0xf0001005
 	ecall
@@ -561,7 +561,7 @@
 .macro SET_VECTORED_INTERRUPTS
 	li t2, 0x1
 	li x31, machine_csr_jump_table_flags
-	li t0, 30
+	li t0, 6
 	sd t0, 0(x31)
 	li x31, 0xf0001005
 	ecall

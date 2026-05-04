@@ -78,7 +78,7 @@
 .equ runtime_s_2_phys                   , 0x0000000041013000
 .equ runtime_s_3                        , 0x0000000041014000
 .equ runtime_s_3_phys                   , 0x0000000041014000
-.equ code                               , 0x0000000041015020
+.equ code                               , 0x0000000041015050
 .equ __section_code                     , 0x0000000041015000
 .equ __section__code_1                  , 0x0000000041016000
 .equ __section__code_1_phys             , 0x0000000041016000
@@ -1106,97 +1106,29 @@
 .equ __section_csr_machine_0            , 0x0000000041215000
 .equ csr_super_0                        , 0x0000000041216000
 .equ __section_csr_super_0              , 0x0000000041216000
-.equ data                               , 0x0000000044c4a000
-.equ __section_data                     , 0x0000000044c4a000
-.equ __section_data_1                   , 0x0000000044c4b000
-.equ __section_data_1_phys              , 0x0000000044c4b000
-.equ os_data                            , 0x0000000044d7e000
-.equ __section_os_data                  , 0x0000000044d7e000
-.equ __section_os_data_1                , 0x0000000044d7f000
-.equ __section_os_data_1_phys           , 0x0000000044d7f000
-.equ hart_context                       , 0x0000000044ee3000
-.equ __section_hart_context             , 0x0000000044ee3000
-.equ hart_stack_0                       , 0x000000004407e000
-.equ __section_hart_stack_0             , 0x000000004407e000
+.equ data                               , 0x000000004431c000
+.equ __section_data                     , 0x000000004431c000
+.equ __section_data_1                   , 0x000000004431d000
+.equ __section_data_1_phys              , 0x000000004431d000
+.equ os_data                            , 0x00000000448cc000
+.equ __section_os_data                  , 0x00000000448cc000
+.equ __section_os_data_1                , 0x00000000448cd000
+.equ __section_os_data_1_phys           , 0x00000000448cd000
+.equ hart_context                       , 0x0000000044736000
+.equ __section_hart_context             , 0x0000000044736000
+.equ hart_stack_0                       , 0x0000000044908000
+.equ __section_hart_stack_0             , 0x0000000044908000
 .equ io_htif                            , 0x0000000041040000
 .equ io_htif_phys                       , 0x0000000041040000
-.equ map_os_sptbr                       , 0x0000000044e4a000
+.equ map_os_sptbr                       , 0x0000000044c08000
 # ;#page_mapping(lin_name=tp_csr_storage, phys_name=tp_csr_storage_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ tp_csr_storage                     , 0x0000000044ff9000
+.equ tp_csr_storage                     , 0x0000000044905000
 # ;#page_mapping(lin_name=tp_csr_storage, phys_name=tp_csr_storage_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ tp_csr_storage_phys                , 0x0000000044ff9000
-# ;#page_mapping(lin_name=SID_ZICSR_01_stack, phys_name=SID_ZICSR_01_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_01_stack                 , 0x0000000044e49000
-# ;#page_mapping(lin_name=SID_ZICSR_01_stack, phys_name=SID_ZICSR_01_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_01_stack_phys            , 0x0000000044e49000
-# ;#page_mapping(lin_name=SID_ZICSR_02_stack, phys_name=SID_ZICSR_02_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_02_stack                 , 0x0000000042008000
-# ;#page_mapping(lin_name=SID_ZICSR_02_stack, phys_name=SID_ZICSR_02_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_02_stack_phys            , 0x0000000042008000
-# ;#page_mapping(lin_name=SID_ZICSR_03_stack, phys_name=SID_ZICSR_03_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_03_stack                 , 0x000000004501f000
-# ;#page_mapping(lin_name=SID_ZICSR_03_stack, phys_name=SID_ZICSR_03_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_03_stack_phys            , 0x000000004501f000
-# ;#page_mapping(lin_name=SID_ZICSR_04_stack, phys_name=SID_ZICSR_04_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_04_stack                 , 0x0000000045039000
-# ;#page_mapping(lin_name=SID_ZICSR_04_stack, phys_name=SID_ZICSR_04_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_04_stack_phys            , 0x0000000045039000
-# ;#page_mapping(lin_name=SID_ZICSR_05_stack, phys_name=SID_ZICSR_05_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_05_stack                 , 0x000000004503b000
-# ;#page_mapping(lin_name=SID_ZICSR_05_stack, phys_name=SID_ZICSR_05_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_05_stack_phys            , 0x000000004503b000
-# ;#page_mapping(lin_name=SID_ZICSR_06_stack, phys_name=SID_ZICSR_06_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_06_stack                 , 0x000000004503c000
-# ;#page_mapping(lin_name=SID_ZICSR_06_stack, phys_name=SID_ZICSR_06_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_06_stack_phys            , 0x000000004503c000
+.equ tp_csr_storage_phys                , 0x0000000044905000
 # ;#page_mapping(lin_name=SID_ZICSR_07_stack, phys_name=SID_ZICSR_07_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_07_stack                 , 0x0000000045019000
+.equ SID_ZICSR_07_stack                 , 0x0000000044f67000
 # ;#page_mapping(lin_name=SID_ZICSR_07_stack, phys_name=SID_ZICSR_07_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_07_stack_phys            , 0x0000000045019000
-# ;#page_mapping(lin_name=SID_ZICSR_08_stack, phys_name=SID_ZICSR_08_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_08_stack                 , 0x0000000044dfe000
-# ;#page_mapping(lin_name=SID_ZICSR_08_stack, phys_name=SID_ZICSR_08_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_08_stack_phys            , 0x0000000044dfe000
-# ;#page_mapping(lin_name=SID_ZICSR_09_stack, phys_name=SID_ZICSR_09_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_09_stack                 , 0x0000000044f6e000
-# ;#page_mapping(lin_name=SID_ZICSR_09_stack, phys_name=SID_ZICSR_09_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_09_stack_phys            , 0x0000000044f6e000
-# ;#page_mapping(lin_name=SID_ZICSR_10_stack, phys_name=SID_ZICSR_10_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_10_stack                 , 0x000000004503e000
-# ;#page_mapping(lin_name=SID_ZICSR_10_stack, phys_name=SID_ZICSR_10_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_10_stack_phys            , 0x000000004503e000
-# ;#page_mapping(lin_name=SID_ZICSR_11_stack, phys_name=SID_ZICSR_11_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_11_stack                 , 0x0000000042c27000
-# ;#page_mapping(lin_name=SID_ZICSR_11_stack, phys_name=SID_ZICSR_11_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_11_stack_phys            , 0x0000000042c27000
-# ;#page_mapping(lin_name=SID_ZICSR_12_stack, phys_name=SID_ZICSR_12_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_12_stack                 , 0x0000000044e2b000
-# ;#page_mapping(lin_name=SID_ZICSR_12_stack, phys_name=SID_ZICSR_12_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_12_stack_phys            , 0x0000000044e2b000
-# ;#page_mapping(lin_name=SID_ZICSR_13_stack, phys_name=SID_ZICSR_13_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_13_stack                 , 0x0000000044d8e000
-# ;#page_mapping(lin_name=SID_ZICSR_13_stack, phys_name=SID_ZICSR_13_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_13_stack_phys            , 0x0000000044d8e000
-# ;#page_mapping(lin_name=SID_ZICSR_14_stack, phys_name=SID_ZICSR_14_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_14_stack                 , 0x0000000045011000
-# ;#page_mapping(lin_name=SID_ZICSR_14_stack, phys_name=SID_ZICSR_14_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_14_stack_phys            , 0x0000000045011000
-# ;#page_mapping(lin_name=SID_ZICSR_15_stack, phys_name=SID_ZICSR_15_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_15_stack                 , 0x0000000044f05000
-# ;#page_mapping(lin_name=SID_ZICSR_15_stack, phys_name=SID_ZICSR_15_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_15_stack_phys            , 0x0000000044f05000
-# ;#page_mapping(lin_name=SID_ZICSR_16_stack, phys_name=SID_ZICSR_16_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_16_stack                 , 0x0000000044d86000
-# ;#page_mapping(lin_name=SID_ZICSR_16_stack, phys_name=SID_ZICSR_16_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_16_stack_phys            , 0x0000000044d86000
-# ;#page_mapping(lin_name=SID_ZICSR_17_stack, phys_name=SID_ZICSR_17_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_17_stack                 , 0x0000000044ee6000
-# ;#page_mapping(lin_name=SID_ZICSR_17_stack, phys_name=SID_ZICSR_17_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_17_stack_phys            , 0x0000000044ee6000
-# ;#page_mapping(lin_name=SID_ZICSR_20_stack, phys_name=SID_ZICSR_20_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_20_stack                 , 0x0000000044eed000
-# ;#page_mapping(lin_name=SID_ZICSR_20_stack, phys_name=SID_ZICSR_20_stack_phys, pagesize=['4kb'], x=0, v=1, r=1, w=1, modify_pt=0, modify_leaf_pt=0, modify_nonleaf_pt=0, g=0, a=1, d=1, page_maps=['map_os'])
-.equ SID_ZICSR_20_stack_phys            , 0x0000000044eed000
+.equ SID_ZICSR_07_stack_phys            , 0x0000000044f67000
 
 # PMA regions:
 # Total PMA regions: 3
@@ -1610,30 +1542,13 @@
 .equ code_machine_127_pa                , 0x0000000041214000
 .equ csr_machine_0_pa                   , 0x0000000041215000
 .equ csr_super_0_pa                     , 0x0000000041216000
-.equ data_pa                            , 0x0000000044c4a000
-.equ os_data_pa                         , 0x0000000044d7e000
-.equ hart_context_pa                    , 0x0000000044ee3000
-.equ hart_stack_0_pa                    , 0x000000004407e000
+.equ data_pa                            , 0x000000004431c000
+.equ os_data_pa                         , 0x00000000448cc000
+.equ hart_context_pa                    , 0x0000000044736000
+.equ hart_stack_0_pa                    , 0x0000000044908000
 .equ io_htif_pa                         , 0x0000000041040000
-.equ tp_csr_storage_pa                  , 0x0000000044ff9000
-.equ SID_ZICSR_01_stack_pa              , 0x0000000044e49000
-.equ SID_ZICSR_02_stack_pa              , 0x0000000042008000
-.equ SID_ZICSR_03_stack_pa              , 0x000000004501f000
-.equ SID_ZICSR_04_stack_pa              , 0x0000000045039000
-.equ SID_ZICSR_05_stack_pa              , 0x000000004503b000
-.equ SID_ZICSR_06_stack_pa              , 0x000000004503c000
-.equ SID_ZICSR_07_stack_pa              , 0x0000000045019000
-.equ SID_ZICSR_08_stack_pa              , 0x0000000044dfe000
-.equ SID_ZICSR_09_stack_pa              , 0x0000000044f6e000
-.equ SID_ZICSR_10_stack_pa              , 0x000000004503e000
-.equ SID_ZICSR_11_stack_pa              , 0x0000000042c27000
-.equ SID_ZICSR_12_stack_pa              , 0x0000000044e2b000
-.equ SID_ZICSR_13_stack_pa              , 0x0000000044d8e000
-.equ SID_ZICSR_14_stack_pa              , 0x0000000045011000
-.equ SID_ZICSR_15_stack_pa              , 0x0000000044f05000
-.equ SID_ZICSR_16_stack_pa              , 0x0000000044d86000
-.equ SID_ZICSR_17_stack_pa              , 0x0000000044ee6000
-.equ SID_ZICSR_20_stack_pa              , 0x0000000044eed000
+.equ tp_csr_storage_pa                  , 0x0000000044905000
+.equ SID_ZICSR_07_stack_pa              , 0x0000000044f67000
 
 # Macros equates
 .equ CHECK_EXCP_MODE_MACHINE, 1
