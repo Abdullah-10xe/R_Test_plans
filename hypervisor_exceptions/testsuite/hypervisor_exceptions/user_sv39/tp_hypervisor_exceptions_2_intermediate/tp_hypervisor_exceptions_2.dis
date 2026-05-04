@@ -1,0 +1,3756 @@
+
+/home/abdullah/RiescueC/riescue/10x_R/hypervisor_exceptions/testsuite/hypervisor_exceptions/user_sv39/tp_hypervisor_exceptions_2:     file format elf64-littleriscv
+
+
+Disassembly of section .runtime:
+
+0000000041000000 <_start>:
+    41000000:	00000093          	li	x1,0
+    41000004:	00000113          	li	x2,0
+    41000008:	00000193          	li	x3,0
+    4100000c:	00000213          	li	x4,0
+    41000010:	00000293          	li	x5,0
+    41000014:	00000313          	li	x6,0
+    41000018:	00000393          	li	x7,0
+    4100001c:	00000413          	li	x8,0
+    41000020:	00000493          	li	x9,0
+    41000024:	00000513          	li	x10,0
+    41000028:	00000593          	li	x11,0
+    4100002c:	00000613          	li	x12,0
+    41000030:	00000693          	li	x13,0
+    41000034:	00000713          	li	x14,0
+    41000038:	00000793          	li	x15,0
+    4100003c:	00000813          	li	x16,0
+    41000040:	00000893          	li	x17,0
+    41000044:	00000913          	li	x18,0
+    41000048:	00000993          	li	x19,0
+    4100004c:	00000a13          	li	x20,0
+    41000050:	00000a93          	li	x21,0
+    41000054:	00000b13          	li	x22,0
+    41000058:	00000b93          	li	x23,0
+    4100005c:	00000c13          	li	x24,0
+    41000060:	00000c93          	li	x25,0
+    41000064:	00000d13          	li	x26,0
+    41000068:	00000d93          	li	x27,0
+    4100006c:	00000e13          	li	x28,0
+    41000070:	00000e93          	li	x29,0
+    41000074:	00000f13          	li	x30,0
+    41000078:	00000f93          	li	x31,0
+
+000000004100007c <loader__load_panic_address>:
+    4100007c:	00001297          	auipc	x5,0x1
+    41000080:	9e828293          	addi	x5,x5,-1560 # 41000a64 <eot__failed>
+    41000084:	30529073          	csrw	mtvec,x5
+
+0000000041000088 <loader__initialize_runtime>:
+    41000088:	00000293          	li	x5,0
+    4100008c:	3012a2f3          	csrrs	x5,misa,x5
+
+0000000041000090 <loader__set_mstatus>:
+    41000090:	000402b7          	lui	x5,0x40
+    41000094:	00a2829b          	addiw	x5,x5,10 # 4000a <pma_region_0_size+0xa>
+    41000098:	3002a2f3          	csrrs	x5,mstatus,x5
+    4100009c:	44c7d237          	lui	x4,0x44c7d
+    410000a0:	34021073          	csrw	mscratch,x4
+
+00000000410000a4 <loader__setup_menvcfg>:
+    410000a4:	00000297          	auipc	x5,0x0
+    410000a8:	4a828293          	addi	x5,x5,1192 # 4100054c <trap_handler_m__trap_entry>
+    410000ac:	30529073          	csrw	mtvec,x5
+
+00000000410000b0 <loader__enable_paging>:
+    410000b0:	fff800b7          	lui	x1,0xfff80
+    410000b4:	11d0809b          	addiw	x1,x1,285 # fffffffffff8011d <current_test_index+0xfffffff0fef68f95>
+    410000b8:	02009093          	slli	x1,x1,0x20
+    410000bc:	04108093          	addi	x1,x1,65
+    410000c0:	00c09093          	slli	x1,x1,0xc
+    410000c4:	40608093          	addi	x1,x1,1030
+    410000c8:	18009073          	csrw	satp,x1
+
+00000000410000cc <loader__done>:
+    410000cc:	1c10006f          	j	41000a8c <scheduler__init>
+
+00000000410000d0 <loader__panic>:
+    410000d0:	1950006f          	j	41000a64 <eot__failed>
+
+00000000410000d4 <syscalls__syscall_check_schedule_next_test>:
+    410000d4:	00f0029b          	addiw	x5,x0,15
+    410000d8:	01c29293          	slli	x5,x5,0x1c
+    410000dc:	00128293          	addi	x5,x5,1
+    410000e0:	01f29a63          	bne	x5,x31,410000f4 <syscalls__syscall_check_fail_test>
+    410000e4:	00000317          	auipc	x6,0x0
+    410000e8:	46830313          	addi	x6,x6,1128 # 4100054c <trap_handler_m__trap_entry>
+    410000ec:	30531073          	csrw	mtvec,x6
+    410000f0:	6a00006f          	j	41000790 <enter_scheduler>
+
+00000000410000f4 <syscalls__syscall_check_fail_test>:
+    410000f4:	00f0029b          	addiw	x5,x0,15
+    410000f8:	01c29293          	slli	x5,x5,0x1c
+    410000fc:	00228293          	addi	x5,x5,2
+    41000100:	01f29a63          	bne	x5,x31,41000114 <syscalls__syscall_check_end_test_without_failure>
+    41000104:	00000317          	auipc	x6,0x0
+    41000108:	44830313          	addi	x6,x6,1096 # 4100054c <trap_handler_m__trap_entry>
+    4100010c:	30531073          	csrw	mtvec,x6
+    41000110:	6b00006f          	j	410007c0 <test_failed>
+
+0000000041000114 <syscalls__syscall_check_end_test_without_failure>:
+    41000114:	00f0029b          	addiw	x5,x0,15
+    41000118:	01c29293          	slli	x5,x5,0x1c
+    4100011c:	00328293          	addi	x5,x5,3
+    41000120:	01f29a63          	bne	x5,x31,41000134 <syscalls__syscall_check_switch_machine_mode>
+    41000124:	00000317          	auipc	x6,0x0
+    41000128:	42830313          	addi	x6,x6,1064 # 4100054c <trap_handler_m__trap_entry>
+    4100012c:	30531073          	csrw	mtvec,x6
+    41000130:	69c0006f          	j	410007cc <os_end_test>
+
+0000000041000134 <syscalls__syscall_check_switch_machine_mode>:
+    41000134:	000f02b7          	lui	x5,0xf0
+    41000138:	0012829b          	addiw	x5,x5,1 # f0001 <__section_os_data_1+0x7001>
+    4100013c:	00c29293          	slli	x5,x5,0xc
+    41000140:	00128293          	addi	x5,x5,1
+    41000144:	0a5f8463          	beq	x31,x5,410001ec <syscalls__os_fn_f0001001>
+
+0000000041000148 <syscalls__syscall_check_switch_super_mode>:
+    41000148:	000f02b7          	lui	x5,0xf0
+    4100014c:	0012829b          	addiw	x5,x5,1 # f0001 <__section_os_data_1+0x7001>
+    41000150:	00c29293          	slli	x5,x5,0xc
+    41000154:	00228293          	addi	x5,x5,2
+    41000158:	0c5f8063          	beq	x31,x5,41000218 <syscalls__os_fn_f0001002>
+
+000000004100015c <syscalls__syscall_check_switch_user_mode>:
+    4100015c:	000f02b7          	lui	x5,0xf0
+    41000160:	0012829b          	addiw	x5,x5,1 # f0001 <__section_os_data_1+0x7001>
+    41000164:	00c29293          	slli	x5,x5,0xc
+    41000168:	00328293          	addi	x5,x5,3
+    4100016c:	0c5f8e63          	beq	x31,x5,41000248 <syscalls__os_fn_f0001003>
+
+0000000041000170 <syscalls__syscall_check_switch_test_mode>:
+    41000170:	000f02b7          	lui	x5,0xf0
+    41000174:	0012829b          	addiw	x5,x5,1 # f0001 <__section_os_data_1+0x7001>
+    41000178:	00c29293          	slli	x5,x5,0xc
+    4100017c:	00428293          	addi	x5,x5,4
+    41000180:	0c5f8863          	beq	x31,x5,41000250 <syscalls__os_fn_f0001004>
+
+0000000041000184 <syscalls__syscall_machine_csr_rw>:
+    41000184:	000f02b7          	lui	x5,0xf0
+    41000188:	0012829b          	addiw	x5,x5,1 # f0001 <__section_os_data_1+0x7001>
+    4100018c:	00c29293          	slli	x5,x5,0xc
+    41000190:	00528293          	addi	x5,x5,5
+    41000194:	0e5f8263          	beq	x31,x5,41000278 <syscalls__os_fn_f0001005>
+
+0000000041000198 <syscalls__syscall_supervisor_csr_rw>:
+    41000198:	000f02b7          	lui	x5,0xf0
+    4100019c:	0012829b          	addiw	x5,x5,1 # f0001 <__section_os_data_1+0x7001>
+    410001a0:	00c29293          	slli	x5,x5,0xc
+    410001a4:	00628293          	addi	x5,x5,6
+    410001a8:	0e5f8e63          	beq	x31,x5,410002a4 <syscalls__os_fn_f0001006>
+
+00000000410001ac <syscalls__syscall_machine_pte_read>:
+    410001ac:	000f02b7          	lui	x5,0xf0
+    410001b0:	0012829b          	addiw	x5,x5,1 # f0001 <__section_os_data_1+0x7001>
+    410001b4:	00c29293          	slli	x5,x5,0xc
+    410001b8:	00728293          	addi	x5,x5,7
+    410001bc:	105f8c63          	beq	x31,x5,410002d4 <syscalls__os_fn_f0001007>
+
+00000000410001c0 <syscalls__syscall_machine_pte_write>:
+    410001c0:	000f02b7          	lui	x5,0xf0
+    410001c4:	0012829b          	addiw	x5,x5,1 # f0001 <__section_os_data_1+0x7001>
+    410001c8:	00c29293          	slli	x5,x5,0xc
+    410001cc:	00828293          	addi	x5,x5,8
+    410001d0:	1e5f8863          	beq	x31,x5,410003c0 <syscalls__os_fn_f0001008>
+
+00000000410001d4 <syscalls__syscall_check_get_hart_context>:
+    410001d4:	000782b7          	lui	x5,0x78
+    410001d8:	0012829b          	addiw	x5,x5,1 # 78001 <pma_region_0_size+0x38001>
+    410001dc:	00d29293          	slli	x5,x5,0xd
+    410001e0:	00128293          	addi	x5,x5,1
+    410001e4:	2c5f8463          	beq	x31,x5,410004ac <syscalls__os_get_hart_context>
+    410001e8:	4c00006f          	j	410006a8 <trap_handler_m__check_exception_label>
+
+00000000410001ec <syscalls__os_fn_f0001001>:
+    410001ec:	000022b7          	lui	x5,0x2
+    410001f0:	8002829b          	addiw	x5,x5,-2048 # 1800 <pma_region_1_size+0x800>
+    410001f4:	3002b073          	csrc	mstatus,x5
+    410001f8:	000022b7          	lui	x5,0x2
+    410001fc:	8002829b          	addiw	x5,x5,-2048 # 1800 <pma_region_1_size+0x800>
+    41000200:	3002a073          	csrs	mstatus,x5
+    41000204:	0010029b          	addiw	x5,x0,1
+    41000208:	02729293          	slli	x5,x5,0x27
+    4100020c:	3002b073          	csrc	mstatus,x5
+    41000210:	411952b7          	lui	x5,0x41195
+    41000214:	2a80006f          	j	410004bc <syscalls__ret_from_os_fn>
+
+0000000041000218 <syscalls__os_fn_f0001002>:
+    41000218:	000022b7          	lui	x5,0x2
+    4100021c:	8002829b          	addiw	x5,x5,-2048 # 1800 <pma_region_1_size+0x800>
+    41000220:	3002b073          	csrc	mstatus,x5
+    41000224:	000012b7          	lui	x5,0x1
+    41000228:	8002829b          	addiw	x5,x5,-2048 # 800 <XLEN+0x7c0>
+    4100022c:	3002a073          	csrs	mstatus,x5
+    41000230:	0010029b          	addiw	x5,x0,1
+    41000234:	02729293          	slli	x5,x5,0x27
+    41000238:	3002b073          	csrc	mstatus,x5
+    4100023c:	12000073          	sfence.vma
+    41000240:	410952b7          	lui	x5,0x41095
+    41000244:	2780006f          	j	410004bc <syscalls__ret_from_os_fn>
+
+0000000041000248 <syscalls__os_fn_f0001003>:
+    41000248:	411152b7          	lui	x5,0x41115
+    4100024c:	2700006f          	j	410004bc <syscalls__ret_from_os_fn>
+
+0000000041000250 <syscalls__os_fn_f0001004>:
+    41000250:	000022b7          	lui	x5,0x2
+    41000254:	8002829b          	addiw	x5,x5,-2048 # 1800 <pma_region_1_size+0x800>
+    41000258:	3002b073          	csrc	mstatus,x5
+    4100025c:	00000293          	li	x5,0
+    41000260:	3002a073          	csrs	mstatus,x5
+    41000264:	0010029b          	addiw	x5,x0,1
+    41000268:	02729293          	slli	x5,x5,0x27
+    4100026c:	3002b073          	csrc	mstatus,x5
+    41000270:	17823283          	ld	x5,376(x4) # 44c7d178 <__section_hart_context+0x178>
+    41000274:	2480006f          	j	410004bc <syscalls__ret_from_os_fn>
+
+0000000041000278 <syscalls__os_fn_f0001005>:
+    41000278:	000022b7          	lui	x5,0x2
+    4100027c:	8002829b          	addiw	x5,x5,-2048 # 1800 <pma_region_1_size+0x800>
+    41000280:	3002b073          	csrc	mstatus,x5
+    41000284:	000022b7          	lui	x5,0x2
+    41000288:	8002829b          	addiw	x5,x5,-2048 # 1800 <pma_region_1_size+0x800>
+    4100028c:	3002a073          	csrs	mstatus,x5
+    41000290:	0010029b          	addiw	x5,x0,1
+    41000294:	02729293          	slli	x5,x5,0x27
+    41000298:	3002b073          	csrc	mstatus,x5
+    4100029c:	412152b7          	lui	x5,0x41215
+    410002a0:	21c0006f          	j	410004bc <syscalls__ret_from_os_fn>
+
+00000000410002a4 <syscalls__os_fn_f0001006>:
+    410002a4:	000022b7          	lui	x5,0x2
+    410002a8:	8002829b          	addiw	x5,x5,-2048 # 1800 <pma_region_1_size+0x800>
+    410002ac:	3002b073          	csrc	mstatus,x5
+    410002b0:	000012b7          	lui	x5,0x1
+    410002b4:	8002829b          	addiw	x5,x5,-2048 # 800 <XLEN+0x7c0>
+    410002b8:	3002a073          	csrs	mstatus,x5
+    410002bc:	0010029b          	addiw	x5,x0,1
+    410002c0:	02729293          	slli	x5,x5,0x27
+    410002c4:	3002b073          	csrc	mstatus,x5
+    410002c8:	12000073          	sfence.vma
+    410002cc:	412162b7          	lui	x5,0x41216
+    410002d0:	1ec0006f          	j	410004bc <syscalls__ret_from_os_fn>
+
+00000000410002d4 <syscalls__os_fn_f0001007>:
+    410002d4:	44904fb7          	lui	x31,0x44904
+    410002d8:	0c0f8f9b          	addiw	x31,x31,192 # 449040c0 <pte_access_flags_pa>
+    410002dc:	000fbf83          	ld	x31,0(x31)
+    410002e0:	449042b7          	lui	x5,0x44904
+    410002e4:	0c82829b          	addiw	x5,x5,200 # 449040c8 <pte_access_flags_pa+0x8>
+    410002e8:	0002b283          	ld	x5,0(x5)
+    410002ec:	44904e37          	lui	x28,0x44904
+    410002f0:	0d0e0e1b          	addiw	x28,x28,208 # 449040d0 <pte_access_flags_pa+0x10>
+    410002f4:	000e3e03          	ld	x28,0(x28)
+
+00000000410002f8 <syscalls__pte_walk_check_glevel_without_gstage_read>:
+    410002f8:	fff00f93          	li	x31,-1
+    410002fc:	0dfe1063          	bne	x28,x31,410003bc <syscalls__pte_walk_fail_read>
+    41000300:	18002373          	csrr	x6,satp
+    41000304:	03c35e93          	srli	x29,x6,0x3c
+    41000308:	01431313          	slli	x6,x6,0x14
+    4100030c:	01435313          	srli	x6,x6,0x14
+    41000310:	00c31313          	slli	x6,x6,0xc
+    41000314:	ff8e8e93          	addi	x29,x29,-8
+    41000318:	003e9f13          	slli	x30,x29,0x3
+    4100031c:	01df0eb3          	add	x29,x30,x29
+    41000320:	01ee8e93          	addi	x29,x29,30
+    41000324:	00000f13          	li	x30,0
+
+0000000041000328 <syscalls__pte_walk_loop_read>:
+    41000328:	44904fb7          	lui	x31,0x44904
+    4100032c:	0c0f8f9b          	addiw	x31,x31,192 # 449040c0 <pte_access_flags_pa>
+    41000330:	000fbf83          	ld	x31,0(x31)
+    41000334:	01dfdfb3          	srl	x31,x31,x29
+    41000338:	1fffff93          	andi	x31,x31,511
+    4100033c:	003f9f93          	slli	x31,x31,0x3
+    41000340:	01f30333          	add	x6,x6,x31
+    41000344:	005f0e63          	beq	x30,x5,41000360 <syscalls__pte_walk_done_read>
+    41000348:	00033f83          	ld	x31,0(x6)
+    4100034c:	00afdf93          	srli	x31,x31,0xa
+    41000350:	00cf9313          	slli	x6,x31,0xc
+    41000354:	001f0f13          	addi	x30,x30,1
+    41000358:	ff7e8e93          	addi	x29,x29,-9
+    4100035c:	fcdff06f          	j	41000328 <syscalls__pte_walk_loop_read>
+
+0000000041000360 <syscalls__pte_walk_done_read>:
+    41000360:	fff00f93          	li	x31,-1
+    41000364:	05fe0263          	beq	x28,x31,410003a8 <syscalls__pte_walk_final_read>
+
+0000000041000368 <syscalls__pte_walk_gstage_read>:
+    41000368:	44904fb7          	lui	x31,0x44904
+    4100036c:	0c0f8f9b          	addiw	x31,x31,192 # 449040c0 <pte_access_flags_pa>
+    41000370:	006fb023          	sd	x6,0(x31)
+    41000374:	000e0293          	mv	x5,x28
+    41000378:	fff00e13          	li	x28,-1
+    4100037c:	68002373          	csrr	x6,hgatp
+    41000380:	03c35e93          	srli	x29,x6,0x3c
+    41000384:	01431313          	slli	x6,x6,0x14
+    41000388:	01435313          	srli	x6,x6,0x14
+    4100038c:	00c31313          	slli	x6,x6,0xc
+    41000390:	ff8e8e93          	addi	x29,x29,-8
+    41000394:	003e9f13          	slli	x30,x29,0x3
+    41000398:	01df0eb3          	add	x29,x30,x29
+    4100039c:	01ee8e93          	addi	x29,x29,30
+    410003a0:	00000f13          	li	x30,0
+    410003a4:	f85ff06f          	j	41000328 <syscalls__pte_walk_loop_read>
+
+00000000410003a8 <syscalls__pte_walk_final_read>:
+    410003a8:	00033383          	ld	x7,0(x6)
+    410003ac:	341022f3          	csrr	x5,mepc
+    410003b0:	00428293          	addi	x5,x5,4
+    410003b4:	16523c23          	sd	x5,376(x4) # 178 <XLEN+0x138>
+    410003b8:	e99ff06f          	j	41000250 <syscalls__os_fn_f0001004>
+
+00000000410003bc <syscalls__pte_walk_fail_read>:
+    410003bc:	4040006f          	j	410007c0 <test_failed>
+
+00000000410003c0 <syscalls__os_fn_f0001008>:
+    410003c0:	44904fb7          	lui	x31,0x44904
+    410003c4:	0c0f8f9b          	addiw	x31,x31,192 # 449040c0 <pte_access_flags_pa>
+    410003c8:	000fbf83          	ld	x31,0(x31)
+    410003cc:	449042b7          	lui	x5,0x44904
+    410003d0:	0c82829b          	addiw	x5,x5,200 # 449040c8 <pte_access_flags_pa+0x8>
+    410003d4:	0002b283          	ld	x5,0(x5)
+    410003d8:	44904e37          	lui	x28,0x44904
+    410003dc:	0d0e0e1b          	addiw	x28,x28,208 # 449040d0 <pte_access_flags_pa+0x10>
+    410003e0:	000e3e03          	ld	x28,0(x28)
+
+00000000410003e4 <syscalls__pte_walk_check_glevel_without_gstage_write>:
+    410003e4:	fff00f93          	li	x31,-1
+    410003e8:	0dfe1063          	bne	x28,x31,410004a8 <syscalls__pte_walk_fail_write>
+    410003ec:	18002373          	csrr	x6,satp
+    410003f0:	03c35e93          	srli	x29,x6,0x3c
+    410003f4:	01431313          	slli	x6,x6,0x14
+    410003f8:	01435313          	srli	x6,x6,0x14
+    410003fc:	00c31313          	slli	x6,x6,0xc
+    41000400:	ff8e8e93          	addi	x29,x29,-8
+    41000404:	003e9f13          	slli	x30,x29,0x3
+    41000408:	01df0eb3          	add	x29,x30,x29
+    4100040c:	01ee8e93          	addi	x29,x29,30
+    41000410:	00000f13          	li	x30,0
+
+0000000041000414 <syscalls__pte_walk_loop_write>:
+    41000414:	44904fb7          	lui	x31,0x44904
+    41000418:	0c0f8f9b          	addiw	x31,x31,192 # 449040c0 <pte_access_flags_pa>
+    4100041c:	000fbf83          	ld	x31,0(x31)
+    41000420:	01dfdfb3          	srl	x31,x31,x29
+    41000424:	1fffff93          	andi	x31,x31,511
+    41000428:	003f9f93          	slli	x31,x31,0x3
+    4100042c:	01f30333          	add	x6,x6,x31
+    41000430:	005f0e63          	beq	x30,x5,4100044c <syscalls__pte_walk_done_write>
+    41000434:	00033f83          	ld	x31,0(x6)
+    41000438:	00afdf93          	srli	x31,x31,0xa
+    4100043c:	00cf9313          	slli	x6,x31,0xc
+    41000440:	001f0f13          	addi	x30,x30,1
+    41000444:	ff7e8e93          	addi	x29,x29,-9
+    41000448:	fcdff06f          	j	41000414 <syscalls__pte_walk_loop_write>
+
+000000004100044c <syscalls__pte_walk_done_write>:
+    4100044c:	fff00f93          	li	x31,-1
+    41000450:	05fe0263          	beq	x28,x31,41000494 <syscalls__pte_walk_final_write>
+
+0000000041000454 <syscalls__pte_walk_gstage_write>:
+    41000454:	44904fb7          	lui	x31,0x44904
+    41000458:	0c0f8f9b          	addiw	x31,x31,192 # 449040c0 <pte_access_flags_pa>
+    4100045c:	006fb023          	sd	x6,0(x31)
+    41000460:	000e0293          	mv	x5,x28
+    41000464:	fff00e13          	li	x28,-1
+    41000468:	68002373          	csrr	x6,hgatp
+    4100046c:	03c35e93          	srli	x29,x6,0x3c
+    41000470:	01431313          	slli	x6,x6,0x14
+    41000474:	01435313          	srli	x6,x6,0x14
+    41000478:	00c31313          	slli	x6,x6,0xc
+    4100047c:	ff8e8e93          	addi	x29,x29,-8
+    41000480:	003e9f13          	slli	x30,x29,0x3
+    41000484:	01df0eb3          	add	x29,x30,x29
+    41000488:	01ee8e93          	addi	x29,x29,30
+    4100048c:	00000f13          	li	x30,0
+    41000490:	f85ff06f          	j	41000414 <syscalls__pte_walk_loop_write>
+
+0000000041000494 <syscalls__pte_walk_final_write>:
+    41000494:	00733023          	sd	x7,0(x6)
+    41000498:	341022f3          	csrr	x5,mepc
+    4100049c:	00428293          	addi	x5,x5,4
+    410004a0:	16523c23          	sd	x5,376(x4) # 178 <XLEN+0x138>
+    410004a4:	dadff06f          	j	41000250 <syscalls__os_fn_f0001004>
+
+00000000410004a8 <syscalls__pte_walk_fail_write>:
+    410004a8:	3180006f          	j	410007c0 <test_failed>
+
+00000000410004ac <syscalls__os_get_hart_context>:
+    410004ac:	14002573          	csrr	x10,sscratch
+    410004b0:	341022f3          	csrr	x5,mepc
+    410004b4:	00428293          	addi	x5,x5,4
+    410004b8:	0040006f          	j	410004bc <syscalls__ret_from_os_fn>
+
+00000000410004bc <syscalls__ret_from_os_fn>:
+    410004bc:	34102373          	csrr	x6,mepc
+    410004c0:	00430313          	addi	x6,x6,4
+    410004c4:	16623c23          	sd	x6,376(x4) # 178 <XLEN+0x138>
+    410004c8:	34129073          	csrw	mepc,x5
+    410004cc:	fff00f93          	li	x31,-1
+    410004d0:	2a40006f          	j	41000774 <trap_handler_m__skip_xepc_write>
+
+00000000410004d4 <trap_handler_m__invalid_interrupt>:
+    410004d4:	2ec0006f          	j	410007c0 <test_failed>
+
+00000000410004d8 <trap_handler_m__clear_all_interrupts>:
+    410004d8:	34401073          	csrw	mip,x0
+    410004dc:	30200073          	mret
+
+00000000410004e0 <trap_handler_m___CLEAR_SSI>:
+    410004e0:	00200293          	li	x5,2
+    410004e4:	3442b073          	csrc	mip,x5
+    410004e8:	30200073          	mret
+
+00000000410004ec <trap_handler_m___CLEAR_MSI>:
+    410004ec:	00800293          	li	x5,8
+    410004f0:	3442b073          	csrc	mip,x5
+    410004f4:	30200073          	mret
+
+00000000410004f8 <trap_handler_m___CLEAR_STI>:
+    410004f8:	02000293          	li	x5,32
+    410004fc:	3442b073          	csrc	mip,x5
+    41000500:	30200073          	mret
+
+0000000041000504 <trap_handler_m___CLEAR_MTI>:
+    41000504:	08000293          	li	x5,128
+    41000508:	3442b073          	csrc	mip,x5
+    4100050c:	30200073          	mret
+
+0000000041000510 <trap_handler_m___CLEAR_SEI>:
+    41000510:	20000293          	li	x5,512
+    41000514:	3442b073          	csrc	mip,x5
+    41000518:	30200073          	mret
+
+000000004100051c <trap_handler_m___CLEAR_MEI>:
+    4100051c:	000012b7          	lui	x5,0x1
+    41000520:	8002829b          	addiw	x5,x5,-2048 # 800 <XLEN+0x7c0>
+    41000524:	3442b073          	csrc	mip,x5
+    41000528:	30200073          	mret
+
+000000004100052c <trap_handler_m___CLEAR_COI>:
+    4100052c:	000022b7          	lui	x5,0x2
+    41000530:	3442b073          	csrc	mip,x5
+    41000534:	30200073          	mret
+
+0000000041000538 <trap_handler_m__clear_highest_priority_interrupt>:
+    41000538:	344022f3          	csrr	x5,mip
+    4100053c:	40500333          	neg	x6,x5
+    41000540:	0062f2b3          	and	x5,x5,x6
+    41000544:	3442b073          	csrc	mip,x5
+    41000548:	30200073          	mret
+
+000000004100054c <trap_handler_m__trap_entry>:
+    4100054c:	0fc0006f          	j	41000648 <trap_handler_m__trap_handler>
+
+0000000041000550 <trap_handler_m__interrupt_vector_table>:
+    41000550:	f91ff06f          	j	410004e0 <trap_handler_m___CLEAR_SSI>
+    41000554:	f81ff06f          	j	410004d4 <trap_handler_m__invalid_interrupt>
+    41000558:	f95ff06f          	j	410004ec <trap_handler_m___CLEAR_MSI>
+    4100055c:	f79ff06f          	j	410004d4 <trap_handler_m__invalid_interrupt>
+    41000560:	f99ff06f          	j	410004f8 <trap_handler_m___CLEAR_STI>
+    41000564:	f71ff06f          	j	410004d4 <trap_handler_m__invalid_interrupt>
+    41000568:	f9dff06f          	j	41000504 <trap_handler_m___CLEAR_MTI>
+    4100056c:	f69ff06f          	j	410004d4 <trap_handler_m__invalid_interrupt>
+    41000570:	fa1ff06f          	j	41000510 <trap_handler_m___CLEAR_SEI>
+    41000574:	f61ff06f          	j	410004d4 <trap_handler_m__invalid_interrupt>
+    41000578:	fa5ff06f          	j	4100051c <trap_handler_m___CLEAR_MEI>
+    4100057c:	f59ff06f          	j	410004d4 <trap_handler_m__invalid_interrupt>
+    41000580:	fadff06f          	j	4100052c <trap_handler_m___CLEAR_COI>
+    41000584:	f51ff06f          	j	410004d4 <trap_handler_m__invalid_interrupt>
+    41000588:	f4dff06f          	j	410004d4 <trap_handler_m__invalid_interrupt>
+    4100058c:	fadff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000590:	fa9ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000594:	fa5ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000598:	fa1ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    4100059c:	f9dff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005a0:	f99ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005a4:	f95ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005a8:	f91ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005ac:	f8dff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005b0:	f89ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005b4:	f85ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005b8:	f81ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005bc:	f7dff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005c0:	f79ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005c4:	f75ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005c8:	f71ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005cc:	f6dff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005d0:	f69ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005d4:	f65ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005d8:	f61ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005dc:	f5dff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005e0:	f59ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005e4:	f55ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005e8:	f51ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005ec:	f4dff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005f0:	f49ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005f4:	f45ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005f8:	f41ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    410005fc:	f3dff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000600:	f39ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000604:	f35ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000608:	f31ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    4100060c:	f2dff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000610:	f29ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000614:	f25ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000618:	f21ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    4100061c:	f1dff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000620:	f19ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000624:	f15ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000628:	f11ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    4100062c:	f0dff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000630:	f09ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000634:	f05ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000638:	f01ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    4100063c:	efdff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000640:	ef9ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+    41000644:	ef5ff06f          	j	41000538 <trap_handler_m__clear_highest_priority_interrupt>
+
+0000000041000648 <trap_handler_m__trap_handler>:
+    41000648:	342022f3          	csrr	x5,mcause
+    4100064c:	fff0031b          	addiw	x6,x0,-1
+    41000650:	03f31313          	slli	x6,x6,0x3f
+    41000654:	00537333          	and	x6,x6,x5
+    41000658:	02030263          	beqz	x6,4100067c <trap_handler_m__exception_path>
+
+000000004100065c <trap_handler_m__interrupt_handler>:
+    4100065c:	fff0031b          	addiw	x6,x0,-1
+    41000660:	03f31313          	slli	x6,x6,0x3f
+    41000664:	0062c2b3          	xor	x5,x5,x6
+    41000668:	00000317          	auipc	x6,0x0
+    4100066c:	ee430313          	addi	x6,x6,-284 # 4100054c <trap_handler_m__trap_entry>
+    41000670:	00229293          	slli	x5,x5,0x2
+    41000674:	005302b3          	add	x5,x6,x5
+    41000678:	00028067          	jr	x5 # 2000 <pma_region_1_size+0x1000>
+
+000000004100067c <trap_handler_m__exception_path>:
+    4100067c:	34021273          	csrrw	x4,mscratch,x4
+    41000680:	00000297          	auipc	x5,0x0
+    41000684:	10828293          	addi	x5,x5,264 # 41000788 <trap_handler_m__trap_panic>
+    41000688:	30529073          	csrw	mtvec,x5
+    4100068c:	0040006f          	j	41000690 <trap_handler_m__excp_entry>
+
+0000000041000690 <trap_handler_m__excp_entry>:
+    41000690:	34202373          	csrr	x6,mcause
+    41000694:	00800293          	li	x5,8
+    41000698:	00534863          	blt	x6,x5,410006a8 <trap_handler_m__check_exception_label>
+    4100069c:	00b00293          	li	x5,11
+    410006a0:	0062c463          	blt	x5,x6,410006a8 <trap_handler_m__check_exception_label>
+    410006a4:	a31ff06f          	j	410000d4 <syscalls__syscall_check_schedule_next_test>
+
+00000000410006a8 <trap_handler_m__check_exception_label>:
+    410006a8:	04623c23          	sd	x6,88(x4) # 58 <XLEN+0x18>
+    410006ac:	341022f3          	csrr	x5,mepc
+    410006b0:	02523423          	sd	x5,40(x4) # 28 <SECURE_ACCESS_PROBABILITY+0xa>
+    410006b4:	01820283          	lb	x5,24(x4) # 18 <STORE_GUEST_PAGE_FAULT+0x1>
+    410006b8:	00029863          	bnez	x5,410006c8 <trap_handler_m__check_excp>
+    410006bc:	00128293          	addi	x5,x5,1
+    410006c0:	00520c23          	sb	x5,24(x4) # 18 <STORE_GUEST_PAGE_FAULT+0x1>
+    410006c4:	0980006f          	j	4100075c <trap_handler_m__ecall_from_machine>
+
+00000000410006c8 <trap_handler_m__check_excp>:
+    410006c8:	06823283          	ld	x5,104(x4) # 68 <XLEN+0x28>
+    410006cc:	06023423          	sd	x0,104(x4) # 68 <XLEN+0x28>
+    410006d0:	00028663          	beqz	x5,410006dc <trap_handler_m__skip_mode_check>
+    410006d4:	00100393          	li	x7,1
+    410006d8:	0e729463          	bne	x5,x7,410007c0 <test_failed>
+
+00000000410006dc <trap_handler_m__skip_mode_check>:
+    410006dc:	05023283          	ld	x5,80(x4) # 50 <XLEN+0x10>
+    410006e0:	04023823          	sd	x0,80(x4) # 50 <XLEN+0x10>
+    410006e4:	0c531e63          	bne	x6,x5,410007c0 <test_failed>
+    410006e8:	03823283          	ld	x5,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    410006ec:	02023c23          	sd	x0,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    410006f0:	06029463          	bnez	x5,41000758 <trap_handler_m__skip_gva_check>
+    410006f4:	02023303          	ld	x6,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    410006f8:	02023023          	sd	x0,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    410006fc:	02823283          	ld	x5,40(x4) # 28 <SECURE_ACCESS_PROBABILITY+0xa>
+    41000700:	02023423          	sd	x0,40(x4) # 28 <SECURE_ACCESS_PROBABILITY+0xa>
+    41000704:	0a531e63          	bne	x6,x5,410007c0 <test_failed>
+    41000708:	04023283          	ld	x5,64(x4) # 40 <XLEN>
+    4100070c:	04023023          	sd	x0,64(x4) # 40 <XLEN>
+    41000710:	00028663          	beqz	x5,4100071c <trap_handler_m__skip_nonzero_tval_check>
+
+0000000041000714 <trap_handler_m__nonzero_tval_check>:
+    41000714:	34302373          	csrr	x6,mtval
+    41000718:	0a531463          	bne	x6,x5,410007c0 <test_failed>
+
+000000004100071c <trap_handler_m__skip_nonzero_tval_check>:
+    4100071c:	04823283          	ld	x5,72(x4) # 48 <XLEN+0x8>
+    41000720:	04023423          	sd	x0,72(x4) # 48 <XLEN+0x8>
+    41000724:	00028663          	beqz	x5,41000730 <trap_handler_m__skip_nonzero_htval_check>
+
+0000000041000728 <trap_handler_m__nonzero_htval_check>:
+    41000728:	34b02373          	csrr	x6,0x34b
+    4100072c:	08531a63          	bne	x6,x5,410007c0 <test_failed>
+
+0000000041000730 <trap_handler_m__skip_nonzero_htval_check>:
+    41000730:	06023283          	ld	x5,96(x4) # 60 <XLEN+0x20>
+    41000734:	06023023          	sd	x0,96(x4) # 60 <XLEN+0x20>
+    41000738:	02028063          	beqz	x5,41000758 <trap_handler_m__skip_gva_check>
+
+000000004100073c <trap_handler_m__gva_check>:
+    4100073c:	30002373          	csrr	x6,mstatus
+    41000740:	02635313          	srli	x6,x6,0x26
+    41000744:	00137313          	andi	x6,x6,1
+    41000748:	06030c63          	beqz	x6,410007c0 <test_failed>
+    4100074c:	0010031b          	addiw	x6,x0,1
+    41000750:	02631313          	slli	x6,x6,0x26
+    41000754:	30033073          	csrc	mstatus,x6
+
+0000000041000758 <trap_handler_m__skip_gva_check>:
+    41000758:	0040006f          	j	4100075c <trap_handler_m__ecall_from_machine>
+
+000000004100075c <trap_handler_m__ecall_from_machine>:
+    4100075c:	03023283          	ld	x5,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41000760:	02023823          	sd	x0,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41000764:	07023303          	ld	x6,112(x4) # 70 <XLEN+0x30>
+    41000768:	06023823          	sd	x0,112(x4) # 70 <XLEN+0x30>
+    4100076c:	00031463          	bnez	x6,41000774 <trap_handler_m__skip_xepc_write>
+    41000770:	34129073          	csrw	mepc,x5
+
+0000000041000774 <trap_handler_m__skip_xepc_write>:
+    41000774:	00000317          	auipc	x6,0x0
+    41000778:	dd830313          	addi	x6,x6,-552 # 4100054c <trap_handler_m__trap_entry>
+    4100077c:	30531073          	csrw	mtvec,x6
+    41000780:	34021273          	csrrw	x4,mscratch,x4
+    41000784:	30200073          	mret
+
+0000000041000788 <trap_handler_m__trap_panic>:
+    41000788:	00000193          	li	x3,0
+    4100078c:	2b40006f          	j	41000a40 <eot__end_test>
+
+0000000041000790 <enter_scheduler>:
+    41000790:	0002f337          	lui	x6,0x2f
+    41000794:	ab73031b          	addiw	x6,x6,-1353 # 2eab7 <tp_csr_storage+0x2aab7>
+    41000798:	00e31313          	slli	x6,x6,0xe
+    4100079c:	0de30313          	addi	x6,x6,222
+    410007a0:	02628063          	beq	x5,x6,410007c0 <test_failed>
+    410007a4:	00000513          	li	x10,0
+    410007a8:	030000ef          	jal	410007d8 <rvcp_print_test_result>
+    410007ac:	3180006f          	j	41000ac4 <scheduler__dispatch>
+
+00000000410007b0 <test_passed>:
+    410007b0:	34021273          	csrrw	x4,mscratch,x4
+    410007b4:	00000513          	li	x10,0
+    410007b8:	020000ef          	jal	410007d8 <rvcp_print_test_result>
+    410007bc:	3080006f          	j	41000ac4 <scheduler__dispatch>
+
+00000000410007c0 <test_failed>:
+    410007c0:	34021273          	csrrw	x4,mscratch,x4
+    410007c4:	00300193          	li	x3,3
+    410007c8:	2780006f          	j	41000a40 <eot__end_test>
+
+00000000410007cc <os_end_test>:
+    410007cc:	34021273          	csrrw	x4,mscratch,x4
+    410007d0:	00100193          	li	x3,1
+    410007d4:	26c0006f          	j	41000a40 <eot__end_test>
+
+00000000410007d8 <rvcp_print_test_result>:
+    410007d8:	00050e13          	mv	x28,x10
+    410007dc:	18823283          	ld	x5,392(x4) # 188 <XLEN+0x148>
+    410007e0:	0010031b          	addiw	x6,x0,1
+    410007e4:	02031313          	slli	x6,x6,0x20
+    410007e8:	ffe30313          	addi	x6,x6,-2
+    410007ec:	1c628063          	beq	x5,x6,410009ac <rvcp_print_test_result+0x1d4>
+    410007f0:	0010031b          	addiw	x6,x0,1
+    410007f4:	02031313          	slli	x6,x6,0x20
+    410007f8:	fff30313          	addi	x6,x6,-1
+    410007fc:	1a628863          	beq	x5,x6,410009ac <rvcp_print_test_result+0x1d4>
+    41000800:	1a02c663          	bltz	x5,410009ac <rvcp_print_test_result+0x1d4>
+    41000804:	00000317          	auipc	x6,0x0
+    41000808:	39030313          	addi	x6,x6,912 # 41000b94 <dtest_descriptor_table>
+    4100080c:	00329393          	slli	x7,x5,0x3
+    41000810:	00730333          	add	x6,x6,x7
+    41000814:	00033e83          	ld	x29,0(x6)
+    41000818:	44904f37          	lui	x30,0x44904
+    4100081c:	030f0f1b          	addiw	x30,x30,48 # 44904030 <rvcp_prefix_str_pa>
+    41000820:	000f4283          	lbu	x5,0(x30)
+    41000824:	02028663          	beqz	x5,41000850 <rvcp_print_test_result+0x78>
+    41000828:	1010031b          	addiw	x6,x0,257
+    4100082c:	03031313          	slli	x6,x6,0x30
+    41000830:	005362b3          	or	x5,x6,x5
+    41000834:	0003f317          	auipc	x6,0x3f
+    41000838:	7cc30313          	addi	x6,x6,1996 # 41040000 <tohost>
+    4100083c:	00033383          	ld	x7,0(x6)
+    41000840:	fe039ee3          	bnez	x7,4100083c <rvcp_print_test_result+0x64>
+    41000844:	00533023          	sd	x5,0(x6)
+    41000848:	001f0f13          	addi	x30,x30,1
+    4100084c:	fd5ff06f          	j	41000820 <rvcp_print_test_result+0x48>
+    41000850:	44904f37          	lui	x30,0x44904
+    41000854:	041f0f1b          	addiw	x30,x30,65 # 44904041 <rvcp_testname_str_pa>
+    41000858:	000f4283          	lbu	x5,0(x30)
+    4100085c:	02028663          	beqz	x5,41000888 <rvcp_print_test_result+0xb0>
+    41000860:	1010031b          	addiw	x6,x0,257
+    41000864:	03031313          	slli	x6,x6,0x30
+    41000868:	005362b3          	or	x5,x6,x5
+    4100086c:	0003f317          	auipc	x6,0x3f
+    41000870:	79430313          	addi	x6,x6,1940 # 41040000 <tohost>
+    41000874:	00033383          	ld	x7,0(x6)
+    41000878:	fe039ee3          	bnez	x7,41000874 <rvcp_print_test_result+0x9c>
+    4100087c:	00533023          	sd	x5,0(x6)
+    41000880:	001f0f13          	addi	x30,x30,1
+    41000884:	fd5ff06f          	j	41000858 <rvcp_print_test_result+0x80>
+    41000888:	44904f37          	lui	x30,0x44904
+    4100088c:	06af0f1b          	addiw	x30,x30,106 # 4490406a <rvcp_space_str_pa>
+    41000890:	000f4283          	lbu	x5,0(x30)
+    41000894:	02028663          	beqz	x5,410008c0 <rvcp_print_test_result+0xe8>
+    41000898:	1010031b          	addiw	x6,x0,257
+    4100089c:	03031313          	slli	x6,x6,0x30
+    410008a0:	005362b3          	or	x5,x6,x5
+    410008a4:	0003f317          	auipc	x6,0x3f
+    410008a8:	75c30313          	addi	x6,x6,1884 # 41040000 <tohost>
+    410008ac:	00033383          	ld	x7,0(x6)
+    410008b0:	fe039ee3          	bnez	x7,410008ac <rvcp_print_test_result+0xd4>
+    410008b4:	00533023          	sd	x5,0(x6)
+    410008b8:	001f0f13          	addi	x30,x30,1
+    410008bc:	fd5ff06f          	j	41000890 <rvcp_print_test_result+0xb8>
+    410008c0:	000e8f13          	mv	x30,x29
+    410008c4:	000f4283          	lbu	x5,0(x30)
+    410008c8:	02028663          	beqz	x5,410008f4 <rvcp_print_test_result+0x11c>
+    410008cc:	1010031b          	addiw	x6,x0,257
+    410008d0:	03031313          	slli	x6,x6,0x30
+    410008d4:	005362b3          	or	x5,x6,x5
+    410008d8:	0003f317          	auipc	x6,0x3f
+    410008dc:	72830313          	addi	x6,x6,1832 # 41040000 <tohost>
+    410008e0:	00033383          	ld	x7,0(x6)
+    410008e4:	fe039ee3          	bnez	x7,410008e0 <rvcp_print_test_result+0x108>
+    410008e8:	00533023          	sd	x5,0(x6)
+    410008ec:	001f0f13          	addi	x30,x30,1
+    410008f0:	fd5ff06f          	j	410008c4 <rvcp_print_test_result+0xec>
+    410008f4:	44904f37          	lui	x30,0x44904
+    410008f8:	06af0f1b          	addiw	x30,x30,106 # 4490406a <rvcp_space_str_pa>
+    410008fc:	000f4283          	lbu	x5,0(x30)
+    41000900:	02028663          	beqz	x5,4100092c <rvcp_print_test_result+0x154>
+    41000904:	1010031b          	addiw	x6,x0,257
+    41000908:	03031313          	slli	x6,x6,0x30
+    4100090c:	005362b3          	or	x5,x6,x5
+    41000910:	0003f317          	auipc	x6,0x3f
+    41000914:	6f030313          	addi	x6,x6,1776 # 41040000 <tohost>
+    41000918:	00033383          	ld	x7,0(x6)
+    4100091c:	fe039ee3          	bnez	x7,41000918 <rvcp_print_test_result+0x140>
+    41000920:	00533023          	sd	x5,0(x6)
+    41000924:	001f0f13          	addi	x30,x30,1
+    41000928:	fd5ff06f          	j	410008fc <rvcp_print_test_result+0x124>
+    4100092c:	000e1863          	bnez	x28,4100093c <rvcp_print_test_result+0x164>
+    41000930:	44904f37          	lui	x30,0x44904
+    41000934:	05cf0f1b          	addiw	x30,x30,92 # 4490405c <rvcp_passed_str_pa>
+    41000938:	00c0006f          	j	41000944 <rvcp_print_test_result+0x16c>
+    4100093c:	44904f37          	lui	x30,0x44904
+    41000940:	063f0f1b          	addiw	x30,x30,99 # 44904063 <rvcp_failed_str_pa>
+    41000944:	000f4283          	lbu	x5,0(x30)
+    41000948:	02028663          	beqz	x5,41000974 <rvcp_print_test_result+0x19c>
+    4100094c:	1010031b          	addiw	x6,x0,257
+    41000950:	03031313          	slli	x6,x6,0x30
+    41000954:	005362b3          	or	x5,x6,x5
+    41000958:	0003f317          	auipc	x6,0x3f
+    4100095c:	6a830313          	addi	x6,x6,1704 # 41040000 <tohost>
+    41000960:	00033383          	ld	x7,0(x6)
+    41000964:	fe039ee3          	bnez	x7,41000960 <rvcp_print_test_result+0x188>
+    41000968:	00533023          	sd	x5,0(x6)
+    4100096c:	001f0f13          	addi	x30,x30,1
+    41000970:	fd5ff06f          	j	41000944 <rvcp_print_test_result+0x16c>
+    41000974:	44904f37          	lui	x30,0x44904
+    41000978:	06cf0f1b          	addiw	x30,x30,108 # 4490406c <rvcp_newline_str_pa>
+    4100097c:	000f4283          	lbu	x5,0(x30)
+    41000980:	02028663          	beqz	x5,410009ac <rvcp_print_test_result+0x1d4>
+    41000984:	1010031b          	addiw	x6,x0,257
+    41000988:	03031313          	slli	x6,x6,0x30
+    4100098c:	005362b3          	or	x5,x6,x5
+    41000990:	0003f317          	auipc	x6,0x3f
+    41000994:	67030313          	addi	x6,x6,1648 # 41040000 <tohost>
+    41000998:	00033383          	ld	x7,0(x6)
+    4100099c:	fe039ee3          	bnez	x7,41000998 <rvcp_print_test_result+0x1c0>
+    410009a0:	00533023          	sd	x5,0(x6)
+    410009a4:	001f0f13          	addi	x30,x30,1
+    410009a8:	fd5ff06f          	j	4100097c <rvcp_print_test_result+0x1a4>
+    410009ac:	00008067          	ret
+
+00000000410009b0 <os_rng_orig>:
+    410009b0:	f14023f3          	csrr	x7,mhartid
+    410009b4:	00068313          	mv	x6,x13
+    410009b8:	026383b3          	mul	x7,x7,x6
+    410009bc:	00058313          	mv	x6,x11
+    410009c0:	00730333          	add	x6,x6,x7
+    410009c4:	00033283          	ld	x5,0(x6)
+    410009c8:	01529313          	slli	x6,x5,0x15
+    410009cc:	0062c2b3          	xor	x5,x5,x6
+    410009d0:	0232d313          	srli	x6,x5,0x23
+    410009d4:	0062c2b3          	xor	x5,x5,x6
+    410009d8:	00429313          	slli	x6,x5,0x4
+    410009dc:	0062c2b3          	xor	x5,x5,x6
+    410009e0:	00058313          	mv	x6,x11
+    410009e4:	00730333          	add	x6,x6,x7
+    410009e8:	00533023          	sd	x5,0(x6)
+    410009ec:	00060313          	mv	x6,x12
+    410009f0:	0262f2b3          	remu	x5,x5,x6
+    410009f4:	00028513          	mv	x10,x5
+    410009f8:	00008067          	ret
+    410009fc:	02a00513          	li	x10,42
+    41000a00:	001965b7          	lui	x11,0x196
+    41000a04:	60d5859b          	addiw	x11,x11,1549 # 19660d <__section_os_data_1+0xad60d>
+    41000a08:	3c6ef637          	lui	x12,0x3c6ef
+    41000a0c:	35f6061b          	addiw	x12,x12,863 # 3c6ef35f <mem0+0x1c3c035f>
+    41000a10:	02200693          	li	x13,34
+    41000a14:	02b50533          	mul	x10,x10,x11
+    41000a18:	00c50533          	add	x10,x10,x12
+    41000a1c:	02d56533          	rem	x10,x10,x13
+    41000a20:	00b00593          	li	x11,11
+    41000a24:	02b56533          	rem	x10,x10,x11
+    41000a28:	00008067          	ret
+    41000a2c:	0000                	.insn	2, 0x0000
+	...
+
+0000000041000a30 <tohost_mutex>:
+	...
+
+0000000041000a38 <tohost_addr_mem>:
+    41000a38:	0000                	.insn	2, 0x0000
+    41000a3a:	4104                	.insn	2, 0x4104
+    41000a3c:	0000                	.insn	2, 0x0000
+	...
+
+0000000041000a40 <eot__end_test>:
+    41000a40:	00100293          	li	x5,1
+    41000a44:	00328463          	beq	x5,x3,41000a4c <eot__passed>
+    41000a48:	01c0006f          	j	41000a64 <eot__failed>
+
+0000000041000a4c <eot__passed>:
+    41000a4c:	0ff0000f          	fence
+    41000a50:	00000297          	auipc	x5,0x0
+    41000a54:	fe82b283          	ld	x5,-24(x5) # 41000a38 <tohost_addr_mem>
+    41000a58:	00100313          	li	x6,1
+    41000a5c:	0062a023          	sw	x6,0(x5)
+    41000a60:	0240006f          	j	41000a84 <eot__halt>
+
+0000000041000a64 <eot__failed>:
+    41000a64:	00100513          	li	x10,1
+    41000a68:	d71ff0ef          	jal	410007d8 <rvcp_print_test_result>
+    41000a6c:	0ff0000f          	fence
+    41000a70:	00000297          	auipc	x5,0x0
+    41000a74:	fc82b283          	ld	x5,-56(x5) # 41000a38 <tohost_addr_mem>
+    41000a78:	00300313          	li	x6,3
+    41000a7c:	0062a023          	sw	x6,0(x5)
+    41000a80:	0040006f          	j	41000a84 <eot__halt>
+
+0000000041000a84 <eot__halt>:
+    41000a84:	10500073          	wfi
+    41000a88:	ffdff06f          	j	41000a84 <eot__halt>
+
+0000000041000a8c <scheduler__init>:
+    41000a8c:	00000297          	auipc	x5,0x0
+    41000a90:	0d828293          	addi	x5,x5,216 # 41000b64 <scheduler__panic>
+    41000a94:	305292f3          	csrrw	x5,mtvec,x5
+    41000a98:	18523023          	sd	x5,384(x4) # 180 <XLEN+0x140>
+    41000a9c:	00400293          	li	x5,4
+    41000aa0:	18523823          	sd	x5,400(x4) # 190 <XLEN+0x150>
+    41000aa4:	0010029b          	addiw	x5,x0,1
+    41000aa8:	02029293          	slli	x5,x5,0x20
+    41000aac:	ffe28293          	addi	x5,x5,-2
+    41000ab0:	18523423          	sd	x5,392(x4) # 188 <XLEN+0x148>
+    41000ab4:	00000317          	auipc	x6,0x0
+    41000ab8:	14030313          	addi	x6,x6,320 # 41000bf4 <scheduler__test_setup_ptr>
+    41000abc:	00033303          	ld	x6,0(x6)
+    41000ac0:	07c0006f          	j	41000b3c <scheduler__execute_test>
+
+0000000041000ac4 <scheduler__dispatch>:
+    41000ac4:	00000297          	auipc	x5,0x0
+    41000ac8:	0a028293          	addi	x5,x5,160 # 41000b64 <scheduler__panic>
+    41000acc:	305292f3          	csrrw	x5,mtvec,x5
+    41000ad0:	18523023          	sd	x5,384(x4) # 180 <XLEN+0x140>
+
+0000000041000ad4 <scheduler__csr_read_randomization>:
+    41000ad4:	141022f3          	csrr	x5,sepc
+    41000ad8:	f15022f3          	csrr	x5,0xf15
+    41000adc:	305022f3          	csrr	x5,mtvec
+    41000ae0:	106022f3          	csrr	x5,scounteren
+    41000ae4:	105022f3          	csrr	x5,stvec
+    41000ae8:	142022f3          	csrr	x5,scause
+    41000aec:	104022f3          	csrr	x5,sie
+    41000af0:	104022f3          	csrr	x5,sie
+    41000af4:	30a022f3          	csrr	x5,0x30a
+    41000af8:	142022f3          	csrr	x5,scause
+    41000afc:	343022f3          	csrr	x5,mtval
+
+0000000041000b00 <scheduler__load_num_runs>:
+    41000b00:	19023303          	ld	x6,400(x4) # 190 <XLEN+0x150>
+    41000b04:	04030c63          	beqz	x6,41000b5c <scheduler__finished>
+
+0000000041000b08 <scheduler__decrement_num_runs>:
+    41000b08:	fff30393          	addi	x7,x6,-1
+    41000b0c:	18723823          	sd	x7,400(x4) # 190 <XLEN+0x150>
+    41000b10:	00000e17          	auipc	x28,0x0
+    41000b14:	0d0e0e13          	addi	x28,x28,208 # 41000be0 <dtest_index_map>
+    41000b18:	00239e93          	slli	x29,x7,0x2
+    41000b1c:	01de0e33          	add	x28,x28,x29
+    41000b20:	000e2e03          	lw	x28,0(x28)
+    41000b24:	19c23423          	sd	x28,392(x4) # 188 <XLEN+0x148>
+
+0000000041000b28 <scheduler__calc_test_pointer>:
+    41000b28:	00339293          	slli	x5,x7,0x3
+
+0000000041000b2c <scheduler__load_test_addr>:
+    41000b2c:	00000317          	auipc	x6,0x0
+    41000b30:	04830313          	addi	x6,x6,72 # 41000b74 <os_test_sequence>
+    41000b34:	006282b3          	add	x5,x5,x6
+    41000b38:	0002b303          	ld	x6,0(x5)
+
+0000000041000b3c <scheduler__execute_test>:
+    41000b3c:	18023283          	ld	x5,384(x4) # 180 <XLEN+0x140>
+    41000b40:	30529073          	csrw	mtvec,x5
+    41000b44:	34021273          	csrrw	x4,mscratch,x4
+    41000b48:	00000213          	li	x4,0
+    41000b4c:	14131073          	csrw	sepc,x6
+    41000b50:	10000293          	li	x5,256
+    41000b54:	1002b073          	csrc	sstatus,x5
+    41000b58:	10200073          	sret
+
+0000000041000b5c <scheduler__finished>:
+    41000b5c:	00100193          	li	x3,1
+    41000b60:	ee1ff06f          	j	41000a40 <eot__end_test>
+
+0000000041000b64 <scheduler__panic>:
+    41000b64:	00000193          	li	x3,0
+    41000b68:	ed9ff06f          	j	41000a40 <eot__end_test>
+
+0000000041000b6c <num_runs>:
+    41000b6c:	0004                	.insn	2, 0x0004
+    41000b6e:	0000                	.insn	2, 0x0000
+    41000b70:	0000                	.insn	2, 0x0000
+	...
+
+0000000041000b74 <os_test_sequence>:
+    41000b74:	5d10                	.insn	2, 0x5d10
+    41000b76:	4101                	.insn	2, 0x4101
+    41000b78:	0000                	.insn	2, 0x0000
+    41000b7a:	0000                	.insn	2, 0x0000
+    41000b7c:	5484                	.insn	2, 0x5484
+    41000b7e:	4101                	.insn	2, 0x4101
+    41000b80:	0000                	.insn	2, 0x0000
+    41000b82:	0000                	.insn	2, 0x0000
+    41000b84:	5b10                	.insn	2, 0x5b10
+    41000b86:	4101                	.insn	2, 0x4101
+    41000b88:	0000                	.insn	2, 0x0000
+    41000b8a:	0000                	.insn	2, 0x0000
+    41000b8c:	5050                	.insn	2, 0x5050
+    41000b8e:	4101                	.insn	2, 0x4101
+    41000b90:	0000                	.insn	2, 0x0000
+	...
+
+0000000041000b94 <dtest_descriptor_table>:
+    41000b94:	0bac                	.insn	2, 0x0bac
+    41000b96:	4100                	.insn	2, 0x4100
+    41000b98:	0000                	.insn	2, 0x0000
+    41000b9a:	0000                	.insn	2, 0x0000
+    41000b9c:	0bba                	.insn	2, 0x0bba
+    41000b9e:	4100                	.insn	2, 0x4100
+    41000ba0:	0000                	.insn	2, 0x0000
+    41000ba2:	0000                	.insn	2, 0x0000
+    41000ba4:	0bc8                	.insn	2, 0x0bc8
+    41000ba6:	4100                	.insn	2, 0x4100
+    41000ba8:	0000                	.insn	2, 0x0000
+	...
+
+0000000041000bac <dtest_name_0>:
+    41000bac:	5f444953          	.insn	4, 0x5f444953
+    41000bb0:	4548                	.insn	2, 0x4548
+    41000bb2:	4358                	.insn	2, 0x4358
+    41000bb4:	5045                	.insn	2, 0x5045
+    41000bb6:	315f 0032       	.insn	6, 0x49530032315f
+
+0000000041000bba <dtest_name_1>:
+    41000bba:	5f444953          	.insn	4, 0x5f444953
+    41000bbe:	4548                	.insn	2, 0x4548
+    41000bc0:	4358                	.insn	2, 0x4358
+    41000bc2:	5045                	.insn	2, 0x5045
+    41000bc4:	315f 0033       	.insn	6, 0x49530033315f
+
+0000000041000bc8 <dtest_name_2>:
+    41000bc8:	5f444953          	.insn	4, 0x5f444953
+    41000bcc:	4548                	.insn	2, 0x4548
+    41000bce:	4358                	.insn	2, 0x4358
+    41000bd0:	5045                	.insn	2, 0x5045
+    41000bd2:	315f 5f34 7568      	.insn	6, 0x75685f34315f
+    41000bd8:	6d5f 646f 0065      	.insn	6, 0x0065646f6d5f
+	...
+
+0000000041000be0 <dtest_index_map>:
+    41000be0:	ffff                	.insn	2, 0xffff
+    41000be2:	ffff                	.insn	2, 0xffff
+    41000be4:	0001                	.insn	2, 0x0001
+    41000be6:	0000                	.insn	2, 0x0000
+    41000be8:	0002                	.insn	2, 0x0002
+	...
+
+0000000041000bf4 <scheduler__test_setup_ptr>:
+    41000bf4:	5040                	.insn	2, 0x5040
+    41000bf6:	4101                	.insn	2, 0x4101
+    41000bf8:	0000                	.insn	2, 0x0000
+	...
+
+0000000041000bfc <scheduler__test_cleanup_ptr>:
+    41000bfc:	5d10                	.insn	2, 0x5d10
+    41000bfe:	4101                	.insn	2, 0x4101
+    41000c00:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .runtime_s:
+
+0000000041011000 <trap_handler_s__invalid_interrupt>:
+    41011000:	1740006f          	j	41011174 <trap_handler_s__test_failed>
+
+0000000041011004 <trap_handler_s__clear_all_interrupts>:
+    41011004:	14401073          	csrw	sip,x0
+    41011008:	10200073          	sret
+
+000000004101100c <trap_handler_s___CLEAR_SSI>:
+    4101100c:	00200293          	li	x5,2
+    41011010:	1442b073          	csrc	sip,x5
+    41011014:	10200073          	sret
+
+0000000041011018 <trap_handler_s___CLEAR_MSI>:
+    41011018:	00800293          	li	x5,8
+    4101101c:	1442b073          	csrc	sip,x5
+    41011020:	10200073          	sret
+
+0000000041011024 <trap_handler_s___CLEAR_STI>:
+    41011024:	02000293          	li	x5,32
+    41011028:	1442b073          	csrc	sip,x5
+    4101102c:	10200073          	sret
+
+0000000041011030 <trap_handler_s___CLEAR_MTI>:
+    41011030:	08000293          	li	x5,128
+    41011034:	1442b073          	csrc	sip,x5
+    41011038:	10200073          	sret
+
+000000004101103c <trap_handler_s___CLEAR_SEI>:
+    4101103c:	20000293          	li	x5,512
+    41011040:	1442b073          	csrc	sip,x5
+    41011044:	10200073          	sret
+
+0000000041011048 <trap_handler_s___CLEAR_MEI>:
+    41011048:	000012b7          	lui	x5,0x1
+    4101104c:	8002829b          	addiw	x5,x5,-2048 # 800 <XLEN+0x7c0>
+    41011050:	1442b073          	csrc	sip,x5
+    41011054:	10200073          	sret
+
+0000000041011058 <trap_handler_s___CLEAR_COI>:
+    41011058:	000022b7          	lui	x5,0x2
+    4101105c:	1442b073          	csrc	sip,x5
+    41011060:	10200073          	sret
+
+0000000041011064 <trap_handler_s__clear_highest_priority_interrupt>:
+    41011064:	144022f3          	csrr	x5,sip
+    41011068:	40500333          	neg	x6,x5
+    4101106c:	0062f2b3          	and	x5,x5,x6
+    41011070:	1442b073          	csrc	sip,x5
+    41011074:	10200073          	sret
+
+0000000041011078 <trap_handler_s__trap_entry>:
+    41011078:	10c0006f          	j	41011184 <trap_handler_s__trap_handler>
+
+000000004101107c <trap_handler_s__interrupt_vector_table>:
+    4101107c:	f91ff06f          	j	4101100c <trap_handler_s___CLEAR_SSI>
+    41011080:	f81ff06f          	j	41011000 <trap_handler_s__invalid_interrupt>
+    41011084:	f95ff06f          	j	41011018 <trap_handler_s___CLEAR_MSI>
+    41011088:	f79ff06f          	j	41011000 <trap_handler_s__invalid_interrupt>
+    4101108c:	f99ff06f          	j	41011024 <trap_handler_s___CLEAR_STI>
+    41011090:	f71ff06f          	j	41011000 <trap_handler_s__invalid_interrupt>
+    41011094:	f9dff06f          	j	41011030 <trap_handler_s___CLEAR_MTI>
+    41011098:	f69ff06f          	j	41011000 <trap_handler_s__invalid_interrupt>
+    4101109c:	fa1ff06f          	j	4101103c <trap_handler_s___CLEAR_SEI>
+    410110a0:	f61ff06f          	j	41011000 <trap_handler_s__invalid_interrupt>
+    410110a4:	fa5ff06f          	j	41011048 <trap_handler_s___CLEAR_MEI>
+    410110a8:	f59ff06f          	j	41011000 <trap_handler_s__invalid_interrupt>
+    410110ac:	fadff06f          	j	41011058 <trap_handler_s___CLEAR_COI>
+    410110b0:	f51ff06f          	j	41011000 <trap_handler_s__invalid_interrupt>
+    410110b4:	f4dff06f          	j	41011000 <trap_handler_s__invalid_interrupt>
+    410110b8:	fadff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110bc:	fa9ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110c0:	fa5ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110c4:	fa1ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110c8:	f9dff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110cc:	f99ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110d0:	f95ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110d4:	f91ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110d8:	f8dff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110dc:	f89ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110e0:	f85ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110e4:	f81ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110e8:	f7dff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110ec:	f79ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110f0:	f75ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110f4:	f71ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110f8:	f6dff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    410110fc:	f69ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011100:	f65ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011104:	f61ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011108:	f5dff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    4101110c:	f59ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011110:	f55ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011114:	f51ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011118:	f4dff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    4101111c:	f49ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011120:	f45ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011124:	f41ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011128:	f3dff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    4101112c:	f39ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011130:	f35ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011134:	f31ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011138:	f2dff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    4101113c:	f29ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011140:	f25ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011144:	f21ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011148:	f1dff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    4101114c:	f19ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011150:	f15ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011154:	f11ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011158:	f0dff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    4101115c:	f09ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011160:	f05ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011164:	f01ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011168:	efdff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    4101116c:	ef9ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+    41011170:	ef5ff06f          	j	41011064 <trap_handler_s__clear_highest_priority_interrupt>
+
+0000000041011174 <trap_handler_s__test_failed>:
+    41011174:	00f00f9b          	addiw	x31,x0,15
+    41011178:	01cf9f93          	slli	x31,x31,0x1c
+    4101117c:	002f8f93          	addi	x31,x31,2
+    41011180:	00000073          	ecall
+
+0000000041011184 <trap_handler_s__trap_handler>:
+    41011184:	142022f3          	csrr	x5,scause
+    41011188:	fff0031b          	addiw	x6,x0,-1
+    4101118c:	03f31313          	slli	x6,x6,0x3f
+    41011190:	00537333          	and	x6,x6,x5
+    41011194:	02030263          	beqz	x6,410111b8 <trap_handler_s__exception_path>
+
+0000000041011198 <trap_handler_s__interrupt_handler>:
+    41011198:	fff0031b          	addiw	x6,x0,-1
+    4101119c:	03f31313          	slli	x6,x6,0x3f
+    410111a0:	0062c2b3          	xor	x5,x5,x6
+    410111a4:	00000317          	auipc	x6,0x0
+    410111a8:	ed430313          	addi	x6,x6,-300 # 41011078 <trap_handler_s__trap_entry>
+    410111ac:	00229293          	slli	x5,x5,0x2
+    410111b0:	005302b3          	add	x5,x6,x5
+    410111b4:	00028067          	jr	x5 # 2000 <pma_region_1_size+0x1000>
+
+00000000410111b8 <trap_handler_s__exception_path>:
+    410111b8:	14021273          	csrrw	x4,sscratch,x4
+    410111bc:	00000297          	auipc	x5,0x0
+    410111c0:	0cc28293          	addi	x5,x5,204 # 41011288 <trap_handler_s__trap_panic>
+    410111c4:	10529073          	csrw	stvec,x5
+    410111c8:	0040006f          	j	410111cc <trap_handler_s__excp_entry>
+
+00000000410111cc <trap_handler_s__excp_entry>:
+    410111cc:	14202373          	csrr	x6,scause
+    410111d0:	00800293          	li	x5,8
+    410111d4:	00534863          	blt	x6,x5,410111e4 <trap_handler_s__check_exception_label>
+    410111d8:	00b00293          	li	x5,11
+    410111dc:	0062c463          	blt	x5,x6,410111e4 <trap_handler_s__check_exception_label>
+    410111e0:	0a80006f          	j	41011288 <trap_handler_s__trap_panic>
+
+00000000410111e4 <trap_handler_s__check_exception_label>:
+    410111e4:	04623c23          	sd	x6,88(x4) # 58 <XLEN+0x18>
+    410111e8:	141022f3          	csrr	x5,sepc
+    410111ec:	02523423          	sd	x5,40(x4) # 28 <SECURE_ACCESS_PROBABILITY+0xa>
+    410111f0:	01820283          	lb	x5,24(x4) # 18 <STORE_GUEST_PAGE_FAULT+0x1>
+    410111f4:	00029863          	bnez	x5,41011204 <trap_handler_s__check_excp>
+    410111f8:	00128293          	addi	x5,x5,1
+    410111fc:	00520c23          	sb	x5,24(x4) # 18 <STORE_GUEST_PAGE_FAULT+0x1>
+    41011200:	05c0006f          	j	4101125c <trap_handler_s__ecall_from_machine>
+
+0000000041011204 <trap_handler_s__check_excp>:
+    41011204:	06823283          	ld	x5,104(x4) # 68 <XLEN+0x28>
+    41011208:	06023423          	sd	x0,104(x4) # 68 <XLEN+0x28>
+    4101120c:	00028663          	beqz	x5,41011218 <trap_handler_s__skip_mode_check>
+    41011210:	00300393          	li	x7,3
+    41011214:	f67290e3          	bne	x5,x7,41011174 <trap_handler_s__test_failed>
+
+0000000041011218 <trap_handler_s__skip_mode_check>:
+    41011218:	05023283          	ld	x5,80(x4) # 50 <XLEN+0x10>
+    4101121c:	04023823          	sd	x0,80(x4) # 50 <XLEN+0x10>
+    41011220:	f4531ae3          	bne	x6,x5,41011174 <trap_handler_s__test_failed>
+    41011224:	03823283          	ld	x5,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41011228:	02023c23          	sd	x0,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    4101122c:	02029663          	bnez	x5,41011258 <trap_handler_s__skip_nonzero_tval_check>
+    41011230:	02023303          	ld	x6,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41011234:	02023023          	sd	x0,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41011238:	02823283          	ld	x5,40(x4) # 28 <SECURE_ACCESS_PROBABILITY+0xa>
+    4101123c:	02023423          	sd	x0,40(x4) # 28 <SECURE_ACCESS_PROBABILITY+0xa>
+    41011240:	f2531ae3          	bne	x6,x5,41011174 <trap_handler_s__test_failed>
+    41011244:	04023283          	ld	x5,64(x4) # 40 <XLEN>
+    41011248:	04023023          	sd	x0,64(x4) # 40 <XLEN>
+    4101124c:	00028663          	beqz	x5,41011258 <trap_handler_s__skip_nonzero_tval_check>
+
+0000000041011250 <trap_handler_s__nonzero_tval_check>:
+    41011250:	14302373          	csrr	x6,stval
+    41011254:	f25310e3          	bne	x6,x5,41011174 <trap_handler_s__test_failed>
+
+0000000041011258 <trap_handler_s__skip_nonzero_tval_check>:
+    41011258:	0040006f          	j	4101125c <trap_handler_s__ecall_from_machine>
+
+000000004101125c <trap_handler_s__ecall_from_machine>:
+    4101125c:	03023283          	ld	x5,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41011260:	02023823          	sd	x0,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41011264:	07023303          	ld	x6,112(x4) # 70 <XLEN+0x30>
+    41011268:	06023823          	sd	x0,112(x4) # 70 <XLEN+0x30>
+    4101126c:	00031463          	bnez	x6,41011274 <trap_handler_s__skip_xepc_write>
+    41011270:	14129073          	csrw	sepc,x5
+
+0000000041011274 <trap_handler_s__skip_xepc_write>:
+    41011274:	00000317          	auipc	x6,0x0
+    41011278:	e0430313          	addi	x6,x6,-508 # 41011078 <trap_handler_s__trap_entry>
+    4101127c:	10531073          	csrw	stvec,x6
+    41011280:	14021273          	csrrw	x4,sscratch,x4
+    41011284:	10200073          	sret
+
+0000000041011288 <trap_handler_s__trap_panic>:
+    41011288:	00000193          	li	x3,0
+    4101128c:	00f00f9b          	addiw	x31,x0,15
+    41011290:	01cf9f93          	slli	x31,x31,0x1c
+    41011294:	002f8f93          	addi	x31,x31,2
+    41011298:	00000073          	ecall
+
+Disassembly of section .code:
+
+0000000041015010 <passed>:
+    41015010:	00f00f9b          	addiw	x31,x0,15
+    41015014:	01cf9f93          	slli	x31,x31,0x1c
+    41015018:	001f8f93          	addi	x31,x31,1
+    4101501c:	00000073          	ecall
+
+0000000041015020 <failed>:
+    41015020:	00f00f9b          	addiw	x31,x0,15
+    41015024:	01cf9f93          	slli	x31,x31,0x1c
+    41015028:	002f8f93          	addi	x31,x31,2
+    4101502c:	00000073          	ecall
+
+0000000041015030 <end_test>:
+    41015030:	00f00f9b          	addiw	x31,x0,15
+    41015034:	01cf9f93          	slli	x31,x31,0x1c
+    41015038:	003f8f93          	addi	x31,x31,3
+    4101503c:	00000073          	ecall
+
+0000000041015040 <test_setup>:
+    41015040:	00f00f9b          	addiw	x31,x0,15
+    41015044:	01cf9f93          	slli	x31,x31,0x1c
+    41015048:	001f8f93          	addi	x31,x31,1
+    4101504c:	00000073          	ecall
+
+0000000041015050 <SID_HEXCEP_12>:
+    41015050:	4144d137          	lui	x2,0x4144d
+    41015054:	000012b7          	lui	x5,0x1
+    41015058:	00510133          	add	x2,x2,x5
+    4101505c:	ff017113          	andi	x2,x2,-16
+    41015060:	00f01237          	lui	x4,0xf01
+    41015064:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015068:	00c21213          	slli	x4,x4,0xc
+    4101506c:	00200e13          	li	x28,2
+    41015070:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015074:	00000e17          	auipc	x28,0x0
+    41015078:	04ce0e13          	addi	x28,x28,76 # 410150c0 <fault_label_0>
+    4101507c:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015080:	00000e13          	li	x28,0
+    41015084:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015088:	00000e13          	li	x28,0
+    4101508c:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015090:	00000e17          	auipc	x28,0x0
+    41015094:	044e0e13          	addi	x28,x28,68 # 410150d4 <excp_return_label_0>
+    41015098:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    4101509c:	00000e13          	li	x28,0
+    410150a0:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    410150a4:	00000e13          	li	x28,0
+    410150a8:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    410150ac:	00000e13          	li	x28,0
+    410150b0:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    410150b4:	00000e13          	li	x28,0
+    410150b8:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    410150bc:	00000393          	li	x7,0
+
+00000000410150c0 <fault_label_0>:
+    410150c0:	2003a4f3          	csrrs	x9,vsstatus,x7
+    410150c4:	000e8537          	lui	x10,0xe8
+    410150c8:	0085051b          	addiw	x10,x10,8 # e8008 <failed_addr>
+    410150cc:	00053a03          	ld	x20,0(x10)
+    410150d0:	000a0067          	jr	x20
+
+00000000410150d4 <excp_return_label_0>:
+    410150d4:	00f01237          	lui	x4,0xf01
+    410150d8:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    410150dc:	00c21213          	slli	x4,x4,0xc
+    410150e0:	00200e13          	li	x28,2
+    410150e4:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    410150e8:	00000e17          	auipc	x28,0x0
+    410150ec:	04ce0e13          	addi	x28,x28,76 # 41015134 <fault_label_1>
+    410150f0:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    410150f4:	00000e13          	li	x28,0
+    410150f8:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    410150fc:	00000e13          	li	x28,0
+    41015100:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015104:	00000e17          	auipc	x28,0x0
+    41015108:	044e0e13          	addi	x28,x28,68 # 41015148 <excp_return_label_1>
+    4101510c:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015110:	00000e13          	li	x28,0
+    41015114:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015118:	00000e13          	li	x28,0
+    4101511c:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015120:	00000e13          	li	x28,0
+    41015124:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015128:	00000e13          	li	x28,0
+    4101512c:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015130:	00000713          	li	x14,0
+
+0000000041015134 <fault_label_1>:
+    41015134:	24472573          	csrrs	x10,vsip,x14
+    41015138:	000e8537          	lui	x10,0xe8
+    4101513c:	0085051b          	addiw	x10,x10,8 # e8008 <failed_addr>
+    41015140:	00053383          	ld	x7,0(x10)
+    41015144:	00038067          	jr	x7
+
+0000000041015148 <excp_return_label_1>:
+    41015148:	00f01237          	lui	x4,0xf01
+    4101514c:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015150:	00c21213          	slli	x4,x4,0xc
+    41015154:	00200e13          	li	x28,2
+    41015158:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    4101515c:	00000e17          	auipc	x28,0x0
+    41015160:	04ce0e13          	addi	x28,x28,76 # 410151a8 <fault_label_2>
+    41015164:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015168:	00000e13          	li	x28,0
+    4101516c:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015170:	00000e13          	li	x28,0
+    41015174:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015178:	00000e17          	auipc	x28,0x0
+    4101517c:	044e0e13          	addi	x28,x28,68 # 410151bc <excp_return_label_2>
+    41015180:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015184:	00000e13          	li	x28,0
+    41015188:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    4101518c:	00000e13          	li	x28,0
+    41015190:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015194:	00000e13          	li	x28,0
+    41015198:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    4101519c:	00000e13          	li	x28,0
+    410151a0:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    410151a4:	00000993          	li	x19,0
+
+00000000410151a8 <fault_label_2>:
+    410151a8:	2049a973          	csrrs	x18,vsie,x19
+    410151ac:	000e84b7          	lui	x9,0xe8
+    410151b0:	0084849b          	addiw	x9,x9,8 # e8008 <failed_addr>
+    410151b4:	0004b803          	ld	x16,0(x9)
+    410151b8:	00080067          	jr	x16
+
+00000000410151bc <excp_return_label_2>:
+    410151bc:	00f01237          	lui	x4,0xf01
+    410151c0:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    410151c4:	00c21213          	slli	x4,x4,0xc
+    410151c8:	00200e13          	li	x28,2
+    410151cc:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    410151d0:	00000e17          	auipc	x28,0x0
+    410151d4:	04ce0e13          	addi	x28,x28,76 # 4101521c <fault_label_3>
+    410151d8:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    410151dc:	00000e13          	li	x28,0
+    410151e0:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    410151e4:	00000e13          	li	x28,0
+    410151e8:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    410151ec:	00000e17          	auipc	x28,0x0
+    410151f0:	044e0e13          	addi	x28,x28,68 # 41015230 <excp_return_label_3>
+    410151f4:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    410151f8:	00000e13          	li	x28,0
+    410151fc:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015200:	00000e13          	li	x28,0
+    41015204:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015208:	00000e13          	li	x28,0
+    4101520c:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015210:	00000e13          	li	x28,0
+    41015214:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015218:	00000713          	li	x14,0
+
+000000004101521c <fault_label_3>:
+    4101521c:	20572473          	csrrs	x8,vstvec,x14
+    41015220:	000e8537          	lui	x10,0xe8
+    41015224:	0085051b          	addiw	x10,x10,8 # e8008 <failed_addr>
+    41015228:	00053483          	ld	x9,0(x10)
+    4101522c:	00048067          	jr	x9
+
+0000000041015230 <excp_return_label_3>:
+    41015230:	00f01237          	lui	x4,0xf01
+    41015234:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015238:	00c21213          	slli	x4,x4,0xc
+    4101523c:	00200e13          	li	x28,2
+    41015240:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015244:	00000e17          	auipc	x28,0x0
+    41015248:	04ce0e13          	addi	x28,x28,76 # 41015290 <fault_label_4>
+    4101524c:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015250:	00000e13          	li	x28,0
+    41015254:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015258:	00000e13          	li	x28,0
+    4101525c:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015260:	00000e17          	auipc	x28,0x0
+    41015264:	044e0e13          	addi	x28,x28,68 # 410152a4 <excp_return_label_4>
+    41015268:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    4101526c:	00000e13          	li	x28,0
+    41015270:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015274:	00000e13          	li	x28,0
+    41015278:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    4101527c:	00000e13          	li	x28,0
+    41015280:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015284:	00000e13          	li	x28,0
+    41015288:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    4101528c:	00000893          	li	x17,0
+
+0000000041015290 <fault_label_4>:
+    41015290:	2408aef3          	csrrs	x29,vsscratch,x17
+    41015294:	000e8737          	lui	x14,0xe8
+    41015298:	0087071b          	addiw	x14,x14,8 # e8008 <failed_addr>
+    4101529c:	00073e03          	ld	x28,0(x14)
+    410152a0:	000e0067          	jr	x28
+
+00000000410152a4 <excp_return_label_4>:
+    410152a4:	00f01237          	lui	x4,0xf01
+    410152a8:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    410152ac:	00c21213          	slli	x4,x4,0xc
+    410152b0:	00200e13          	li	x28,2
+    410152b4:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    410152b8:	00000e17          	auipc	x28,0x0
+    410152bc:	04ce0e13          	addi	x28,x28,76 # 41015304 <fault_label_5>
+    410152c0:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    410152c4:	00000e13          	li	x28,0
+    410152c8:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    410152cc:	00000e13          	li	x28,0
+    410152d0:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    410152d4:	00000e17          	auipc	x28,0x0
+    410152d8:	044e0e13          	addi	x28,x28,68 # 41015318 <excp_return_label_5>
+    410152dc:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    410152e0:	00000e13          	li	x28,0
+    410152e4:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    410152e8:	00000e13          	li	x28,0
+    410152ec:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    410152f0:	00000e13          	li	x28,0
+    410152f4:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    410152f8:	00000e13          	li	x28,0
+    410152fc:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015300:	00000e13          	li	x28,0
+
+0000000041015304 <fault_label_5>:
+    41015304:	241e2ef3          	csrrs	x29,vsepc,x28
+    41015308:	000e89b7          	lui	x19,0xe8
+    4101530c:	0089899b          	addiw	x19,x19,8 # e8008 <failed_addr>
+    41015310:	0009bd83          	ld	x27,0(x19)
+    41015314:	000d8067          	jr	x27
+
+0000000041015318 <excp_return_label_5>:
+    41015318:	00f01237          	lui	x4,0xf01
+    4101531c:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015320:	00c21213          	slli	x4,x4,0xc
+    41015324:	00200e13          	li	x28,2
+    41015328:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    4101532c:	00000e17          	auipc	x28,0x0
+    41015330:	04ce0e13          	addi	x28,x28,76 # 41015378 <fault_label_6>
+    41015334:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015338:	00000e13          	li	x28,0
+    4101533c:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015340:	00000e13          	li	x28,0
+    41015344:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015348:	00000e17          	auipc	x28,0x0
+    4101534c:	044e0e13          	addi	x28,x28,68 # 4101538c <excp_return_label_6>
+    41015350:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015354:	00000e13          	li	x28,0
+    41015358:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    4101535c:	00000e13          	li	x28,0
+    41015360:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015364:	00000e13          	li	x28,0
+    41015368:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    4101536c:	00000e13          	li	x28,0
+    41015370:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015374:	00000413          	li	x8,0
+
+0000000041015378 <fault_label_6>:
+    41015378:	242423f3          	csrrs	x7,vscause,x8
+    4101537c:	000e8537          	lui	x10,0xe8
+    41015380:	0085051b          	addiw	x10,x10,8 # e8008 <failed_addr>
+    41015384:	00053c03          	ld	x24,0(x10)
+    41015388:	000c0067          	jr	x24
+
+000000004101538c <excp_return_label_6>:
+    4101538c:	00f01237          	lui	x4,0xf01
+    41015390:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015394:	00c21213          	slli	x4,x4,0xc
+    41015398:	00200e13          	li	x28,2
+    4101539c:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    410153a0:	00000e17          	auipc	x28,0x0
+    410153a4:	04ce0e13          	addi	x28,x28,76 # 410153ec <fault_label_7>
+    410153a8:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    410153ac:	00000e13          	li	x28,0
+    410153b0:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    410153b4:	00000e13          	li	x28,0
+    410153b8:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    410153bc:	00000e17          	auipc	x28,0x0
+    410153c0:	044e0e13          	addi	x28,x28,68 # 41015400 <excp_return_label_7>
+    410153c4:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    410153c8:	00000e13          	li	x28,0
+    410153cc:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    410153d0:	00000e13          	li	x28,0
+    410153d4:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    410153d8:	00000e13          	li	x28,0
+    410153dc:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    410153e0:	00000e13          	li	x28,0
+    410153e4:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    410153e8:	00000593          	li	x11,0
+
+00000000410153ec <fault_label_7>:
+    410153ec:	2435a373          	csrrs	x6,vstval,x11
+    410153f0:	000e8937          	lui	x18,0xe8
+    410153f4:	0089091b          	addiw	x18,x18,8 # e8008 <failed_addr>
+    410153f8:	00093703          	ld	x14,0(x18)
+    410153fc:	00070067          	jr	x14
+
+0000000041015400 <excp_return_label_7>:
+    41015400:	00f01237          	lui	x4,0xf01
+    41015404:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015408:	00c21213          	slli	x4,x4,0xc
+    4101540c:	00200e13          	li	x28,2
+    41015410:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015414:	00000e17          	auipc	x28,0x0
+    41015418:	04ce0e13          	addi	x28,x28,76 # 41015460 <fault_label_8>
+    4101541c:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015420:	00000e13          	li	x28,0
+    41015424:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015428:	00000e13          	li	x28,0
+    4101542c:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015430:	00000e17          	auipc	x28,0x0
+    41015434:	044e0e13          	addi	x28,x28,68 # 41015474 <SID_HEXCEP_12_passed>
+    41015438:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    4101543c:	00000e13          	li	x28,0
+    41015440:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015444:	00000e13          	li	x28,0
+    41015448:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    4101544c:	00000e13          	li	x28,0
+    41015450:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015454:	00000e13          	li	x28,0
+    41015458:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    4101545c:	00000a13          	li	x20,0
+
+0000000041015460 <fault_label_8>:
+    41015460:	280a28f3          	csrrs	x17,vsatp,x20
+    41015464:	000e8eb7          	lui	x29,0xe8
+    41015468:	008e8e9b          	addiw	x29,x29,8 # e8008 <failed_addr>
+    4101546c:	000eb383          	ld	x7,0(x29)
+    41015470:	00038067          	jr	x7
+
+0000000041015474 <SID_HEXCEP_12_passed>:
+    41015474:	00f00f9b          	addiw	x31,x0,15
+    41015478:	01cf9f93          	slli	x31,x31,0x1c
+    4101547c:	001f8f93          	addi	x31,x31,1
+    41015480:	00000073          	ecall
+
+0000000041015484 <SID_HEXCEP_13>:
+    41015484:	00004137          	lui	x2,0x4
+    41015488:	000e8fb7          	lui	x31,0xe8
+    4101548c:	0b0f8f9b          	addiw	x31,x31,176 # e80b0 <machine_csr_jump_table_flags>
+    41015490:	00100f13          	li	x30,1
+    41015494:	01efb023          	sd	x30,0(x31)
+    41015498:	000f0fb7          	lui	x31,0xf0
+    4101549c:	001f8f9b          	addiw	x31,x31,1 # f0001 <__section_os_data_1+0x7001>
+    410154a0:	00cf9f93          	slli	x31,x31,0xc
+    410154a4:	005f8f93          	addi	x31,x31,5
+    410154a8:	00000073          	ecall
+    410154ac:	00713023          	sd	x7,0(x2) # 4000 <tp_csr_storage>
+    410154b0:	0d79f137          	lui	x2,0xd79f
+    410154b4:	000012b7          	lui	x5,0x1
+    410154b8:	00510133          	add	x2,x2,x5
+    410154bc:	ff017113          	andi	x2,x2,-16
+    410154c0:	20000393          	li	x7,512
+    410154c4:	000e8fb7          	lui	x31,0xe8
+    410154c8:	0b8f8f9b          	addiw	x31,x31,184 # e80b8 <super_csr_jump_table_flags>
+    410154cc:	00200f13          	li	x30,2
+    410154d0:	01efb023          	sd	x30,0(x31)
+    410154d4:	000f0fb7          	lui	x31,0xf0
+    410154d8:	001f8f9b          	addiw	x31,x31,1 # f0001 <__section_os_data_1+0x7001>
+    410154dc:	00cf9f93          	slli	x31,x31,0xc
+    410154e0:	006f8f93          	addi	x31,x31,6
+    410154e4:	00000073          	ecall
+    410154e8:	00f01237          	lui	x4,0xf01
+    410154ec:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    410154f0:	00c21213          	slli	x4,x4,0xc
+    410154f4:	00200e13          	li	x28,2
+    410154f8:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    410154fc:	00000e17          	auipc	x28,0x0
+    41015500:	04ce0e13          	addi	x28,x28,76 # 41015548 <fault_label_9>
+    41015504:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015508:	00000e13          	li	x28,0
+    4101550c:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015510:	00000e13          	li	x28,0
+    41015514:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015518:	00000e17          	auipc	x28,0x0
+    4101551c:	044e0e13          	addi	x28,x28,68 # 4101555c <excp_return_label_9>
+    41015520:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015524:	00000e13          	li	x28,0
+    41015528:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    4101552c:	00000e13          	li	x28,0
+    41015530:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015534:	00000e13          	li	x28,0
+    41015538:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    4101553c:	00000e13          	li	x28,0
+    41015540:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015544:	2032f637          	lui	x12,0x2032f
+
+0000000041015548 <fault_label_9>:
+    41015548:	60064cf3          	hlv.b	x25,(x12)
+    4101554c:	000e86b7          	lui	x13,0xe8
+    41015550:	0086869b          	addiw	x13,x13,8 # e8008 <failed_addr>
+    41015554:	0006b803          	ld	x16,0(x13)
+    41015558:	00080067          	jr	x16
+
+000000004101555c <excp_return_label_9>:
+    4101555c:	00f01237          	lui	x4,0xf01
+    41015560:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015564:	00c21213          	slli	x4,x4,0xc
+    41015568:	00200e13          	li	x28,2
+    4101556c:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015570:	00000e17          	auipc	x28,0x0
+    41015574:	04ce0e13          	addi	x28,x28,76 # 410155bc <fault_label_10>
+    41015578:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    4101557c:	00000e13          	li	x28,0
+    41015580:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015584:	00000e13          	li	x28,0
+    41015588:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    4101558c:	00000e17          	auipc	x28,0x0
+    41015590:	044e0e13          	addi	x28,x28,68 # 410155d0 <excp_return_label_10>
+    41015594:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015598:	00000e13          	li	x28,0
+    4101559c:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    410155a0:	00000e13          	li	x28,0
+    410155a4:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    410155a8:	00000e13          	li	x28,0
+    410155ac:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    410155b0:	00000e13          	li	x28,0
+    410155b4:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    410155b8:	2032f8b7          	lui	x17,0x2032f
+
+00000000410155bc <fault_label_10>:
+    410155bc:	6018c373          	hlv.bu	x6,(x17)
+    410155c0:	000e87b7          	lui	x15,0xe8
+    410155c4:	0087879b          	addiw	x15,x15,8 # e8008 <failed_addr>
+    410155c8:	0007bb83          	ld	x23,0(x15)
+    410155cc:	000b8067          	jr	x23
+
+00000000410155d0 <excp_return_label_10>:
+    410155d0:	00f01237          	lui	x4,0xf01
+    410155d4:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    410155d8:	00c21213          	slli	x4,x4,0xc
+    410155dc:	00200e13          	li	x28,2
+    410155e0:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    410155e4:	00000e17          	auipc	x28,0x0
+    410155e8:	04ce0e13          	addi	x28,x28,76 # 41015630 <fault_label_11>
+    410155ec:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    410155f0:	00000e13          	li	x28,0
+    410155f4:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    410155f8:	00000e13          	li	x28,0
+    410155fc:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015600:	00000e17          	auipc	x28,0x0
+    41015604:	044e0e13          	addi	x28,x28,68 # 41015644 <excp_return_label_11>
+    41015608:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    4101560c:	00000e13          	li	x28,0
+    41015610:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015614:	00000e13          	li	x28,0
+    41015618:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    4101561c:	00000e13          	li	x28,0
+    41015620:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015624:	00000e13          	li	x28,0
+    41015628:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    4101562c:	2032f937          	lui	x18,0x2032f
+
+0000000041015630 <fault_label_11>:
+    41015630:	64094773          	hlv.h	x14,(x18)
+    41015634:	000e8637          	lui	x12,0xe8
+    41015638:	0086061b          	addiw	x12,x12,8 # e8008 <failed_addr>
+    4101563c:	00063c83          	ld	x25,0(x12)
+    41015640:	000c8067          	jr	x25
+
+0000000041015644 <excp_return_label_11>:
+    41015644:	00f01237          	lui	x4,0xf01
+    41015648:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    4101564c:	00c21213          	slli	x4,x4,0xc
+    41015650:	00200e13          	li	x28,2
+    41015654:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015658:	00000e17          	auipc	x28,0x0
+    4101565c:	04ce0e13          	addi	x28,x28,76 # 410156a4 <fault_label_12>
+    41015660:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015664:	00000e13          	li	x28,0
+    41015668:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    4101566c:	00000e13          	li	x28,0
+    41015670:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015674:	00000e17          	auipc	x28,0x0
+    41015678:	044e0e13          	addi	x28,x28,68 # 410156b8 <excp_return_label_12>
+    4101567c:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015680:	00000e13          	li	x28,0
+    41015684:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015688:	00000e13          	li	x28,0
+    4101568c:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015690:	00000e13          	li	x28,0
+    41015694:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015698:	00000e13          	li	x28,0
+    4101569c:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    410156a0:	2032fe37          	lui	x28,0x2032f
+
+00000000410156a4 <fault_label_12>:
+    410156a4:	641e4873          	hlv.hu	x16,(x28)
+    410156a8:	000e8737          	lui	x14,0xe8
+    410156ac:	0087071b          	addiw	x14,x14,8 # e8008 <failed_addr>
+    410156b0:	00073303          	ld	x6,0(x14)
+    410156b4:	00030067          	jr	x6
+
+00000000410156b8 <excp_return_label_12>:
+    410156b8:	00f01237          	lui	x4,0xf01
+    410156bc:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    410156c0:	00c21213          	slli	x4,x4,0xc
+    410156c4:	00200e13          	li	x28,2
+    410156c8:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    410156cc:	00000e17          	auipc	x28,0x0
+    410156d0:	04ce0e13          	addi	x28,x28,76 # 41015718 <fault_label_13>
+    410156d4:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    410156d8:	00000e13          	li	x28,0
+    410156dc:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    410156e0:	00000e13          	li	x28,0
+    410156e4:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    410156e8:	00000e17          	auipc	x28,0x0
+    410156ec:	044e0e13          	addi	x28,x28,68 # 4101572c <excp_return_label_13>
+    410156f0:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    410156f4:	00000e13          	li	x28,0
+    410156f8:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    410156fc:	00000e13          	li	x28,0
+    41015700:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015704:	00000e13          	li	x28,0
+    41015708:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    4101570c:	00000e13          	li	x28,0
+    41015710:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015714:	2032fa37          	lui	x20,0x2032f
+
+0000000041015718 <fault_label_13>:
+    41015718:	680a46f3          	hlv.w	x13,(x20)
+    4101571c:	000e86b7          	lui	x13,0xe8
+    41015720:	0086869b          	addiw	x13,x13,8 # e8008 <failed_addr>
+    41015724:	0006b383          	ld	x7,0(x13)
+    41015728:	00038067          	jr	x7
+
+000000004101572c <excp_return_label_13>:
+    4101572c:	00f01237          	lui	x4,0xf01
+    41015730:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015734:	00c21213          	slli	x4,x4,0xc
+    41015738:	00200e13          	li	x28,2
+    4101573c:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015740:	00000e17          	auipc	x28,0x0
+    41015744:	04ce0e13          	addi	x28,x28,76 # 4101578c <fault_label_14>
+    41015748:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    4101574c:	00000e13          	li	x28,0
+    41015750:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015754:	00000e13          	li	x28,0
+    41015758:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    4101575c:	00000e17          	auipc	x28,0x0
+    41015760:	044e0e13          	addi	x28,x28,68 # 410157a0 <excp_return_label_14>
+    41015764:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015768:	00000e13          	li	x28,0
+    4101576c:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015770:	00000e13          	li	x28,0
+    41015774:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015778:	00000e13          	li	x28,0
+    4101577c:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015780:	00000e13          	li	x28,0
+    41015784:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015788:	2032fa37          	lui	x20,0x2032f
+
+000000004101578c <fault_label_14>:
+    4101578c:	681a4973          	hlv.wu	x18,(x20)
+    41015790:	000e8a37          	lui	x20,0xe8
+    41015794:	008a0a1b          	addiw	x20,x20,8 # e8008 <failed_addr>
+    41015798:	000a3f03          	ld	x30,0(x20)
+    4101579c:	000f0067          	jr	x30
+
+00000000410157a0 <excp_return_label_14>:
+    410157a0:	00f01237          	lui	x4,0xf01
+    410157a4:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    410157a8:	00c21213          	slli	x4,x4,0xc
+    410157ac:	00200e13          	li	x28,2
+    410157b0:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    410157b4:	00000e17          	auipc	x28,0x0
+    410157b8:	04ce0e13          	addi	x28,x28,76 # 41015800 <fault_label_15>
+    410157bc:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    410157c0:	00000e13          	li	x28,0
+    410157c4:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    410157c8:	00000e13          	li	x28,0
+    410157cc:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    410157d0:	00000e17          	auipc	x28,0x0
+    410157d4:	044e0e13          	addi	x28,x28,68 # 41015814 <excp_return_label_15>
+    410157d8:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    410157dc:	00000e13          	li	x28,0
+    410157e0:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    410157e4:	00000e13          	li	x28,0
+    410157e8:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    410157ec:	00000e13          	li	x28,0
+    410157f0:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    410157f4:	00000e13          	li	x28,0
+    410157f8:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    410157fc:	2032ff37          	lui	x30,0x2032f
+
+0000000041015800 <fault_label_15>:
+    41015800:	6c0f4873          	hlv.d	x16,(x30)
+    41015804:	000e8fb7          	lui	x31,0xe8
+    41015808:	008f8f9b          	addiw	x31,x31,8 # e8008 <failed_addr>
+    4101580c:	000fb883          	ld	x17,0(x31)
+    41015810:	00088067          	jr	x17 # 2032f000 <mem0>
+
+0000000041015814 <excp_return_label_15>:
+    41015814:	00f01237          	lui	x4,0xf01
+    41015818:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    4101581c:	00c21213          	slli	x4,x4,0xc
+    41015820:	00200e13          	li	x28,2
+    41015824:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015828:	00000e17          	auipc	x28,0x0
+    4101582c:	04ce0e13          	addi	x28,x28,76 # 41015874 <fault_label_16>
+    41015830:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015834:	00000e13          	li	x28,0
+    41015838:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    4101583c:	00000e13          	li	x28,0
+    41015840:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015844:	00000e17          	auipc	x28,0x0
+    41015848:	044e0e13          	addi	x28,x28,68 # 41015888 <excp_return_label_16>
+    4101584c:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015850:	00000e13          	li	x28,0
+    41015854:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015858:	00000e13          	li	x28,0
+    4101585c:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015860:	00000e13          	li	x28,0
+    41015864:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015868:	00000e13          	li	x28,0
+    4101586c:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015870:	2032fcb7          	lui	x25,0x2032f
+
+0000000041015874 <fault_label_16>:
+    41015874:	643ccaf3          	hlvx.hu	x21,(x25)
+    41015878:	000e8cb7          	lui	x25,0xe8
+    4101587c:	008c8c9b          	addiw	x25,x25,8 # e8008 <failed_addr>
+    41015880:	000cb603          	ld	x12,0(x25)
+    41015884:	00060067          	jr	x12
+
+0000000041015888 <excp_return_label_16>:
+    41015888:	00f01237          	lui	x4,0xf01
+    4101588c:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015890:	00c21213          	slli	x4,x4,0xc
+    41015894:	00200e13          	li	x28,2
+    41015898:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    4101589c:	00000e17          	auipc	x28,0x0
+    410158a0:	04ce0e13          	addi	x28,x28,76 # 410158e8 <fault_label_17>
+    410158a4:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    410158a8:	00000e13          	li	x28,0
+    410158ac:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    410158b0:	00000e13          	li	x28,0
+    410158b4:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    410158b8:	00000e17          	auipc	x28,0x0
+    410158bc:	044e0e13          	addi	x28,x28,68 # 410158fc <excp_return_label_17>
+    410158c0:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    410158c4:	00000e13          	li	x28,0
+    410158c8:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    410158cc:	00000e13          	li	x28,0
+    410158d0:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    410158d4:	00000e13          	li	x28,0
+    410158d8:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    410158dc:	00000e13          	li	x28,0
+    410158e0:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    410158e4:	2032f8b7          	lui	x17,0x2032f
+
+00000000410158e8 <fault_label_17>:
+    410158e8:	6838ccf3          	hlvx.wu	x25,(x17)
+    410158ec:	000e8337          	lui	x6,0xe8
+    410158f0:	0083031b          	addiw	x6,x6,8 # e8008 <failed_addr>
+    410158f4:	00033f83          	ld	x31,0(x6)
+    410158f8:	000f8067          	jr	x31
+
+00000000410158fc <excp_return_label_17>:
+    410158fc:	12345f37          	lui	x30,0x12345
+    41015900:	678f0f1b          	addiw	x30,x30,1656 # 12345678 <SID_HEXCEP_13_stack+0x4ba6678>
+    41015904:	00f01237          	lui	x4,0xf01
+    41015908:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    4101590c:	00c21213          	slli	x4,x4,0xc
+    41015910:	00200e13          	li	x28,2
+    41015914:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015918:	00000e17          	auipc	x28,0x0
+    4101591c:	04ce0e13          	addi	x28,x28,76 # 41015964 <fault_label_18>
+    41015920:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015924:	00000e13          	li	x28,0
+    41015928:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    4101592c:	00000e13          	li	x28,0
+    41015930:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015934:	00000e17          	auipc	x28,0x0
+    41015938:	044e0e13          	addi	x28,x28,68 # 41015978 <excp_return_label_18>
+    4101593c:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015940:	00000e13          	li	x28,0
+    41015944:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015948:	00000e13          	li	x28,0
+    4101594c:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015950:	00000e13          	li	x28,0
+    41015954:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015958:	00000e13          	li	x28,0
+    4101595c:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015960:	2032fd37          	lui	x26,0x2032f
+
+0000000041015964 <fault_label_18>:
+    41015964:	63ed4073          	hsv.b	x30,(x26)
+    41015968:	000e8937          	lui	x18,0xe8
+    4101596c:	0089091b          	addiw	x18,x18,8 # e8008 <failed_addr>
+    41015970:	00093e83          	ld	x29,0(x18)
+    41015974:	000e8067          	jr	x29
+
+0000000041015978 <excp_return_label_18>:
+    41015978:	00f01237          	lui	x4,0xf01
+    4101597c:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015980:	00c21213          	slli	x4,x4,0xc
+    41015984:	00200e13          	li	x28,2
+    41015988:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    4101598c:	00000e17          	auipc	x28,0x0
+    41015990:	04ce0e13          	addi	x28,x28,76 # 410159d8 <fault_label_19>
+    41015994:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015998:	00000e13          	li	x28,0
+    4101599c:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    410159a0:	00000e13          	li	x28,0
+    410159a4:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    410159a8:	00000e17          	auipc	x28,0x0
+    410159ac:	044e0e13          	addi	x28,x28,68 # 410159ec <excp_return_label_19>
+    410159b0:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    410159b4:	00000e13          	li	x28,0
+    410159b8:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    410159bc:	00000e13          	li	x28,0
+    410159c0:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    410159c4:	00000e13          	li	x28,0
+    410159c8:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    410159cc:	00000e13          	li	x28,0
+    410159d0:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    410159d4:	2032f837          	lui	x16,0x2032f
+
+00000000410159d8 <fault_label_19>:
+    410159d8:	67e84073          	hsv.h	x30,(x16)
+    410159dc:	000e8637          	lui	x12,0xe8
+    410159e0:	0086061b          	addiw	x12,x12,8 # e8008 <failed_addr>
+    410159e4:	00063883          	ld	x17,0(x12)
+    410159e8:	00088067          	jr	x17 # 2032f000 <mem0>
+
+00000000410159ec <excp_return_label_19>:
+    410159ec:	00f01237          	lui	x4,0xf01
+    410159f0:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    410159f4:	00c21213          	slli	x4,x4,0xc
+    410159f8:	00200e13          	li	x28,2
+    410159fc:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015a00:	00000e17          	auipc	x28,0x0
+    41015a04:	04ce0e13          	addi	x28,x28,76 # 41015a4c <fault_label_20>
+    41015a08:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015a0c:	00000e13          	li	x28,0
+    41015a10:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015a14:	00000e13          	li	x28,0
+    41015a18:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015a1c:	00000e17          	auipc	x28,0x0
+    41015a20:	044e0e13          	addi	x28,x28,68 # 41015a60 <excp_return_label_20>
+    41015a24:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015a28:	00000e13          	li	x28,0
+    41015a2c:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015a30:	00000e13          	li	x28,0
+    41015a34:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015a38:	00000e13          	li	x28,0
+    41015a3c:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015a40:	00000e13          	li	x28,0
+    41015a44:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015a48:	2032f737          	lui	x14,0x2032f
+
+0000000041015a4c <fault_label_20>:
+    41015a4c:	6be74073          	hsv.w	x30,(x14)
+    41015a50:	000e8837          	lui	x16,0xe8
+    41015a54:	0088081b          	addiw	x16,x16,8 # e8008 <failed_addr>
+    41015a58:	00083a83          	ld	x21,0(x16)
+    41015a5c:	000a8067          	jr	x21
+
+0000000041015a60 <excp_return_label_20>:
+    41015a60:	00f01237          	lui	x4,0xf01
+    41015a64:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015a68:	00c21213          	slli	x4,x4,0xc
+    41015a6c:	00200e13          	li	x28,2
+    41015a70:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015a74:	00000e17          	auipc	x28,0x0
+    41015a78:	04ce0e13          	addi	x28,x28,76 # 41015ac0 <fault_label_21>
+    41015a7c:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015a80:	00000e13          	li	x28,0
+    41015a84:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015a88:	00000e13          	li	x28,0
+    41015a8c:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015a90:	00000e17          	auipc	x28,0x0
+    41015a94:	044e0e13          	addi	x28,x28,68 # 41015ad4 <excp_return_label_21>
+    41015a98:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015a9c:	00000e13          	li	x28,0
+    41015aa0:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015aa4:	00000e13          	li	x28,0
+    41015aa8:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015aac:	00000e13          	li	x28,0
+    41015ab0:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015ab4:	00000e13          	li	x28,0
+    41015ab8:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015abc:	2032fcb7          	lui	x25,0x2032f
+
+0000000041015ac0 <fault_label_21>:
+    41015ac0:	6fecc073          	hsv.d	x30,(x25)
+    41015ac4:	000e86b7          	lui	x13,0xe8
+    41015ac8:	0086869b          	addiw	x13,x13,8 # e8008 <failed_addr>
+    41015acc:	0006b603          	ld	x12,0(x13)
+    41015ad0:	00060067          	jr	x12
+
+0000000041015ad4 <excp_return_label_21>:
+    41015ad4:	00004137          	lui	x2,0x4
+    41015ad8:	00013383          	ld	x7,0(x2) # 4000 <tp_csr_storage>
+    41015adc:	000e8fb7          	lui	x31,0xe8
+    41015ae0:	0b0f8f9b          	addiw	x31,x31,176 # e80b0 <machine_csr_jump_table_flags>
+    41015ae4:	00300f13          	li	x30,3
+    41015ae8:	01efb023          	sd	x30,0(x31)
+    41015aec:	000f0fb7          	lui	x31,0xf0
+    41015af0:	001f8f9b          	addiw	x31,x31,1 # f0001 <__section_os_data_1+0x7001>
+    41015af4:	00cf9f93          	slli	x31,x31,0xc
+    41015af8:	005f8f93          	addi	x31,x31,5
+    41015afc:	00000073          	ecall
+
+0000000041015b00 <SID_HEXCEP_13_passed>:
+    41015b00:	00f00f9b          	addiw	x31,x0,15
+    41015b04:	01cf9f93          	slli	x31,x31,0x1c
+    41015b08:	001f8f93          	addi	x31,x31,1
+    41015b0c:	00000073          	ecall
+
+0000000041015b10 <SID_HEXCEP_14_hu_mode>:
+    41015b10:	00400137          	lui	x2,0x400
+    41015b14:	8011011b          	addiw	x2,x2,-2047 # 3ff801 <__section_os_data_1+0x316801>
+    41015b18:	00c11113          	slli	x2,x2,0xc
+    41015b1c:	000012b7          	lui	x5,0x1
+    41015b20:	00510133          	add	x2,x2,x5
+    41015b24:	ff017113          	andi	x2,x2,-16
+    41015b28:	00f01237          	lui	x4,0xf01
+    41015b2c:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015b30:	00c21213          	slli	x4,x4,0xc
+    41015b34:	00200e13          	li	x28,2
+    41015b38:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015b3c:	00000e17          	auipc	x28,0x0
+    41015b40:	054e0e13          	addi	x28,x28,84 # 41015b90 <fault_label_22>
+    41015b44:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015b48:	00000e13          	li	x28,0
+    41015b4c:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015b50:	00000e13          	li	x28,0
+    41015b54:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015b58:	00000e17          	auipc	x28,0x0
+    41015b5c:	04ce0e13          	addi	x28,x28,76 # 41015ba4 <excp_return_label_22>
+    41015b60:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015b64:	00000e13          	li	x28,0
+    41015b68:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015b6c:	00000e13          	li	x28,0
+    41015b70:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015b74:	00000e13          	li	x28,0
+    41015b78:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015b7c:	00000e13          	li	x28,0
+    41015b80:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015b84:	05b5feb7          	lui	x29,0x5b5f
+    41015b88:	00000b93          	li	x23,0
+    41015b8c:	017e8fb3          	add	x31,x29,x23
+
+0000000041015b90 <fault_label_22>:
+    41015b90:	220f8073          	hfence.vvma	x31
+    41015b94:	000e8a37          	lui	x20,0xe8
+    41015b98:	008a0a1b          	addiw	x20,x20,8 # e8008 <failed_addr>
+    41015b9c:	000a3b03          	ld	x22,0(x20)
+    41015ba0:	000b0067          	jr	x22
+
+0000000041015ba4 <excp_return_label_22>:
+    41015ba4:	00f01237          	lui	x4,0xf01
+    41015ba8:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015bac:	00c21213          	slli	x4,x4,0xc
+    41015bb0:	00200e13          	li	x28,2
+    41015bb4:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015bb8:	00000e17          	auipc	x28,0x0
+    41015bbc:	054e0e13          	addi	x28,x28,84 # 41015c0c <fault_label_23>
+    41015bc0:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015bc4:	00000e13          	li	x28,0
+    41015bc8:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015bcc:	00000e13          	li	x28,0
+    41015bd0:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015bd4:	00000e17          	auipc	x28,0x0
+    41015bd8:	04ce0e13          	addi	x28,x28,76 # 41015c20 <excp_return_label_23>
+    41015bdc:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015be0:	00000e13          	li	x28,0
+    41015be4:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015be8:	00000e13          	li	x28,0
+    41015bec:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015bf0:	00000e13          	li	x28,0
+    41015bf4:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015bf8:	00000e13          	li	x28,0
+    41015bfc:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+    41015c00:	05b5feb7          	lui	x29,0x5b5f
+    41015c04:	00000693          	li	x13,0
+    41015c08:	00de88b3          	add	x17,x29,x13
+
+0000000041015c0c <fault_label_23>:
+    41015c0c:	62088073          	hfence.gvma	x17
+    41015c10:	000e8b37          	lui	x22,0xe8
+    41015c14:	008b0b1b          	addiw	x22,x22,8 # e8008 <failed_addr>
+    41015c18:	000b3583          	ld	x11,0(x22)
+    41015c1c:	00058067          	jr	x11
+
+0000000041015c20 <excp_return_label_23>:
+    41015c20:	00f01237          	lui	x4,0xf01
+    41015c24:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015c28:	00c21213          	slli	x4,x4,0xc
+    41015c2c:	00200e13          	li	x28,2
+    41015c30:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015c34:	00000e17          	auipc	x28,0x0
+    41015c38:	048e0e13          	addi	x28,x28,72 # 41015c7c <fault_label_24>
+    41015c3c:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015c40:	00000e13          	li	x28,0
+    41015c44:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015c48:	00000e13          	li	x28,0
+    41015c4c:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015c50:	00000e17          	auipc	x28,0x0
+    41015c54:	040e0e13          	addi	x28,x28,64 # 41015c90 <excp_return_label_24>
+    41015c58:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015c5c:	00000e13          	li	x28,0
+    41015c60:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015c64:	00000e13          	li	x28,0
+    41015c68:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015c6c:	00000e13          	li	x28,0
+    41015c70:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015c74:	00000e13          	li	x28,0
+    41015c78:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+
+0000000041015c7c <fault_label_24>:
+    41015c7c:	26000073          	hinval.vvma	x0,x0
+    41015c80:	000e8fb7          	lui	x31,0xe8
+    41015c84:	008f8f9b          	addiw	x31,x31,8 # e8008 <failed_addr>
+    41015c88:	000fb803          	ld	x16,0(x31)
+    41015c8c:	00080067          	jr	x16
+
+0000000041015c90 <excp_return_label_24>:
+    41015c90:	00f01237          	lui	x4,0xf01
+    41015c94:	0172021b          	addiw	x4,x4,23 # f01017 <__section_os_data_1+0xe18017>
+    41015c98:	00c21213          	slli	x4,x4,0xc
+    41015c9c:	00200e13          	li	x28,2
+    41015ca0:	05c23823          	sd	x28,80(x4) # 50 <XLEN+0x10>
+    41015ca4:	00000e17          	auipc	x28,0x0
+    41015ca8:	048e0e13          	addi	x28,x28,72 # 41015cec <fault_label_25>
+    41015cac:	03c23023          	sd	x28,32(x4) # 20 <SECURE_ACCESS_PROBABILITY+0x2>
+    41015cb0:	00000e13          	li	x28,0
+    41015cb4:	05c23023          	sd	x28,64(x4) # 40 <XLEN>
+    41015cb8:	00000e13          	li	x28,0
+    41015cbc:	05c23423          	sd	x28,72(x4) # 48 <XLEN+0x8>
+    41015cc0:	00000e17          	auipc	x28,0x0
+    41015cc4:	040e0e13          	addi	x28,x28,64 # 41015d00 <SID_HEXCEP_14_hu_mode_passed>
+    41015cc8:	03c23823          	sd	x28,48(x4) # 30 <SECURE_ACCESS_PROBABILITY+0x12>
+    41015ccc:	00000e13          	li	x28,0
+    41015cd0:	03c23c23          	sd	x28,56(x4) # 38 <SECURE_ACCESS_PROBABILITY+0x1a>
+    41015cd4:	00000e13          	li	x28,0
+    41015cd8:	07c23023          	sd	x28,96(x4) # 60 <XLEN+0x20>
+    41015cdc:	00000e13          	li	x28,0
+    41015ce0:	07c23423          	sd	x28,104(x4) # 68 <XLEN+0x28>
+    41015ce4:	00000e13          	li	x28,0
+    41015ce8:	07c23823          	sd	x28,112(x4) # 70 <XLEN+0x30>
+
+0000000041015cec <fault_label_25>:
+    41015cec:	66000073          	hinval.gvma	x0,x0
+    41015cf0:	000e8fb7          	lui	x31,0xe8
+    41015cf4:	008f8f9b          	addiw	x31,x31,8 # e8008 <failed_addr>
+    41015cf8:	000fbe03          	ld	x28,0(x31)
+    41015cfc:	000e0067          	jr	x28
+
+0000000041015d00 <SID_HEXCEP_14_hu_mode_passed>:
+    41015d00:	00f00f9b          	addiw	x31,x0,15
+    41015d04:	01cf9f93          	slli	x31,x31,0x1c
+    41015d08:	001f8f93          	addi	x31,x31,1
+    41015d0c:	00000073          	ecall
+
+0000000041015d10 <test_cleanup>:
+    41015d10:	00f00f9b          	addiw	x31,x0,15
+    41015d14:	01cf9f93          	slli	x31,x31,0x1c
+    41015d18:	001f8f93          	addi	x31,x31,1
+    41015d1c:	00000073          	ecall
+
+0000000041015d20 <local_test_failed>:
+    41015d20:	00f00f9b          	addiw	x31,x0,15
+    41015d24:	01cf9f93          	slli	x31,x31,0x1c
+    41015d28:	002f8f93          	addi	x31,x31,2
+    41015d2c:	00000073          	ecall
+
+Disassembly of section .csr_machine_0:
+
+0000000041215000 <csr_access_hstatus_supervisor_key_3_write-0x40>:
+    41215000:	44904fb7          	lui	x31,0x44904
+    41215004:	0b0f8f9b          	addiw	x31,x31,176 # 449040b0 <machine_csr_jump_table_flags_pa>
+    41215008:	000fbf83          	ld	x31,0(x31)
+    4121500c:	00300293          	li	x5,3
+    41215010:	025f8863          	beq	x31,x5,41215040 <csr_access_hstatus_supervisor_key_3_write>
+    41215014:	00100293          	li	x5,1
+    41215018:	025f8863          	beq	x31,x5,41215048 <csr_access_hstatus_supervisor_key_1_read>
+    4121501c:	00600293          	li	x5,6
+    41215020:	025f8863          	beq	x31,x5,41215050 <csr_access_mstatus_machine_key_6_set>
+    41215024:	00400293          	li	x5,4
+    41215028:	025f8863          	beq	x31,x5,41215058 <csr_access_mstatus_machine_key_4_clear>
+    4121502c:	00900293          	li	x5,9
+    41215030:	025f8863          	beq	x31,x5,41215060 <csr_access_mtvec_machine_key_9_set>
+    41215034:	00800293          	li	x5,8
+    41215038:	025f8863          	beq	x31,x5,41215068 <csr_access_mtvec_machine_key_8_clear>
+    4121503c:	0340006f          	j	41215070 <end_machine_label>
+
+0000000041215040 <csr_access_hstatus_supervisor_key_3_write>:
+    41215040:	60039073          	csrw	hstatus,x7
+    41215044:	02c0006f          	j	41215070 <end_machine_label>
+
+0000000041215048 <csr_access_hstatus_supervisor_key_1_read>:
+    41215048:	600023f3          	csrr	x7,hstatus
+    4121504c:	0240006f          	j	41215070 <end_machine_label>
+
+0000000041215050 <csr_access_mstatus_machine_key_6_set>:
+    41215050:	3003a073          	csrs	mstatus,x7
+    41215054:	01c0006f          	j	41215070 <end_machine_label>
+
+0000000041215058 <csr_access_mstatus_machine_key_4_clear>:
+    41215058:	3003b073          	csrc	mstatus,x7
+    4121505c:	0140006f          	j	41215070 <end_machine_label>
+
+0000000041215060 <csr_access_mtvec_machine_key_9_set>:
+    41215060:	3053a073          	csrs	mtvec,x7
+    41215064:	00c0006f          	j	41215070 <end_machine_label>
+
+0000000041215068 <csr_access_mtvec_machine_key_8_clear>:
+    41215068:	3053b073          	csrc	mtvec,x7
+    4121506c:	0040006f          	j	41215070 <end_machine_label>
+
+0000000041215070 <end_machine_label>:
+    41215070:	000f0fb7          	lui	x31,0xf0
+    41215074:	001f8f9b          	addiw	x31,x31,1 # f0001 <__section_os_data_1+0x7001>
+    41215078:	00cf9f93          	slli	x31,x31,0xc
+    4121507c:	004f8f93          	addi	x31,x31,4
+    41215080:	00000073          	ecall
+
+Disassembly of section .csr_super_0:
+
+0000000041216000 <csr_access_hstatus_supervisor_key_2_clear-0x38>:
+    41216000:	000e8fb7          	lui	x31,0xe8
+    41216004:	0b8f8f9b          	addiw	x31,x31,184 # e80b8 <super_csr_jump_table_flags>
+    41216008:	000fbf83          	ld	x31,0(x31)
+    4121600c:	00200293          	li	x5,2
+    41216010:	025f8463          	beq	x31,x5,41216038 <csr_access_hstatus_supervisor_key_2_clear>
+    41216014:	00700293          	li	x5,7
+    41216018:	025f8463          	beq	x31,x5,41216040 <csr_access_sstatus_supervisor_key_7_set>
+    4121601c:	00500293          	li	x5,5
+    41216020:	025f8463          	beq	x31,x5,41216048 <csr_access_sstatus_supervisor_key_5_clear>
+    41216024:	00b00293          	li	x5,11
+    41216028:	025f8463          	beq	x31,x5,41216050 <csr_access_stvec_supervisor_key_11_set>
+    4121602c:	00a00293          	li	x5,10
+    41216030:	025f8463          	beq	x31,x5,41216058 <csr_access_stvec_supervisor_key_10_clear>
+    41216034:	02c0006f          	j	41216060 <end_super_label>
+
+0000000041216038 <csr_access_hstatus_supervisor_key_2_clear>:
+    41216038:	6003b073          	csrc	hstatus,x7
+    4121603c:	0240006f          	j	41216060 <end_super_label>
+
+0000000041216040 <csr_access_sstatus_supervisor_key_7_set>:
+    41216040:	1003a073          	csrs	sstatus,x7
+    41216044:	01c0006f          	j	41216060 <end_super_label>
+
+0000000041216048 <csr_access_sstatus_supervisor_key_5_clear>:
+    41216048:	1003b073          	csrc	sstatus,x7
+    4121604c:	0140006f          	j	41216060 <end_super_label>
+
+0000000041216050 <csr_access_stvec_supervisor_key_11_set>:
+    41216050:	1053a073          	csrs	stvec,x7
+    41216054:	00c0006f          	j	41216060 <end_super_label>
+
+0000000041216058 <csr_access_stvec_supervisor_key_10_clear>:
+    41216058:	1053b073          	csrc	stvec,x7
+    4121605c:	0040006f          	j	41216060 <end_super_label>
+
+0000000041216060 <end_super_label>:
+    41216060:	000f0fb7          	lui	x31,0xf0
+    41216064:	001f8f9b          	addiw	x31,x31,1 # f0001 <__section_os_data_1+0x7001>
+    41216068:	00cf9f93          	slli	x31,x31,0xc
+    4121606c:	004f8f93          	addi	x31,x31,4
+    41216070:	00000073          	ecall
+
+Disassembly of section .os_data:
+
+00000000000e8000 <passed_addr_ptr>:
+   e8000:	5010                	.insn	2, 0x5010
+   e8002:	4101                	.insn	2, 0x4101
+   e8004:	0000                	.insn	2, 0x0000
+	...
+
+00000000000e8008 <failed_addr_ptr>:
+   e8008:	5020                	.insn	2, 0x5020
+   e800a:	4101                	.insn	2, 0x4101
+   e800c:	0000                	.insn	2, 0x0000
+	...
+
+00000000000e8010 <end_test_addr_ptr>:
+   e8010:	5030                	.insn	2, 0x5030
+   e8012:	4101                	.insn	2, 0x4101
+   e8014:	0000                	.insn	2, 0x0000
+	...
+
+00000000000e8018 <os_passed_addr_ptr>:
+   e8018:	07b0                	.insn	2, 0x07b0
+   e801a:	4100                	.insn	2, 0x4100
+   e801c:	0000                	.insn	2, 0x0000
+	...
+
+00000000000e8020 <os_failed_addr_ptr>:
+   e8020:	07c0                	.insn	2, 0x07c0
+   e8022:	4100                	.insn	2, 0x4100
+   e8024:	0000                	.insn	2, 0x0000
+	...
+
+00000000000e8028 <os_end_test_addr_ptr>:
+   e8028:	07cc                	.insn	2, 0x07cc
+   e802a:	4100                	.insn	2, 0x4100
+   e802c:	0000                	.insn	2, 0x0000
+	...
+
+00000000000e8030 <rvcp_prefix_str_data>:
+   e8030:	5652                	.insn	2, 0x5652
+   e8032:	203a5043          	fmadd.s	f0,f20,f3,f4,unknown
+   e8036:	6554                	.insn	2, 0x6554
+   e8038:	46207473          	csrrci	x8,0x462,0
+   e803c:	6c69                	.insn	2, 0x6c69
+   e803e:	2065                	.insn	2, 0x2065
+	...
+
+00000000000e8041 <rvcp_testname_str_data>:
+   e8041:	7074                	.insn	2, 0x7074
+   e8043:	685f 7079 7265      	.insn	6, 0x72657079685f
+   e8049:	6976                	.insn	2, 0x6976
+   e804b:	5f726f73          	csrrsi	x30,0x5f7,4
+   e804f:	7865                	.insn	2, 0x7865
+   e8051:	74706563          	bltu	x0,x7,e879b <num_hard_fails_mem+0x6bb>
+   e8055:	6f69                	.insn	2, 0x6f69
+   e8057:	736e                	.insn	2, 0x736e
+   e8059:	325f        	.insn	6, 0x53415000325f
+
+00000000000e805c <rvcp_passed_str_data>:
+   e805c:	4150                	.insn	2, 0x4150
+   e805e:	44455353          	fround.h	f6,f10,unknown
+	...
+
+00000000000e8063 <rvcp_failed_str_data>:
+   e8063:	4146                	.insn	2, 0x4146
+   e8065:	4c49                	.insn	2, 0x4c49
+   e8067:	4445                	.insn	2, 0x4445
+	...
+
+00000000000e806a <rvcp_space_str_data>:
+   e806a:	0020                	.insn	2, 0x0020
+
+00000000000e806c <rvcp_newline_str_data>:
+   e806c:	000a                	.insn	2, 0x000a
+	...
+
+00000000000e8070 <excp_ignored_count_mem>:
+	...
+
+00000000000e8078 <machine_flags_mem>:
+	...
+
+00000000000e8080 <user_flags_mem>:
+	...
+
+00000000000e8088 <super_flags_mem>:
+	...
+
+00000000000e8090 <machine_area_mem>:
+	...
+
+00000000000e8098 <user_area_mem>:
+	...
+
+00000000000e80a0 <super_area_mem>:
+	...
+
+00000000000e80a8 <zero_data_mem>:
+	...
+
+00000000000e80b0 <machine_csr_jump_table_flags_mem>:
+	...
+
+00000000000e80b8 <super_csr_jump_table_flags_mem>:
+	...
+
+00000000000e80c0 <pte_access_flags_mem>:
+	...
+
+00000000000e80d8 <num_harts_ended_mem>:
+	...
+
+00000000000e80e0 <num_hard_fails_mem>:
+	...
+
+Disassembly of section .hart_context:
+
+0000000f01017000 <hart_context_0>:
+   f01017000:	0000                	.insn	2, 0x0000
+   f01017002:	4165                	.insn	2, 0x4165
+	...
+   f01017018:	0001                	.insn	2, 0x0001
+   f0101701a:	0000                	.insn	2, 0x0000
+   f0101701c:	0000                	.insn	2, 0x0000
+   f0101701e:	0000                	.insn	2, 0x0000
+   f01017020:	ffff                	.insn	2, 0xffff
+   f01017022:	ffff                	.insn	2, 0xffff
+   f01017024:	ffff                	.insn	2, 0xffff
+   f01017026:	ffff                	.insn	2, 0xffff
+   f01017028:	ffff                	.insn	2, 0xffff
+   f0101702a:	ffff                	.insn	2, 0xffff
+   f0101702c:	ffff                	.insn	2, 0xffff
+   f0101702e:	ffff                	.insn	2, 0xffff
+   f01017030:	ffff                	.insn	2, 0xffff
+   f01017032:	ffff                	.insn	2, 0xffff
+   f01017034:	ffff                	.insn	2, 0xffff
+   f01017036:	ffff                	.insn	2, 0xffff
+	...
+   f01017050:	00ff 0000 0000 0000 	.insn	10, 0x00ff00000000000000ff
+   f01017058:	00ff 
+	...
+   f01017176:	0000                	.insn	2, 0x0000
+   f01017178:	ffff                	.insn	2, 0xffff
+   f0101717a:	ffff                	.insn	2, 0xffff
+   f0101717c:	ffff                	.insn	2, 0xffff
+   f0101717e:	ffff                	.insn	2, 0xffff
+	...
+   f01017188:	ffff                	.insn	2, 0xffff
+   f0101718a:	ffff                	.insn	2, 0xffff
+	...
+
+Disassembly of section .hart_stack_0:
+
+000000004164f000 <hart_stack_0>:
+	...
+
+Disassembly of section .io_htif:
+
+0000000041040000 <tohost>:
+	...
+
+0000000041040040 <fromhost>:
+	...
+
+Disassembly of section .mem0:
+
+000000002032f000 <.mem0>:
+    2032f000:	c0de                	.insn	2, 0xc0de
+    2032f002:	c001                	.insn	2, 0xc001
+    2032f004:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .mem1:
+
+0000000005b5f000 <.mem1>:
+ 5b5f000:	c0de                	.insn	2, 0xc0de
+ 5b5f002:	c001                	.insn	2, 0xc001
+ 5b5f004:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .tp_csr_storage:
+
+0000000000004000 <.tp_csr_storage>:
+    4000:	c0de                	.insn	2, 0xc0de
+    4002:	c001                	.insn	2, 0xc001
+    4004:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .SID_HEXCEP_12_stack:
+
+000000004144d000 <.SID_HEXCEP_12_stack>:
+    4144d000:	c0de                	.insn	2, 0xc0de
+    4144d002:	c001                	.insn	2, 0xc001
+    4144d004:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .SID_HEXCEP_13_stack:
+
+000000000d79f000 <.SID_HEXCEP_13_stack>:
+ d79f000:	c0de                	.insn	2, 0xc0de
+ d79f002:	c001                	.insn	2, 0xc001
+ d79f004:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .SID_HEXCEP_14_hu_mode_stack:
+
+00000003ff801000 <.SID_HEXCEP_14_hu_mode_stack>:
+   3ff801000:	c0de                	.insn	2, 0xc0de
+   3ff801002:	c001                	.insn	2, 0xc001
+   3ff801004:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .__pagetable_map_os_0x0000000041406000:
+
+0000000041406000 <__pagetable_map_os_0x0000000041406000>:
+    41406000:	6801                	.insn	2, 0x6801
+    41406002:	000010ff a0010000 	.insn	12, 0x1135a0010000000010ff
+    4140600a:	00001135 
+	...
+    41406076:	0000                	.insn	2, 0x0000
+    41406078:	6001                	.insn	2, 0x6001
+    4140607a:	1111                	.insn	2, 0x1111
+	...
+    414061e0:	d801                	.insn	2, 0xd801
+    414061e2:	1132                	.insn	2, 0x1132
+    414061e4:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .__pagetable_map_os_0x0000000044d68000:
+
+0000000044d68000 <__pagetable_map_os_0x0000000044d68000>:
+	...
+    44d68040:	5c01                	.insn	2, 0x5c01
+    44d68042:	10b1                	.insn	2, 0x10b1
+    44d68044:	0000                	.insn	2, 0x0000
+    44d68046:	0000                	.insn	2, 0x0000
+    44d68048:	4401                	.insn	2, 0x4401
+    44d6804a:	10fd                	.insn	2, 0x10fd
+    44d6804c:	0000                	.insn	2, 0x0000
+    44d6804e:	0000                	.insn	2, 0x0000
+    44d68050:	1801                	.insn	2, 0x1801
+    44d68052:	1124                	.insn	2, 0x1124
+    44d68054:	0000                	.insn	2, 0x0000
+    44d68056:	0000                	.insn	2, 0x0000
+    44d68058:	fc01                	.insn	2, 0xfc01
+    44d6805a:	0000104f          	fnmadd.s	f0,f0,f0,f0,rtz
+	...
+
+Disassembly of section .__pagetable_map_os_0x0000000042c57000:
+
+0000000042c57000 <__pagetable_map_os_0x0000000042c57000>:
+	...
+    42c57080:	40df 1040 0000      	.insn	6, 0x104040df
+    42c57086:	0000                	.insn	2, 0x0000
+    42c57088:	104044cf          	fnmadd.s	f9,f0,f4,f2,rmm
+    42c5708c:	0000                	.insn	2, 0x0000
+    42c5708e:	0000                	.insn	2, 0x0000
+    42c57090:	104048cf          	fnmadd.s	f17,f0,f4,f2,rmm
+    42c57094:	0000                	.insn	2, 0x0000
+    42c57096:	0000                	.insn	2, 0x0000
+    42c57098:	10404ccf          	fnmadd.s	f25,f0,f4,f2,rmm
+    42c5709c:	0000                	.insn	2, 0x0000
+    42c5709e:	0000                	.insn	2, 0x0000
+    42c570a0:	104050cf          	fnmadd.s	f1,f0,f4,f2,unknown
+    42c570a4:	0000                	.insn	2, 0x0000
+    42c570a6:	0000                	.insn	2, 0x0000
+    42c570a8:	00df 1090 0000      	.insn	6, 0x109000df
+    42c570ae:	0000                	.insn	2, 0x0000
+    42c570b0:	04df 1090 0000      	.insn	6, 0x109004df
+    42c570b6:	0000                	.insn	2, 0x0000
+    42c570b8:	08df 1090 0000      	.insn	6, 0x109008df
+    42c570be:	0000                	.insn	2, 0x0000
+    42c570c0:	0cdf 1090 0000      	.insn	6, 0x10900cdf
+    42c570c6:	0000                	.insn	2, 0x0000
+    42c570c8:	10df 1090 0000      	.insn	6, 0x109010df
+    42c570ce:	0000                	.insn	2, 0x0000
+    42c570d0:	14df 1090 0000      	.insn	6, 0x109014df
+    42c570d6:	0000                	.insn	2, 0x0000
+    42c570d8:	18df 1090 0000      	.insn	6, 0x109018df
+    42c570de:	0000                	.insn	2, 0x0000
+    42c570e0:	1cdf 1090 0000      	.insn	6, 0x10901cdf
+    42c570e6:	0000                	.insn	2, 0x0000
+    42c570e8:	20df 1090 0000      	.insn	6, 0x109020df
+    42c570ee:	0000                	.insn	2, 0x0000
+    42c570f0:	24df 1090 0000      	.insn	6, 0x109024df
+    42c570f6:	0000                	.insn	2, 0x0000
+    42c570f8:	28df 1090 0000      	.insn	6, 0x109028df
+    42c570fe:	0000                	.insn	2, 0x0000
+    42c57100:	2cdf 1090 0000      	.insn	6, 0x10902cdf
+    42c57106:	0000                	.insn	2, 0x0000
+    42c57108:	30df 1090 0000      	.insn	6, 0x109030df
+    42c5710e:	0000                	.insn	2, 0x0000
+    42c57110:	34df 1090 0000      	.insn	6, 0x109034df
+    42c57116:	0000                	.insn	2, 0x0000
+    42c57118:	38df 1090 0000      	.insn	6, 0x109038df
+    42c5711e:	0000                	.insn	2, 0x0000
+    42c57120:	3cdf 1090 0000      	.insn	6, 0x10903cdf
+    42c57126:	0000                	.insn	2, 0x0000
+    42c57128:	40df 1090 0000      	.insn	6, 0x109040df
+    42c5712e:	0000                	.insn	2, 0x0000
+    42c57130:	44df 1090 0000      	.insn	6, 0x109044df
+    42c57136:	0000                	.insn	2, 0x0000
+    42c57138:	48df 1090 0000      	.insn	6, 0x109048df
+    42c5713e:	0000                	.insn	2, 0x0000
+    42c57140:	4cdf 1090 0000      	.insn	6, 0x10904cdf
+    42c57146:	0000                	.insn	2, 0x0000
+    42c57148:	50df 1090 0000      	.insn	6, 0x109050df
+    42c5714e:	0000                	.insn	2, 0x0000
+    42c57150:	54df 1090 0000      	.insn	6, 0x109054df
+    42c57156:	0000                	.insn	2, 0x0000
+    42c57158:	58df 1090 0000      	.insn	6, 0x109058df
+    42c5715e:	0000                	.insn	2, 0x0000
+    42c57160:	5cdf 1090 0000      	.insn	6, 0x10905cdf
+    42c57166:	0000                	.insn	2, 0x0000
+    42c57168:	60df 1090 0000      	.insn	6, 0x109060df
+    42c5716e:	0000                	.insn	2, 0x0000
+    42c57170:	64df 1090 0000      	.insn	6, 0x109064df
+    42c57176:	0000                	.insn	2, 0x0000
+    42c57178:	68df 1090 0000      	.insn	6, 0x109068df
+    42c5717e:	0000                	.insn	2, 0x0000
+    42c57180:	6cdf 1090 0000      	.insn	6, 0x10906cdf
+    42c57186:	0000                	.insn	2, 0x0000
+    42c57188:	70df 1090 0000      	.insn	6, 0x109070df
+    42c5718e:	0000                	.insn	2, 0x0000
+    42c57190:	74df 1090 0000      	.insn	6, 0x109074df
+    42c57196:	0000                	.insn	2, 0x0000
+    42c57198:	78df 1090 0000      	.insn	6, 0x109078df
+    42c5719e:	0000                	.insn	2, 0x0000
+    42c571a0:	7cdf 1090 0000      	.insn	6, 0x10907cdf
+    42c571a6:	0000                	.insn	2, 0x0000
+    42c571a8:	80df 1090 0000      	.insn	6, 0x109080df
+    42c571ae:	0000                	.insn	2, 0x0000
+    42c571b0:	84df 1090 0000      	.insn	6, 0x109084df
+    42c571b6:	0000                	.insn	2, 0x0000
+    42c571b8:	88df 1090 0000      	.insn	6, 0x109088df
+    42c571be:	0000                	.insn	2, 0x0000
+    42c571c0:	8cdf 1090 0000      	.insn	6, 0x10908cdf
+    42c571c6:	0000                	.insn	2, 0x0000
+    42c571c8:	90df 1090 0000      	.insn	6, 0x109090df
+    42c571ce:	0000                	.insn	2, 0x0000
+    42c571d0:	94df 1090 0000      	.insn	6, 0x109094df
+    42c571d6:	0000                	.insn	2, 0x0000
+    42c571d8:	98df 1090 0000      	.insn	6, 0x109098df
+    42c571de:	0000                	.insn	2, 0x0000
+    42c571e0:	9cdf 1090 0000      	.insn	6, 0x10909cdf
+    42c571e6:	0000                	.insn	2, 0x0000
+    42c571e8:	a0df 1090 0000      	.insn	6, 0x1090a0df
+    42c571ee:	0000                	.insn	2, 0x0000
+    42c571f0:	a4df 1090 0000      	.insn	6, 0x1090a4df
+    42c571f6:	0000                	.insn	2, 0x0000
+    42c571f8:	a8df 1090 0000      	.insn	6, 0x1090a8df
+    42c571fe:	0000                	.insn	2, 0x0000
+    42c57200:	00df 1041 0000      	.insn	6, 0x104100df
+    42c57206:	0000                	.insn	2, 0x0000
+    42c57208:	b0df 1090 0000      	.insn	6, 0x1090b0df
+    42c5720e:	0000                	.insn	2, 0x0000
+    42c57210:	b4df 1090 0000      	.insn	6, 0x1090b4df
+    42c57216:	0000                	.insn	2, 0x0000
+    42c57218:	b8df 1090 0000      	.insn	6, 0x1090b8df
+    42c5721e:	0000                	.insn	2, 0x0000
+    42c57220:	bcdf 1090 0000      	.insn	6, 0x1090bcdf
+    42c57226:	0000                	.insn	2, 0x0000
+    42c57228:	c0df 1090 0000      	.insn	6, 0x1090c0df
+    42c5722e:	0000                	.insn	2, 0x0000
+    42c57230:	c4df 1090 0000      	.insn	6, 0x1090c4df
+    42c57236:	0000                	.insn	2, 0x0000
+    42c57238:	c8df 1090 0000      	.insn	6, 0x1090c8df
+    42c5723e:	0000                	.insn	2, 0x0000
+    42c57240:	ccdf 1090 0000      	.insn	6, 0x1090ccdf
+    42c57246:	0000                	.insn	2, 0x0000
+    42c57248:	d0df 1090 0000      	.insn	6, 0x1090d0df
+    42c5724e:	0000                	.insn	2, 0x0000
+    42c57250:	d4df 1090 0000      	.insn	6, 0x1090d4df
+    42c57256:	0000                	.insn	2, 0x0000
+    42c57258:	d8df 1090 0000      	.insn	6, 0x1090d8df
+    42c5725e:	0000                	.insn	2, 0x0000
+    42c57260:	dcdf 1090 0000      	.insn	6, 0x1090dcdf
+    42c57266:	0000                	.insn	2, 0x0000
+    42c57268:	e0df 1090 0000      	.insn	6, 0x1090e0df
+    42c5726e:	0000                	.insn	2, 0x0000
+    42c57270:	e4df 1090 0000      	.insn	6, 0x1090e4df
+    42c57276:	0000                	.insn	2, 0x0000
+    42c57278:	e8df 1090 0000      	.insn	6, 0x1090e8df
+    42c5727e:	0000                	.insn	2, 0x0000
+    42c57280:	ecdf 1090 0000      	.insn	6, 0x1090ecdf
+    42c57286:	0000                	.insn	2, 0x0000
+    42c57288:	f0df 1090 0000      	.insn	6, 0x1090f0df
+    42c5728e:	0000                	.insn	2, 0x0000
+    42c57290:	f4df 1090 0000      	.insn	6, 0x1090f4df
+    42c57296:	0000                	.insn	2, 0x0000
+    42c57298:	f8df 1090 0000      	.insn	6, 0x1090f8df
+    42c5729e:	0000                	.insn	2, 0x0000
+    42c572a0:	fcdf 1090 0000      	.insn	6, 0x1090fcdf
+    42c572a6:	0000                	.insn	2, 0x0000
+    42c572a8:	00df 1091 0000      	.insn	6, 0x109100df
+    42c572ae:	0000                	.insn	2, 0x0000
+    42c572b0:	04df 1091 0000      	.insn	6, 0x109104df
+    42c572b6:	0000                	.insn	2, 0x0000
+    42c572b8:	08df 1091 0000      	.insn	6, 0x109108df
+    42c572be:	0000                	.insn	2, 0x0000
+    42c572c0:	0cdf 1091 0000      	.insn	6, 0x10910cdf
+    42c572c6:	0000                	.insn	2, 0x0000
+    42c572c8:	10df 1091 0000      	.insn	6, 0x109110df
+    42c572ce:	0000                	.insn	2, 0x0000
+    42c572d0:	14df 1091 0000      	.insn	6, 0x109114df
+    42c572d6:	0000                	.insn	2, 0x0000
+    42c572d8:	18df 1091 0000      	.insn	6, 0x109118df
+    42c572de:	0000                	.insn	2, 0x0000
+    42c572e0:	1cdf 1091 0000      	.insn	6, 0x10911cdf
+    42c572e6:	0000                	.insn	2, 0x0000
+    42c572e8:	20df 1091 0000      	.insn	6, 0x109120df
+    42c572ee:	0000                	.insn	2, 0x0000
+    42c572f0:	24df 1091 0000      	.insn	6, 0x109124df
+    42c572f6:	0000                	.insn	2, 0x0000
+    42c572f8:	28df 1091 0000      	.insn	6, 0x109128df
+    42c572fe:	0000                	.insn	2, 0x0000
+    42c57300:	2cdf 1091 0000      	.insn	6, 0x10912cdf
+    42c57306:	0000                	.insn	2, 0x0000
+    42c57308:	30df 1091 0000      	.insn	6, 0x109130df
+    42c5730e:	0000                	.insn	2, 0x0000
+    42c57310:	34df 1091 0000      	.insn	6, 0x109134df
+    42c57316:	0000                	.insn	2, 0x0000
+    42c57318:	38df 1091 0000      	.insn	6, 0x109138df
+    42c5731e:	0000                	.insn	2, 0x0000
+    42c57320:	3cdf 1091 0000      	.insn	6, 0x10913cdf
+    42c57326:	0000                	.insn	2, 0x0000
+    42c57328:	40df 1091 0000      	.insn	6, 0x109140df
+    42c5732e:	0000                	.insn	2, 0x0000
+    42c57330:	44df 1091 0000      	.insn	6, 0x109144df
+    42c57336:	0000                	.insn	2, 0x0000
+    42c57338:	48df 1091 0000      	.insn	6, 0x109148df
+    42c5733e:	0000                	.insn	2, 0x0000
+    42c57340:	4cdf 1091 0000      	.insn	6, 0x10914cdf
+    42c57346:	0000                	.insn	2, 0x0000
+    42c57348:	50df 1091 0000      	.insn	6, 0x109150df
+    42c5734e:	0000                	.insn	2, 0x0000
+    42c57350:	54df 1091 0000      	.insn	6, 0x109154df
+    42c57356:	0000                	.insn	2, 0x0000
+    42c57358:	58df 1091 0000      	.insn	6, 0x109158df
+    42c5735e:	0000                	.insn	2, 0x0000
+    42c57360:	5cdf 1091 0000      	.insn	6, 0x10915cdf
+    42c57366:	0000                	.insn	2, 0x0000
+    42c57368:	60df 1091 0000      	.insn	6, 0x109160df
+    42c5736e:	0000                	.insn	2, 0x0000
+    42c57370:	64df 1091 0000      	.insn	6, 0x109164df
+    42c57376:	0000                	.insn	2, 0x0000
+    42c57378:	68df 1091 0000      	.insn	6, 0x109168df
+    42c5737e:	0000                	.insn	2, 0x0000
+    42c57380:	6cdf 1091 0000      	.insn	6, 0x10916cdf
+    42c57386:	0000                	.insn	2, 0x0000
+    42c57388:	70df 1091 0000      	.insn	6, 0x109170df
+    42c5738e:	0000                	.insn	2, 0x0000
+    42c57390:	74df 1091 0000      	.insn	6, 0x109174df
+    42c57396:	0000                	.insn	2, 0x0000
+    42c57398:	78df 1091 0000      	.insn	6, 0x109178df
+    42c5739e:	0000                	.insn	2, 0x0000
+    42c573a0:	7cdf 1091 0000      	.insn	6, 0x10917cdf
+    42c573a6:	0000                	.insn	2, 0x0000
+    42c573a8:	80df 1091 0000      	.insn	6, 0x109180df
+    42c573ae:	0000                	.insn	2, 0x0000
+    42c573b0:	84df 1091 0000      	.insn	6, 0x109184df
+    42c573b6:	0000                	.insn	2, 0x0000
+    42c573b8:	88df 1091 0000      	.insn	6, 0x109188df
+    42c573be:	0000                	.insn	2, 0x0000
+    42c573c0:	8cdf 1091 0000      	.insn	6, 0x10918cdf
+    42c573c6:	0000                	.insn	2, 0x0000
+    42c573c8:	90df 1091 0000      	.insn	6, 0x109190df
+    42c573ce:	0000                	.insn	2, 0x0000
+    42c573d0:	94df 1091 0000      	.insn	6, 0x109194df
+    42c573d6:	0000                	.insn	2, 0x0000
+    42c573d8:	98df 1091 0000      	.insn	6, 0x109198df
+    42c573de:	0000                	.insn	2, 0x0000
+    42c573e0:	9cdf 1091 0000      	.insn	6, 0x10919cdf
+    42c573e6:	0000                	.insn	2, 0x0000
+    42c573e8:	a0df 1091 0000      	.insn	6, 0x1091a0df
+    42c573ee:	0000                	.insn	2, 0x0000
+    42c573f0:	a4df 1091 0000      	.insn	6, 0x1091a4df
+    42c573f6:	0000                	.insn	2, 0x0000
+    42c573f8:	a8df 1091 0000      	.insn	6, 0x1091a8df
+    42c573fe:	0000                	.insn	2, 0x0000
+    42c57400:	acdf 1091 0000      	.insn	6, 0x1091acdf
+    42c57406:	0000                	.insn	2, 0x0000
+    42c57408:	b0df 1091 0000      	.insn	6, 0x1091b0df
+    42c5740e:	0000                	.insn	2, 0x0000
+    42c57410:	b4df 1091 0000      	.insn	6, 0x1091b4df
+    42c57416:	0000                	.insn	2, 0x0000
+    42c57418:	b8df 1091 0000      	.insn	6, 0x1091b8df
+    42c5741e:	0000                	.insn	2, 0x0000
+    42c57420:	bcdf 1091 0000      	.insn	6, 0x1091bcdf
+    42c57426:	0000                	.insn	2, 0x0000
+    42c57428:	c0df 1091 0000      	.insn	6, 0x1091c0df
+    42c5742e:	0000                	.insn	2, 0x0000
+    42c57430:	c4df 1091 0000      	.insn	6, 0x1091c4df
+    42c57436:	0000                	.insn	2, 0x0000
+    42c57438:	c8df 1091 0000      	.insn	6, 0x1091c8df
+    42c5743e:	0000                	.insn	2, 0x0000
+    42c57440:	ccdf 1091 0000      	.insn	6, 0x1091ccdf
+    42c57446:	0000                	.insn	2, 0x0000
+    42c57448:	d0df 1091 0000      	.insn	6, 0x1091d0df
+    42c5744e:	0000                	.insn	2, 0x0000
+    42c57450:	d4df 1091 0000      	.insn	6, 0x1091d4df
+    42c57456:	0000                	.insn	2, 0x0000
+    42c57458:	d8df 1091 0000      	.insn	6, 0x1091d8df
+    42c5745e:	0000                	.insn	2, 0x0000
+    42c57460:	dcdf 1091 0000      	.insn	6, 0x1091dcdf
+    42c57466:	0000                	.insn	2, 0x0000
+    42c57468:	e0df 1091 0000      	.insn	6, 0x1091e0df
+    42c5746e:	0000                	.insn	2, 0x0000
+    42c57470:	e4df 1091 0000      	.insn	6, 0x1091e4df
+    42c57476:	0000                	.insn	2, 0x0000
+    42c57478:	e8df 1091 0000      	.insn	6, 0x1091e8df
+    42c5747e:	0000                	.insn	2, 0x0000
+    42c57480:	ecdf 1091 0000      	.insn	6, 0x1091ecdf
+    42c57486:	0000                	.insn	2, 0x0000
+    42c57488:	f0df 1091 0000      	.insn	6, 0x1091f0df
+    42c5748e:	0000                	.insn	2, 0x0000
+    42c57490:	f4df 1091 0000      	.insn	6, 0x1091f4df
+    42c57496:	0000                	.insn	2, 0x0000
+    42c57498:	f8df 1091 0000      	.insn	6, 0x1091f8df
+    42c5749e:	0000                	.insn	2, 0x0000
+    42c574a0:	fcdf 1091 0000      	.insn	6, 0x1091fcdf
+    42c574a6:	0000                	.insn	2, 0x0000
+    42c574a8:	109200cf          	fnmadd.s	f1,f4,f9,f2,rne
+    42c574ac:	0000                	.insn	2, 0x0000
+    42c574ae:	0000                	.insn	2, 0x0000
+    42c574b0:	109204cf          	fnmadd.s	f9,f4,f9,f2,rne
+    42c574b4:	0000                	.insn	2, 0x0000
+    42c574b6:	0000                	.insn	2, 0x0000
+    42c574b8:	109208cf          	fnmadd.s	f17,f4,f9,f2,rne
+    42c574bc:	0000                	.insn	2, 0x0000
+    42c574be:	0000                	.insn	2, 0x0000
+    42c574c0:	10920ccf          	fnmadd.s	f25,f4,f9,f2,rne
+    42c574c4:	0000                	.insn	2, 0x0000
+    42c574c6:	0000                	.insn	2, 0x0000
+    42c574c8:	109210cf          	fnmadd.s	f1,f4,f9,f2,rtz
+    42c574cc:	0000                	.insn	2, 0x0000
+    42c574ce:	0000                	.insn	2, 0x0000
+    42c574d0:	109214cf          	fnmadd.s	f9,f4,f9,f2,rtz
+    42c574d4:	0000                	.insn	2, 0x0000
+    42c574d6:	0000                	.insn	2, 0x0000
+    42c574d8:	109218cf          	fnmadd.s	f17,f4,f9,f2,rtz
+    42c574dc:	0000                	.insn	2, 0x0000
+    42c574de:	0000                	.insn	2, 0x0000
+    42c574e0:	10921ccf          	fnmadd.s	f25,f4,f9,f2,rtz
+    42c574e4:	0000                	.insn	2, 0x0000
+    42c574e6:	0000                	.insn	2, 0x0000
+    42c574e8:	109220cf          	fnmadd.s	f1,f4,f9,f2,rdn
+    42c574ec:	0000                	.insn	2, 0x0000
+    42c574ee:	0000                	.insn	2, 0x0000
+    42c574f0:	109224cf          	fnmadd.s	f9,f4,f9,f2,rdn
+    42c574f4:	0000                	.insn	2, 0x0000
+    42c574f6:	0000                	.insn	2, 0x0000
+    42c574f8:	109228cf          	fnmadd.s	f17,f4,f9,f2,rdn
+    42c574fc:	0000                	.insn	2, 0x0000
+    42c574fe:	0000                	.insn	2, 0x0000
+    42c57500:	10922ccf          	fnmadd.s	f25,f4,f9,f2,rdn
+    42c57504:	0000                	.insn	2, 0x0000
+    42c57506:	0000                	.insn	2, 0x0000
+    42c57508:	109230cf          	fnmadd.s	f1,f4,f9,f2,rup
+    42c5750c:	0000                	.insn	2, 0x0000
+    42c5750e:	0000                	.insn	2, 0x0000
+    42c57510:	109234cf          	fnmadd.s	f9,f4,f9,f2,rup
+    42c57514:	0000                	.insn	2, 0x0000
+    42c57516:	0000                	.insn	2, 0x0000
+    42c57518:	109238cf          	fnmadd.s	f17,f4,f9,f2,rup
+    42c5751c:	0000                	.insn	2, 0x0000
+    42c5751e:	0000                	.insn	2, 0x0000
+    42c57520:	10923ccf          	fnmadd.s	f25,f4,f9,f2,rup
+    42c57524:	0000                	.insn	2, 0x0000
+    42c57526:	0000                	.insn	2, 0x0000
+    42c57528:	109240cf          	fnmadd.s	f1,f4,f9,f2,rmm
+    42c5752c:	0000                	.insn	2, 0x0000
+    42c5752e:	0000                	.insn	2, 0x0000
+    42c57530:	109244cf          	fnmadd.s	f9,f4,f9,f2,rmm
+    42c57534:	0000                	.insn	2, 0x0000
+    42c57536:	0000                	.insn	2, 0x0000
+    42c57538:	109248cf          	fnmadd.s	f17,f4,f9,f2,rmm
+    42c5753c:	0000                	.insn	2, 0x0000
+    42c5753e:	0000                	.insn	2, 0x0000
+    42c57540:	10924ccf          	fnmadd.s	f25,f4,f9,f2,rmm
+    42c57544:	0000                	.insn	2, 0x0000
+    42c57546:	0000                	.insn	2, 0x0000
+    42c57548:	109250cf          	fnmadd.s	f1,f4,f9,f2,unknown
+    42c5754c:	0000                	.insn	2, 0x0000
+    42c5754e:	0000                	.insn	2, 0x0000
+    42c57550:	109254cf          	fnmadd.s	f9,f4,f9,f2,unknown
+    42c57554:	0000                	.insn	2, 0x0000
+    42c57556:	0000                	.insn	2, 0x0000
+    42c57558:	109258cf          	fnmadd.s	f17,f4,f9,f2,unknown
+    42c5755c:	0000                	.insn	2, 0x0000
+    42c5755e:	0000                	.insn	2, 0x0000
+    42c57560:	10925ccf          	fnmadd.s	f25,f4,f9,f2,unknown
+    42c57564:	0000                	.insn	2, 0x0000
+    42c57566:	0000                	.insn	2, 0x0000
+    42c57568:	109260cf          	fnmadd.s	f1,f4,f9,f2,unknown
+    42c5756c:	0000                	.insn	2, 0x0000
+    42c5756e:	0000                	.insn	2, 0x0000
+    42c57570:	109264cf          	fnmadd.s	f9,f4,f9,f2,unknown
+    42c57574:	0000                	.insn	2, 0x0000
+    42c57576:	0000                	.insn	2, 0x0000
+    42c57578:	109268cf          	fnmadd.s	f17,f4,f9,f2,unknown
+    42c5757c:	0000                	.insn	2, 0x0000
+    42c5757e:	0000                	.insn	2, 0x0000
+    42c57580:	10926ccf          	fnmadd.s	f25,f4,f9,f2,unknown
+    42c57584:	0000                	.insn	2, 0x0000
+    42c57586:	0000                	.insn	2, 0x0000
+    42c57588:	109270cf          	fnmadd.s	f1,f4,f9,f2
+    42c5758c:	0000                	.insn	2, 0x0000
+    42c5758e:	0000                	.insn	2, 0x0000
+    42c57590:	109274cf          	fnmadd.s	f9,f4,f9,f2
+    42c57594:	0000                	.insn	2, 0x0000
+    42c57596:	0000                	.insn	2, 0x0000
+    42c57598:	109278cf          	fnmadd.s	f17,f4,f9,f2
+    42c5759c:	0000                	.insn	2, 0x0000
+    42c5759e:	0000                	.insn	2, 0x0000
+    42c575a0:	10927ccf          	fnmadd.s	f25,f4,f9,f2
+    42c575a4:	0000                	.insn	2, 0x0000
+    42c575a6:	0000                	.insn	2, 0x0000
+    42c575a8:	109280cf          	fnmadd.s	f1,f5,f9,f2,rne
+    42c575ac:	0000                	.insn	2, 0x0000
+    42c575ae:	0000                	.insn	2, 0x0000
+    42c575b0:	109284cf          	fnmadd.s	f9,f5,f9,f2,rne
+    42c575b4:	0000                	.insn	2, 0x0000
+    42c575b6:	0000                	.insn	2, 0x0000
+    42c575b8:	109288cf          	fnmadd.s	f17,f5,f9,f2,rne
+    42c575bc:	0000                	.insn	2, 0x0000
+    42c575be:	0000                	.insn	2, 0x0000
+    42c575c0:	10928ccf          	fnmadd.s	f25,f5,f9,f2,rne
+    42c575c4:	0000                	.insn	2, 0x0000
+    42c575c6:	0000                	.insn	2, 0x0000
+    42c575c8:	109290cf          	fnmadd.s	f1,f5,f9,f2,rtz
+    42c575cc:	0000                	.insn	2, 0x0000
+    42c575ce:	0000                	.insn	2, 0x0000
+    42c575d0:	109294cf          	fnmadd.s	f9,f5,f9,f2,rtz
+    42c575d4:	0000                	.insn	2, 0x0000
+    42c575d6:	0000                	.insn	2, 0x0000
+    42c575d8:	109298cf          	fnmadd.s	f17,f5,f9,f2,rtz
+    42c575dc:	0000                	.insn	2, 0x0000
+    42c575de:	0000                	.insn	2, 0x0000
+    42c575e0:	10929ccf          	fnmadd.s	f25,f5,f9,f2,rtz
+    42c575e4:	0000                	.insn	2, 0x0000
+    42c575e6:	0000                	.insn	2, 0x0000
+    42c575e8:	1092a0cf          	fnmadd.s	f1,f5,f9,f2,rdn
+    42c575ec:	0000                	.insn	2, 0x0000
+    42c575ee:	0000                	.insn	2, 0x0000
+    42c575f0:	1092a4cf          	fnmadd.s	f9,f5,f9,f2,rdn
+    42c575f4:	0000                	.insn	2, 0x0000
+    42c575f6:	0000                	.insn	2, 0x0000
+    42c575f8:	1092a8cf          	fnmadd.s	f17,f5,f9,f2,rdn
+    42c575fc:	0000                	.insn	2, 0x0000
+    42c575fe:	0000                	.insn	2, 0x0000
+    42c57600:	1092accf          	fnmadd.s	f25,f5,f9,f2,rdn
+    42c57604:	0000                	.insn	2, 0x0000
+    42c57606:	0000                	.insn	2, 0x0000
+    42c57608:	1092b0cf          	fnmadd.s	f1,f5,f9,f2,rup
+    42c5760c:	0000                	.insn	2, 0x0000
+    42c5760e:	0000                	.insn	2, 0x0000
+    42c57610:	1092b4cf          	fnmadd.s	f9,f5,f9,f2,rup
+    42c57614:	0000                	.insn	2, 0x0000
+    42c57616:	0000                	.insn	2, 0x0000
+    42c57618:	1092b8cf          	fnmadd.s	f17,f5,f9,f2,rup
+    42c5761c:	0000                	.insn	2, 0x0000
+    42c5761e:	0000                	.insn	2, 0x0000
+    42c57620:	1092bccf          	fnmadd.s	f25,f5,f9,f2,rup
+    42c57624:	0000                	.insn	2, 0x0000
+    42c57626:	0000                	.insn	2, 0x0000
+    42c57628:	1092c0cf          	fnmadd.s	f1,f5,f9,f2,rmm
+    42c5762c:	0000                	.insn	2, 0x0000
+    42c5762e:	0000                	.insn	2, 0x0000
+    42c57630:	1092c4cf          	fnmadd.s	f9,f5,f9,f2,rmm
+    42c57634:	0000                	.insn	2, 0x0000
+    42c57636:	0000                	.insn	2, 0x0000
+    42c57638:	1092c8cf          	fnmadd.s	f17,f5,f9,f2,rmm
+    42c5763c:	0000                	.insn	2, 0x0000
+    42c5763e:	0000                	.insn	2, 0x0000
+    42c57640:	1092cccf          	fnmadd.s	f25,f5,f9,f2,rmm
+    42c57644:	0000                	.insn	2, 0x0000
+    42c57646:	0000                	.insn	2, 0x0000
+    42c57648:	1092d0cf          	fnmadd.s	f1,f5,f9,f2,unknown
+    42c5764c:	0000                	.insn	2, 0x0000
+    42c5764e:	0000                	.insn	2, 0x0000
+    42c57650:	1092d4cf          	fnmadd.s	f9,f5,f9,f2,unknown
+    42c57654:	0000                	.insn	2, 0x0000
+    42c57656:	0000                	.insn	2, 0x0000
+    42c57658:	1092d8cf          	fnmadd.s	f17,f5,f9,f2,unknown
+    42c5765c:	0000                	.insn	2, 0x0000
+    42c5765e:	0000                	.insn	2, 0x0000
+    42c57660:	1092dccf          	fnmadd.s	f25,f5,f9,f2,unknown
+    42c57664:	0000                	.insn	2, 0x0000
+    42c57666:	0000                	.insn	2, 0x0000
+    42c57668:	1092e0cf          	fnmadd.s	f1,f5,f9,f2,unknown
+    42c5766c:	0000                	.insn	2, 0x0000
+    42c5766e:	0000                	.insn	2, 0x0000
+    42c57670:	1092e4cf          	fnmadd.s	f9,f5,f9,f2,unknown
+    42c57674:	0000                	.insn	2, 0x0000
+    42c57676:	0000                	.insn	2, 0x0000
+    42c57678:	1092e8cf          	fnmadd.s	f17,f5,f9,f2,unknown
+    42c5767c:	0000                	.insn	2, 0x0000
+    42c5767e:	0000                	.insn	2, 0x0000
+    42c57680:	1092eccf          	fnmadd.s	f25,f5,f9,f2,unknown
+    42c57684:	0000                	.insn	2, 0x0000
+    42c57686:	0000                	.insn	2, 0x0000
+    42c57688:	1092f0cf          	fnmadd.s	f1,f5,f9,f2
+    42c5768c:	0000                	.insn	2, 0x0000
+    42c5768e:	0000                	.insn	2, 0x0000
+    42c57690:	1092f4cf          	fnmadd.s	f9,f5,f9,f2
+    42c57694:	0000                	.insn	2, 0x0000
+    42c57696:	0000                	.insn	2, 0x0000
+    42c57698:	1092f8cf          	fnmadd.s	f17,f5,f9,f2
+    42c5769c:	0000                	.insn	2, 0x0000
+    42c5769e:	0000                	.insn	2, 0x0000
+    42c576a0:	1092fccf          	fnmadd.s	f25,f5,f9,f2
+    42c576a4:	0000                	.insn	2, 0x0000
+    42c576a6:	0000                	.insn	2, 0x0000
+    42c576a8:	109300cf          	fnmadd.s	f1,f6,f9,f2,rne
+    42c576ac:	0000                	.insn	2, 0x0000
+    42c576ae:	0000                	.insn	2, 0x0000
+    42c576b0:	109304cf          	fnmadd.s	f9,f6,f9,f2,rne
+    42c576b4:	0000                	.insn	2, 0x0000
+    42c576b6:	0000                	.insn	2, 0x0000
+    42c576b8:	109308cf          	fnmadd.s	f17,f6,f9,f2,rne
+    42c576bc:	0000                	.insn	2, 0x0000
+    42c576be:	0000                	.insn	2, 0x0000
+    42c576c0:	10930ccf          	fnmadd.s	f25,f6,f9,f2,rne
+    42c576c4:	0000                	.insn	2, 0x0000
+    42c576c6:	0000                	.insn	2, 0x0000
+    42c576c8:	109310cf          	fnmadd.s	f1,f6,f9,f2,rtz
+    42c576cc:	0000                	.insn	2, 0x0000
+    42c576ce:	0000                	.insn	2, 0x0000
+    42c576d0:	109314cf          	fnmadd.s	f9,f6,f9,f2,rtz
+    42c576d4:	0000                	.insn	2, 0x0000
+    42c576d6:	0000                	.insn	2, 0x0000
+    42c576d8:	109318cf          	fnmadd.s	f17,f6,f9,f2,rtz
+    42c576dc:	0000                	.insn	2, 0x0000
+    42c576de:	0000                	.insn	2, 0x0000
+    42c576e0:	10931ccf          	fnmadd.s	f25,f6,f9,f2,rtz
+    42c576e4:	0000                	.insn	2, 0x0000
+    42c576e6:	0000                	.insn	2, 0x0000
+    42c576e8:	109320cf          	fnmadd.s	f1,f6,f9,f2,rdn
+    42c576ec:	0000                	.insn	2, 0x0000
+    42c576ee:	0000                	.insn	2, 0x0000
+    42c576f0:	109324cf          	fnmadd.s	f9,f6,f9,f2,rdn
+    42c576f4:	0000                	.insn	2, 0x0000
+    42c576f6:	0000                	.insn	2, 0x0000
+    42c576f8:	109328cf          	fnmadd.s	f17,f6,f9,f2,rdn
+    42c576fc:	0000                	.insn	2, 0x0000
+    42c576fe:	0000                	.insn	2, 0x0000
+    42c57700:	10932ccf          	fnmadd.s	f25,f6,f9,f2,rdn
+    42c57704:	0000                	.insn	2, 0x0000
+    42c57706:	0000                	.insn	2, 0x0000
+    42c57708:	109330cf          	fnmadd.s	f1,f6,f9,f2,rup
+    42c5770c:	0000                	.insn	2, 0x0000
+    42c5770e:	0000                	.insn	2, 0x0000
+    42c57710:	109334cf          	fnmadd.s	f9,f6,f9,f2,rup
+    42c57714:	0000                	.insn	2, 0x0000
+    42c57716:	0000                	.insn	2, 0x0000
+    42c57718:	109338cf          	fnmadd.s	f17,f6,f9,f2,rup
+    42c5771c:	0000                	.insn	2, 0x0000
+    42c5771e:	0000                	.insn	2, 0x0000
+    42c57720:	10933ccf          	fnmadd.s	f25,f6,f9,f2,rup
+    42c57724:	0000                	.insn	2, 0x0000
+    42c57726:	0000                	.insn	2, 0x0000
+    42c57728:	109340cf          	fnmadd.s	f1,f6,f9,f2,rmm
+    42c5772c:	0000                	.insn	2, 0x0000
+    42c5772e:	0000                	.insn	2, 0x0000
+    42c57730:	109344cf          	fnmadd.s	f9,f6,f9,f2,rmm
+    42c57734:	0000                	.insn	2, 0x0000
+    42c57736:	0000                	.insn	2, 0x0000
+    42c57738:	109348cf          	fnmadd.s	f17,f6,f9,f2,rmm
+    42c5773c:	0000                	.insn	2, 0x0000
+    42c5773e:	0000                	.insn	2, 0x0000
+    42c57740:	10934ccf          	fnmadd.s	f25,f6,f9,f2,rmm
+    42c57744:	0000                	.insn	2, 0x0000
+    42c57746:	0000                	.insn	2, 0x0000
+    42c57748:	109350cf          	fnmadd.s	f1,f6,f9,f2,unknown
+    42c5774c:	0000                	.insn	2, 0x0000
+    42c5774e:	0000                	.insn	2, 0x0000
+    42c57750:	109354cf          	fnmadd.s	f9,f6,f9,f2,unknown
+    42c57754:	0000                	.insn	2, 0x0000
+    42c57756:	0000                	.insn	2, 0x0000
+    42c57758:	109358cf          	fnmadd.s	f17,f6,f9,f2,unknown
+    42c5775c:	0000                	.insn	2, 0x0000
+    42c5775e:	0000                	.insn	2, 0x0000
+    42c57760:	10935ccf          	fnmadd.s	f25,f6,f9,f2,unknown
+    42c57764:	0000                	.insn	2, 0x0000
+    42c57766:	0000                	.insn	2, 0x0000
+    42c57768:	109360cf          	fnmadd.s	f1,f6,f9,f2,unknown
+    42c5776c:	0000                	.insn	2, 0x0000
+    42c5776e:	0000                	.insn	2, 0x0000
+    42c57770:	109364cf          	fnmadd.s	f9,f6,f9,f2,unknown
+    42c57774:	0000                	.insn	2, 0x0000
+    42c57776:	0000                	.insn	2, 0x0000
+    42c57778:	109368cf          	fnmadd.s	f17,f6,f9,f2,unknown
+    42c5777c:	0000                	.insn	2, 0x0000
+    42c5777e:	0000                	.insn	2, 0x0000
+    42c57780:	10936ccf          	fnmadd.s	f25,f6,f9,f2,unknown
+    42c57784:	0000                	.insn	2, 0x0000
+    42c57786:	0000                	.insn	2, 0x0000
+    42c57788:	109370cf          	fnmadd.s	f1,f6,f9,f2
+    42c5778c:	0000                	.insn	2, 0x0000
+    42c5778e:	0000                	.insn	2, 0x0000
+    42c57790:	109374cf          	fnmadd.s	f9,f6,f9,f2
+    42c57794:	0000                	.insn	2, 0x0000
+    42c57796:	0000                	.insn	2, 0x0000
+    42c57798:	109378cf          	fnmadd.s	f17,f6,f9,f2
+    42c5779c:	0000                	.insn	2, 0x0000
+    42c5779e:	0000                	.insn	2, 0x0000
+    42c577a0:	10937ccf          	fnmadd.s	f25,f6,f9,f2
+    42c577a4:	0000                	.insn	2, 0x0000
+    42c577a6:	0000                	.insn	2, 0x0000
+    42c577a8:	109380cf          	fnmadd.s	f1,f7,f9,f2,rne
+    42c577ac:	0000                	.insn	2, 0x0000
+    42c577ae:	0000                	.insn	2, 0x0000
+    42c577b0:	109384cf          	fnmadd.s	f9,f7,f9,f2,rne
+    42c577b4:	0000                	.insn	2, 0x0000
+    42c577b6:	0000                	.insn	2, 0x0000
+    42c577b8:	109388cf          	fnmadd.s	f17,f7,f9,f2,rne
+    42c577bc:	0000                	.insn	2, 0x0000
+    42c577be:	0000                	.insn	2, 0x0000
+    42c577c0:	10938ccf          	fnmadd.s	f25,f7,f9,f2,rne
+    42c577c4:	0000                	.insn	2, 0x0000
+    42c577c6:	0000                	.insn	2, 0x0000
+    42c577c8:	109390cf          	fnmadd.s	f1,f7,f9,f2,rtz
+    42c577cc:	0000                	.insn	2, 0x0000
+    42c577ce:	0000                	.insn	2, 0x0000
+    42c577d0:	109394cf          	fnmadd.s	f9,f7,f9,f2,rtz
+    42c577d4:	0000                	.insn	2, 0x0000
+    42c577d6:	0000                	.insn	2, 0x0000
+    42c577d8:	109398cf          	fnmadd.s	f17,f7,f9,f2,rtz
+    42c577dc:	0000                	.insn	2, 0x0000
+    42c577de:	0000                	.insn	2, 0x0000
+    42c577e0:	10939ccf          	fnmadd.s	f25,f7,f9,f2,rtz
+    42c577e4:	0000                	.insn	2, 0x0000
+    42c577e6:	0000                	.insn	2, 0x0000
+    42c577e8:	1093a0cf          	fnmadd.s	f1,f7,f9,f2,rdn
+    42c577ec:	0000                	.insn	2, 0x0000
+    42c577ee:	0000                	.insn	2, 0x0000
+    42c577f0:	1093a4cf          	fnmadd.s	f9,f7,f9,f2,rdn
+    42c577f4:	0000                	.insn	2, 0x0000
+    42c577f6:	0000                	.insn	2, 0x0000
+    42c577f8:	1093a8cf          	fnmadd.s	f17,f7,f9,f2,rdn
+    42c577fc:	0000                	.insn	2, 0x0000
+    42c577fe:	0000                	.insn	2, 0x0000
+    42c57800:	1093accf          	fnmadd.s	f25,f7,f9,f2,rdn
+    42c57804:	0000                	.insn	2, 0x0000
+    42c57806:	0000                	.insn	2, 0x0000
+    42c57808:	1093b0cf          	fnmadd.s	f1,f7,f9,f2,rup
+    42c5780c:	0000                	.insn	2, 0x0000
+    42c5780e:	0000                	.insn	2, 0x0000
+    42c57810:	1093b4cf          	fnmadd.s	f9,f7,f9,f2,rup
+    42c57814:	0000                	.insn	2, 0x0000
+    42c57816:	0000                	.insn	2, 0x0000
+    42c57818:	1093b8cf          	fnmadd.s	f17,f7,f9,f2,rup
+    42c5781c:	0000                	.insn	2, 0x0000
+    42c5781e:	0000                	.insn	2, 0x0000
+    42c57820:	1093bccf          	fnmadd.s	f25,f7,f9,f2,rup
+    42c57824:	0000                	.insn	2, 0x0000
+    42c57826:	0000                	.insn	2, 0x0000
+    42c57828:	1093c0cf          	fnmadd.s	f1,f7,f9,f2,rmm
+    42c5782c:	0000                	.insn	2, 0x0000
+    42c5782e:	0000                	.insn	2, 0x0000
+    42c57830:	1093c4cf          	fnmadd.s	f9,f7,f9,f2,rmm
+    42c57834:	0000                	.insn	2, 0x0000
+    42c57836:	0000                	.insn	2, 0x0000
+    42c57838:	1093c8cf          	fnmadd.s	f17,f7,f9,f2,rmm
+    42c5783c:	0000                	.insn	2, 0x0000
+    42c5783e:	0000                	.insn	2, 0x0000
+    42c57840:	1093cccf          	fnmadd.s	f25,f7,f9,f2,rmm
+    42c57844:	0000                	.insn	2, 0x0000
+    42c57846:	0000                	.insn	2, 0x0000
+    42c57848:	1093d0cf          	fnmadd.s	f1,f7,f9,f2,unknown
+    42c5784c:	0000                	.insn	2, 0x0000
+    42c5784e:	0000                	.insn	2, 0x0000
+    42c57850:	1093d4cf          	fnmadd.s	f9,f7,f9,f2,unknown
+    42c57854:	0000                	.insn	2, 0x0000
+    42c57856:	0000                	.insn	2, 0x0000
+    42c57858:	1093d8cf          	fnmadd.s	f17,f7,f9,f2,unknown
+    42c5785c:	0000                	.insn	2, 0x0000
+    42c5785e:	0000                	.insn	2, 0x0000
+    42c57860:	1093dccf          	fnmadd.s	f25,f7,f9,f2,unknown
+    42c57864:	0000                	.insn	2, 0x0000
+    42c57866:	0000                	.insn	2, 0x0000
+    42c57868:	1093e0cf          	fnmadd.s	f1,f7,f9,f2,unknown
+    42c5786c:	0000                	.insn	2, 0x0000
+    42c5786e:	0000                	.insn	2, 0x0000
+    42c57870:	1093e4cf          	fnmadd.s	f9,f7,f9,f2,unknown
+    42c57874:	0000                	.insn	2, 0x0000
+    42c57876:	0000                	.insn	2, 0x0000
+    42c57878:	1093e8cf          	fnmadd.s	f17,f7,f9,f2,unknown
+    42c5787c:	0000                	.insn	2, 0x0000
+    42c5787e:	0000                	.insn	2, 0x0000
+    42c57880:	1093eccf          	fnmadd.s	f25,f7,f9,f2,unknown
+    42c57884:	0000                	.insn	2, 0x0000
+    42c57886:	0000                	.insn	2, 0x0000
+    42c57888:	1093f0cf          	fnmadd.s	f1,f7,f9,f2
+    42c5788c:	0000                	.insn	2, 0x0000
+    42c5788e:	0000                	.insn	2, 0x0000
+    42c57890:	1093f4cf          	fnmadd.s	f9,f7,f9,f2
+    42c57894:	0000                	.insn	2, 0x0000
+    42c57896:	0000                	.insn	2, 0x0000
+    42c57898:	1093f8cf          	fnmadd.s	f17,f7,f9,f2
+    42c5789c:	0000                	.insn	2, 0x0000
+    42c5789e:	0000                	.insn	2, 0x0000
+    42c578a0:	1093fccf          	fnmadd.s	f25,f7,f9,f2
+    42c578a4:	0000                	.insn	2, 0x0000
+    42c578a6:	0000                	.insn	2, 0x0000
+    42c578a8:	00df 1094 0000      	.insn	6, 0x109400df
+    42c578ae:	0000                	.insn	2, 0x0000
+    42c578b0:	04df 1094 0000      	.insn	6, 0x109404df
+    42c578b6:	0000                	.insn	2, 0x0000
+    42c578b8:	08df 1094 0000      	.insn	6, 0x109408df
+    42c578be:	0000                	.insn	2, 0x0000
+    42c578c0:	0cdf 1094 0000      	.insn	6, 0x10940cdf
+    42c578c6:	0000                	.insn	2, 0x0000
+    42c578c8:	10df 1094 0000      	.insn	6, 0x109410df
+    42c578ce:	0000                	.insn	2, 0x0000
+    42c578d0:	14df 1094 0000      	.insn	6, 0x109414df
+    42c578d6:	0000                	.insn	2, 0x0000
+    42c578d8:	18df 1094 0000      	.insn	6, 0x109418df
+    42c578de:	0000                	.insn	2, 0x0000
+    42c578e0:	1cdf 1094 0000      	.insn	6, 0x10941cdf
+    42c578e6:	0000                	.insn	2, 0x0000
+    42c578e8:	20df 1094 0000      	.insn	6, 0x109420df
+    42c578ee:	0000                	.insn	2, 0x0000
+    42c578f0:	24df 1094 0000      	.insn	6, 0x109424df
+    42c578f6:	0000                	.insn	2, 0x0000
+    42c578f8:	28df 1094 0000      	.insn	6, 0x109428df
+    42c578fe:	0000                	.insn	2, 0x0000
+    42c57900:	2cdf 1094 0000      	.insn	6, 0x10942cdf
+    42c57906:	0000                	.insn	2, 0x0000
+    42c57908:	30df 1094 0000      	.insn	6, 0x109430df
+    42c5790e:	0000                	.insn	2, 0x0000
+    42c57910:	34df 1094 0000      	.insn	6, 0x109434df
+    42c57916:	0000                	.insn	2, 0x0000
+    42c57918:	38df 1094 0000      	.insn	6, 0x109438df
+    42c5791e:	0000                	.insn	2, 0x0000
+    42c57920:	3cdf 1094 0000      	.insn	6, 0x10943cdf
+    42c57926:	0000                	.insn	2, 0x0000
+    42c57928:	40df 1094 0000      	.insn	6, 0x109440df
+    42c5792e:	0000                	.insn	2, 0x0000
+    42c57930:	44df 1094 0000      	.insn	6, 0x109444df
+    42c57936:	0000                	.insn	2, 0x0000
+    42c57938:	48df 1094 0000      	.insn	6, 0x109448df
+    42c5793e:	0000                	.insn	2, 0x0000
+    42c57940:	4cdf 1094 0000      	.insn	6, 0x10944cdf
+    42c57946:	0000                	.insn	2, 0x0000
+    42c57948:	50df 1094 0000      	.insn	6, 0x109450df
+    42c5794e:	0000                	.insn	2, 0x0000
+    42c57950:	54df 1094 0000      	.insn	6, 0x109454df
+    42c57956:	0000                	.insn	2, 0x0000
+    42c57958:	58df 1094 0000      	.insn	6, 0x109458df
+    42c5795e:	0000                	.insn	2, 0x0000
+    42c57960:	5cdf 1094 0000      	.insn	6, 0x10945cdf
+    42c57966:	0000                	.insn	2, 0x0000
+    42c57968:	60df 1094 0000      	.insn	6, 0x109460df
+    42c5796e:	0000                	.insn	2, 0x0000
+    42c57970:	64df 1094 0000      	.insn	6, 0x109464df
+    42c57976:	0000                	.insn	2, 0x0000
+    42c57978:	68df 1094 0000      	.insn	6, 0x109468df
+    42c5797e:	0000                	.insn	2, 0x0000
+    42c57980:	6cdf 1094 0000      	.insn	6, 0x10946cdf
+    42c57986:	0000                	.insn	2, 0x0000
+    42c57988:	70df 1094 0000      	.insn	6, 0x109470df
+    42c5798e:	0000                	.insn	2, 0x0000
+    42c57990:	74df 1094 0000      	.insn	6, 0x109474df
+    42c57996:	0000                	.insn	2, 0x0000
+    42c57998:	78df 1094 0000      	.insn	6, 0x109478df
+    42c5799e:	0000                	.insn	2, 0x0000
+    42c579a0:	7cdf 1094 0000      	.insn	6, 0x10947cdf
+    42c579a6:	0000                	.insn	2, 0x0000
+    42c579a8:	80df 1094 0000      	.insn	6, 0x109480df
+    42c579ae:	0000                	.insn	2, 0x0000
+    42c579b0:	84df 1094 0000      	.insn	6, 0x109484df
+    42c579b6:	0000                	.insn	2, 0x0000
+    42c579b8:	88df 1094 0000      	.insn	6, 0x109488df
+    42c579be:	0000                	.insn	2, 0x0000
+    42c579c0:	8cdf 1094 0000      	.insn	6, 0x10948cdf
+    42c579c6:	0000                	.insn	2, 0x0000
+    42c579c8:	90df 1094 0000      	.insn	6, 0x109490df
+    42c579ce:	0000                	.insn	2, 0x0000
+    42c579d0:	94df 1094 0000      	.insn	6, 0x109494df
+    42c579d6:	0000                	.insn	2, 0x0000
+    42c579d8:	98df 1094 0000      	.insn	6, 0x109498df
+    42c579de:	0000                	.insn	2, 0x0000
+    42c579e0:	9cdf 1094 0000      	.insn	6, 0x10949cdf
+    42c579e6:	0000                	.insn	2, 0x0000
+    42c579e8:	a0df 1094 0000      	.insn	6, 0x1094a0df
+    42c579ee:	0000                	.insn	2, 0x0000
+    42c579f0:	a4df 1094 0000      	.insn	6, 0x1094a4df
+    42c579f6:	0000                	.insn	2, 0x0000
+    42c579f8:	a8df 1094 0000      	.insn	6, 0x1094a8df
+    42c579fe:	0000                	.insn	2, 0x0000
+    42c57a00:	acdf 1094 0000      	.insn	6, 0x1094acdf
+    42c57a06:	0000                	.insn	2, 0x0000
+    42c57a08:	b0df 1094 0000      	.insn	6, 0x1094b0df
+    42c57a0e:	0000                	.insn	2, 0x0000
+    42c57a10:	b4df 1094 0000      	.insn	6, 0x1094b4df
+    42c57a16:	0000                	.insn	2, 0x0000
+    42c57a18:	b8df 1094 0000      	.insn	6, 0x1094b8df
+    42c57a1e:	0000                	.insn	2, 0x0000
+    42c57a20:	bcdf 1094 0000      	.insn	6, 0x1094bcdf
+    42c57a26:	0000                	.insn	2, 0x0000
+    42c57a28:	c0df 1094 0000      	.insn	6, 0x1094c0df
+    42c57a2e:	0000                	.insn	2, 0x0000
+    42c57a30:	c4df 1094 0000      	.insn	6, 0x1094c4df
+    42c57a36:	0000                	.insn	2, 0x0000
+    42c57a38:	c8df 1094 0000      	.insn	6, 0x1094c8df
+    42c57a3e:	0000                	.insn	2, 0x0000
+    42c57a40:	ccdf 1094 0000      	.insn	6, 0x1094ccdf
+    42c57a46:	0000                	.insn	2, 0x0000
+    42c57a48:	d0df 1094 0000      	.insn	6, 0x1094d0df
+    42c57a4e:	0000                	.insn	2, 0x0000
+    42c57a50:	d4df 1094 0000      	.insn	6, 0x1094d4df
+    42c57a56:	0000                	.insn	2, 0x0000
+    42c57a58:	d8df 1094 0000      	.insn	6, 0x1094d8df
+    42c57a5e:	0000                	.insn	2, 0x0000
+    42c57a60:	dcdf 1094 0000      	.insn	6, 0x1094dcdf
+    42c57a66:	0000                	.insn	2, 0x0000
+    42c57a68:	e0df 1094 0000      	.insn	6, 0x1094e0df
+    42c57a6e:	0000                	.insn	2, 0x0000
+    42c57a70:	e4df 1094 0000      	.insn	6, 0x1094e4df
+    42c57a76:	0000                	.insn	2, 0x0000
+    42c57a78:	e8df 1094 0000      	.insn	6, 0x1094e8df
+    42c57a7e:	0000                	.insn	2, 0x0000
+    42c57a80:	ecdf 1094 0000      	.insn	6, 0x1094ecdf
+    42c57a86:	0000                	.insn	2, 0x0000
+    42c57a88:	f0df 1094 0000      	.insn	6, 0x1094f0df
+    42c57a8e:	0000                	.insn	2, 0x0000
+    42c57a90:	f4df 1094 0000      	.insn	6, 0x1094f4df
+    42c57a96:	0000                	.insn	2, 0x0000
+    42c57a98:	f8df 1094 0000      	.insn	6, 0x1094f8df
+    42c57a9e:	0000                	.insn	2, 0x0000
+    42c57aa0:	fcdf 1094 0000      	.insn	6, 0x1094fcdf
+    42c57aa6:	0000                	.insn	2, 0x0000
+    42c57aa8:	00df 1095 0000      	.insn	6, 0x109500df
+    42c57aae:	0000                	.insn	2, 0x0000
+    42c57ab0:	04df 1095 0000      	.insn	6, 0x109504df
+    42c57ab6:	0000                	.insn	2, 0x0000
+    42c57ab8:	08df 1095 0000      	.insn	6, 0x109508df
+    42c57abe:	0000                	.insn	2, 0x0000
+    42c57ac0:	0cdf 1095 0000      	.insn	6, 0x10950cdf
+    42c57ac6:	0000                	.insn	2, 0x0000
+    42c57ac8:	10df 1095 0000      	.insn	6, 0x109510df
+    42c57ace:	0000                	.insn	2, 0x0000
+    42c57ad0:	14df 1095 0000      	.insn	6, 0x109514df
+    42c57ad6:	0000                	.insn	2, 0x0000
+    42c57ad8:	18df 1095 0000      	.insn	6, 0x109518df
+    42c57ade:	0000                	.insn	2, 0x0000
+    42c57ae0:	1cdf 1095 0000      	.insn	6, 0x10951cdf
+    42c57ae6:	0000                	.insn	2, 0x0000
+    42c57ae8:	20df 1095 0000      	.insn	6, 0x109520df
+    42c57aee:	0000                	.insn	2, 0x0000
+    42c57af0:	24df 1095 0000      	.insn	6, 0x109524df
+    42c57af6:	0000                	.insn	2, 0x0000
+    42c57af8:	28df 1095 0000      	.insn	6, 0x109528df
+    42c57afe:	0000                	.insn	2, 0x0000
+    42c57b00:	2cdf 1095 0000      	.insn	6, 0x10952cdf
+    42c57b06:	0000                	.insn	2, 0x0000
+    42c57b08:	30df 1095 0000      	.insn	6, 0x109530df
+    42c57b0e:	0000                	.insn	2, 0x0000
+    42c57b10:	34df 1095 0000      	.insn	6, 0x109534df
+    42c57b16:	0000                	.insn	2, 0x0000
+    42c57b18:	38df 1095 0000      	.insn	6, 0x109538df
+    42c57b1e:	0000                	.insn	2, 0x0000
+    42c57b20:	3cdf 1095 0000      	.insn	6, 0x10953cdf
+    42c57b26:	0000                	.insn	2, 0x0000
+    42c57b28:	40df 1095 0000      	.insn	6, 0x109540df
+    42c57b2e:	0000                	.insn	2, 0x0000
+    42c57b30:	44df 1095 0000      	.insn	6, 0x109544df
+    42c57b36:	0000                	.insn	2, 0x0000
+    42c57b38:	48df 1095 0000      	.insn	6, 0x109548df
+    42c57b3e:	0000                	.insn	2, 0x0000
+    42c57b40:	4cdf 1095 0000      	.insn	6, 0x10954cdf
+    42c57b46:	0000                	.insn	2, 0x0000
+    42c57b48:	50df 1095 0000      	.insn	6, 0x109550df
+    42c57b4e:	0000                	.insn	2, 0x0000
+    42c57b50:	54df 1095 0000      	.insn	6, 0x109554df
+    42c57b56:	0000                	.insn	2, 0x0000
+    42c57b58:	58df 1095 0000      	.insn	6, 0x109558df
+    42c57b5e:	0000                	.insn	2, 0x0000
+    42c57b60:	5cdf 1095 0000      	.insn	6, 0x10955cdf
+    42c57b66:	0000                	.insn	2, 0x0000
+    42c57b68:	60df 1095 0000      	.insn	6, 0x109560df
+    42c57b6e:	0000                	.insn	2, 0x0000
+    42c57b70:	64df 1095 0000      	.insn	6, 0x109564df
+    42c57b76:	0000                	.insn	2, 0x0000
+    42c57b78:	68df 1095 0000      	.insn	6, 0x109568df
+    42c57b7e:	0000                	.insn	2, 0x0000
+    42c57b80:	6cdf 1095 0000      	.insn	6, 0x10956cdf
+    42c57b86:	0000                	.insn	2, 0x0000
+    42c57b88:	70df 1095 0000      	.insn	6, 0x109570df
+    42c57b8e:	0000                	.insn	2, 0x0000
+    42c57b90:	74df 1095 0000      	.insn	6, 0x109574df
+    42c57b96:	0000                	.insn	2, 0x0000
+    42c57b98:	78df 1095 0000      	.insn	6, 0x109578df
+    42c57b9e:	0000                	.insn	2, 0x0000
+    42c57ba0:	7cdf 1095 0000      	.insn	6, 0x10957cdf
+    42c57ba6:	0000                	.insn	2, 0x0000
+    42c57ba8:	80df 1095 0000      	.insn	6, 0x109580df
+    42c57bae:	0000                	.insn	2, 0x0000
+    42c57bb0:	84df 1095 0000      	.insn	6, 0x109584df
+    42c57bb6:	0000                	.insn	2, 0x0000
+    42c57bb8:	88df 1095 0000      	.insn	6, 0x109588df
+    42c57bbe:	0000                	.insn	2, 0x0000
+    42c57bc0:	8cdf 1095 0000      	.insn	6, 0x10958cdf
+    42c57bc6:	0000                	.insn	2, 0x0000
+    42c57bc8:	90df 1095 0000      	.insn	6, 0x109590df
+    42c57bce:	0000                	.insn	2, 0x0000
+    42c57bd0:	94df 1095 0000      	.insn	6, 0x109594df
+    42c57bd6:	0000                	.insn	2, 0x0000
+    42c57bd8:	98df 1095 0000      	.insn	6, 0x109598df
+    42c57bde:	0000                	.insn	2, 0x0000
+    42c57be0:	9cdf 1095 0000      	.insn	6, 0x10959cdf
+    42c57be6:	0000                	.insn	2, 0x0000
+    42c57be8:	a0df 1095 0000      	.insn	6, 0x1095a0df
+    42c57bee:	0000                	.insn	2, 0x0000
+    42c57bf0:	a4df 1095 0000      	.insn	6, 0x1095a4df
+    42c57bf6:	0000                	.insn	2, 0x0000
+    42c57bf8:	a8df 1095 0000      	.insn	6, 0x1095a8df
+    42c57bfe:	0000                	.insn	2, 0x0000
+    42c57c00:	acdf 1095 0000      	.insn	6, 0x1095acdf
+    42c57c06:	0000                	.insn	2, 0x0000
+    42c57c08:	b0df 1095 0000      	.insn	6, 0x1095b0df
+    42c57c0e:	0000                	.insn	2, 0x0000
+    42c57c10:	b4df 1095 0000      	.insn	6, 0x1095b4df
+    42c57c16:	0000                	.insn	2, 0x0000
+    42c57c18:	b8df 1095 0000      	.insn	6, 0x1095b8df
+    42c57c1e:	0000                	.insn	2, 0x0000
+    42c57c20:	bcdf 1095 0000      	.insn	6, 0x1095bcdf
+    42c57c26:	0000                	.insn	2, 0x0000
+    42c57c28:	c0df 1095 0000      	.insn	6, 0x1095c0df
+    42c57c2e:	0000                	.insn	2, 0x0000
+    42c57c30:	c4df 1095 0000      	.insn	6, 0x1095c4df
+    42c57c36:	0000                	.insn	2, 0x0000
+    42c57c38:	c8df 1095 0000      	.insn	6, 0x1095c8df
+    42c57c3e:	0000                	.insn	2, 0x0000
+    42c57c40:	ccdf 1095 0000      	.insn	6, 0x1095ccdf
+    42c57c46:	0000                	.insn	2, 0x0000
+    42c57c48:	d0df 1095 0000      	.insn	6, 0x1095d0df
+    42c57c4e:	0000                	.insn	2, 0x0000
+    42c57c50:	d4df 1095 0000      	.insn	6, 0x1095d4df
+    42c57c56:	0000                	.insn	2, 0x0000
+    42c57c58:	d8df 1095 0000      	.insn	6, 0x1095d8df
+    42c57c5e:	0000                	.insn	2, 0x0000
+    42c57c60:	dcdf 1095 0000      	.insn	6, 0x1095dcdf
+    42c57c66:	0000                	.insn	2, 0x0000
+    42c57c68:	e0df 1095 0000      	.insn	6, 0x1095e0df
+    42c57c6e:	0000                	.insn	2, 0x0000
+    42c57c70:	e4df 1095 0000      	.insn	6, 0x1095e4df
+    42c57c76:	0000                	.insn	2, 0x0000
+    42c57c78:	e8df 1095 0000      	.insn	6, 0x1095e8df
+    42c57c7e:	0000                	.insn	2, 0x0000
+    42c57c80:	ecdf 1095 0000      	.insn	6, 0x1095ecdf
+    42c57c86:	0000                	.insn	2, 0x0000
+    42c57c88:	f0df 1095 0000      	.insn	6, 0x1095f0df
+    42c57c8e:	0000                	.insn	2, 0x0000
+    42c57c90:	f4df 1095 0000      	.insn	6, 0x1095f4df
+    42c57c96:	0000                	.insn	2, 0x0000
+    42c57c98:	f8df 1095 0000      	.insn	6, 0x1095f8df
+    42c57c9e:	0000                	.insn	2, 0x0000
+    42c57ca0:	fcdf 1095 0000      	.insn	6, 0x1095fcdf
+	...
+
+Disassembly of section .__pagetable_map_os_0x0000000043f51000:
+
+0000000043f51000 <__pagetable_map_os_0x0000000043f51000>:
+	...
+    43f510b0:	109804cf          	fnmadd.s	f9,f16,f9,f2,rne
+    43f510b4:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .__pagetable_map_os_0x00000000413ff000:
+
+00000000413ff000 <__pagetable_map_os_0x00000000413ff000>:
+	...
+    413ff278:	a4df 1135 0000      	.insn	6, 0x1135a4df
+	...
+
+Disassembly of section .__pagetable_map_os_0x0000000044906000:
+
+0000000044906000 <__pagetable_map_os_0x0000000044906000>:
+	...
+    44906030:	18df 1050 0000      	.insn	6, 0x105018df
+	...
+    44906266:	0000                	.insn	2, 0x0000
+    44906268:	10b2c4d7          	vminu.vx	v9,v11,x5,v0.t
+    4490626c:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .__pagetable_map_os_0x0000000044458000:
+
+0000000044458000 <__pagetable_map_os_0x0000000044458000>:
+	...
+    44458fd0:	2c01                	.insn	2, 0x2c01
+    44458fd2:	10e0                	.insn	2, 0x10e0
+	...
+    44458fe0:	5c01                	.insn	2, 0x5c01
+    44458fe2:	10de                	.insn	2, 0x10de
+    44458fe4:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .__pagetable_map_os_0x000000004380b000:
+
+000000004380b000 <__pagetable_map_os_0x000000004380b000>:
+	...
+    4380b9a0:	c8df 10b2 0000      	.insn	6, 0x10b2c8df
+    4380b9a6:	0000                	.insn	2, 0x0000
+    4380b9a8:	ccdf 10b2 0000      	.insn	6, 0x10b2ccdf
+	...
+
+Disassembly of section .__pagetable_map_os_0x0000000043797000:
+
+0000000043797000 <__pagetable_map_os_0x0000000043797000>:
+	...
+    43797008:	109bc4d7          	vminu.vx	v9,v9,x23,v0.t
+    4379700c:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .__pagetable_map_os_0x0000000043fda000:
+
+0000000043fda000 <__pagetable_map_os_0x0000000043fda000>:
+    43fda000:	b001                	.insn	2, 0xb001
+    43fda002:	1124                	.insn	2, 0x1124
+	...
+    43fda168:	d001                	.insn	2, 0xd001
+    43fda16a:	1128                	.insn	2, 0x1128
+	...
+    43fda358:	9801                	.insn	2, 0x9801
+    43fda35a:	1132                	.insn	2, 0x1132
+	...
+    43fda808:	9c01                	.insn	2, 0x9c01
+    43fda80a:	10fd                	.insn	2, 0x10fd
+    43fda80c:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .__pagetable_map_os_0x000000004492c000:
+
+000000004492c000 <__pagetable_map_os_0x000000004492c000>:
+	...
+    4492c020:	112ba0d7          	vredminu.vs	v1,v18,v23,v0.t
+	...
+    4492c740:	10df 1124 0000      	.insn	6, 0x112410df
+    4492c746:	0000                	.insn	2, 0x0000
+    4492c748:	14df 1124 0000      	.insn	6, 0x112414df
+	...
+
+Disassembly of section .__pagetable_map_os_0x0000000043f67000:
+
+0000000043f67000 <__pagetable_map_os_0x0000000043f67000>:
+	...
+    43f67978:	10cdd0d7          	vfmin.vf	v1,v12,f27,v0.t
+    43f6797c:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .__pagetable_map_os_0x0000000044a34000:
+
+0000000044a34000 <__pagetable_map_os_0x0000000044a34000>:
+	...
+    44a34af8:	113404d7          	vminu.vv	v9,v19,v8,v0.t
+    44a34afc:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .__pagetable_map_os_0x0000000044ca6000:
+
+0000000044ca6000 <__pagetable_map_os_0x0000000044ca6000>:
+	...
+    44ca6cf8:	11326cd7          	.insn	4, 0x11326cd7
+    44ca6cfc:	0000                	.insn	2, 0x0000
+	...
+
+Disassembly of section .__pagetable_map_os_0x0000000044cb6000:
+
+0000000044cb6000 <__pagetable_map_os_0x0000000044cb6000>:
+	...
+    44cb6040:	fc01                	.insn	2, 0xfc01
+    44cb6042:	0000108f          	.insn	4, 0x108f
+	...
+
+Disassembly of section .__pagetable_map_os_0x00000000423ff000:
+
+00000000423ff000 <__pagetable_map_os_0x00000000423ff000>:
+	...
+    423ff0b8:	f4df 1131 0000      	.insn	6, 0x1131f4df
+	...
+
+Disassembly of section .riscv.attributes:
+
+0000000000000000 <.riscv.attributes>:
+   0:	1841                	.insn	2, 0x1841
+   2:	0002                	.insn	2, 0x0002
+   4:	7200                	.insn	2, 0x7200
+   6:	7369                	.insn	2, 0x7369
+   8:	01007663          	bgeu	x0,x16,14 <INSTRUCTION_GUEST_PAGE_FAULT>
+   c:	020e                	.insn	2, 0x020e
+   e:	0000                	.insn	2, 0x0000
+  10:	7205                	.insn	2, 0x7205
+  12:	3676                	.insn	2, 0x3676
+  14:	6934                	.insn	2, 0x6934
+  16:	7032                	.insn	2, 0x7032
+  18:	5f31                	.insn	2, 0x5f31
+  1a:	326d                	.insn	2, 0x326d
+  1c:	3070                	.insn	2, 0x3070
+  1e:	615f 7032 5f31      	.insn	6, 0x5f317032615f
+  24:	3266                	.insn	2, 0x3266
+  26:	3270                	.insn	2, 0x3270
+  28:	645f 7032 5f32      	.insn	6, 0x5f327032645f
+  2e:	30703263          	.insn	4, 0x30703263
+  32:	625f 7031 5f30      	.insn	6, 0x5f307031625f
+  38:	3176                	.insn	2, 0x3176
+  3a:	3070                	.insn	2, 0x3070
+  3c:	685f 7031 5f30      	.insn	6, 0x5f307031685f
+  42:	697a                	.insn	2, 0x697a
+  44:	6d6f6263          	bltu	x30,x22,708 <XLEN+0x6c8>
+  48:	7031                	.insn	2, 0x7031
+  4a:	5f30                	.insn	2, 0x5f30
+  4c:	697a                	.insn	2, 0x697a
+  4e:	706f6263          	bltu	x30,x6,752 <XLEN+0x712>
+  52:	7031                	.insn	2, 0x7031
+  54:	5f30                	.insn	2, 0x5f30
+  56:	697a                	.insn	2, 0x697a
+  58:	7a6f6263          	bltu	x30,x6,7fc <XLEN+0x7bc>
+  5c:	7031                	.insn	2, 0x7031
+  5e:	5f30                	.insn	2, 0x5f30
+  60:	697a                	.insn	2, 0x697a
+  62:	646e6f63          	bltu	x28,x6,6c0 <XLEN+0x680>
+  66:	7031                	.insn	2, 0x7031
+  68:	5f30                	.insn	2, 0x5f30
+  6a:	697a                	.insn	2, 0x697a
+  6c:	32727363          	bgeu	x4,x7,392 <XLEN+0x352>
+  70:	3070                	.insn	2, 0x3070
+  72:	7a5f 6669 6e65      	.insn	6, 0x6e6566697a5f
+  78:	32696563          	bltu	x18,x6,3a2 <XLEN+0x362>
+  7c:	3070                	.insn	2, 0x3070
+  7e:	7a5f 6869 6e69      	.insn	6, 0x6e6968697a5f
+  84:	7074                	.insn	2, 0x7074
+  86:	7561                	.insn	2, 0x7561
+  88:	70326573          	csrrsi	x10,0x703,4
+  8c:	5f30                	.insn	2, 0x5f30
+  8e:	6d7a                	.insn	2, 0x6d7a
+  90:	756d                	.insn	2, 0x756d
+  92:	316c                	.insn	2, 0x316c
+  94:	3070                	.insn	2, 0x3070
+  96:	7a5f 6161 6f6d      	.insn	6, 0x6f6d61617a5f
+  9c:	7031                	.insn	2, 0x7031
+  9e:	5f30                	.insn	2, 0x5f30
+  a0:	617a                	.insn	2, 0x617a
+  a2:	726c                	.insn	2, 0x726c
+  a4:	70316373          	csrrsi	x6,0x703,2
+  a8:	5f30                	.insn	2, 0x5f30
+  aa:	617a                	.insn	2, 0x617a
+  ac:	31737277          	.insn	4, 0x31737277
+  b0:	3070                	.insn	2, 0x3070
+  b2:	7a5f 6166 7031      	.insn	6, 0x703161667a5f
+  b8:	5f30                	.insn	2, 0x5f30
+  ba:	667a                	.insn	2, 0x667a
+  bc:	6662                	.insn	2, 0x6662
+  be:	696d                	.insn	2, 0x696d
+  c0:	316e                	.insn	2, 0x316e
+  c2:	3070                	.insn	2, 0x3070
+  c4:	7a5f 6866 7031      	.insn	6, 0x703168667a5f
+  ca:	5f30                	.insn	2, 0x5f30
+  cc:	667a                	.insn	2, 0x667a
+  ce:	6d68                	.insn	2, 0x6d68
+  d0:	6e69                	.insn	2, 0x6e69
+  d2:	7031                	.insn	2, 0x7031
+  d4:	5f30                	.insn	2, 0x5f30
+  d6:	637a                	.insn	2, 0x637a
+  d8:	3161                	.insn	2, 0x3161
+  da:	3070                	.insn	2, 0x3070
+  dc:	7a5f 6463 7031      	.insn	6, 0x703164637a5f
+  e2:	5f30                	.insn	2, 0x5f30
+  e4:	627a                	.insn	2, 0x627a
+  e6:	3161                	.insn	2, 0x3161
+  e8:	3070                	.insn	2, 0x3070
+  ea:	7a5f 6262 7031      	.insn	6, 0x703162627a5f
+  f0:	5f30                	.insn	2, 0x5f30
+  f2:	627a                	.insn	2, 0x627a
+  f4:	30703163          	.insn	4, 0x30703163
+  f8:	7a5f 6b62 3162      	.insn	6, 0x31626b627a5f
+  fe:	3070                	.insn	2, 0x3070
+ 100:	7a5f 6b62 3163      	.insn	6, 0x31636b627a5f
+ 106:	3070                	.insn	2, 0x3070
+ 108:	7a5f 6b62 3178      	.insn	6, 0x31786b627a5f
+ 10e:	3070                	.insn	2, 0x3070
+ 110:	7a5f 7362 7031      	.insn	6, 0x703173627a5f
+ 116:	5f30                	.insn	2, 0x5f30
+ 118:	6b7a                	.insn	2, 0x6b7a
+ 11a:	7031                	.insn	2, 0x7031
+ 11c:	5f30                	.insn	2, 0x5f30
+ 11e:	6b7a                	.insn	2, 0x6b7a
+ 120:	316e                	.insn	2, 0x316e
+ 122:	3070                	.insn	2, 0x3070
+ 124:	7a5f 6e6b 3164      	.insn	6, 0x31646e6b7a5f
+ 12a:	3070                	.insn	2, 0x3070
+ 12c:	7a5f 6e6b 3165      	.insn	6, 0x31656e6b7a5f
+ 132:	3070                	.insn	2, 0x3070
+ 134:	7a5f 6e6b 3168      	.insn	6, 0x31686e6b7a5f
+ 13a:	3070                	.insn	2, 0x3070
+ 13c:	7a5f 726b 7031      	.insn	6, 0x7031726b7a5f
+ 142:	5f30                	.insn	2, 0x5f30
+ 144:	6b7a                	.insn	2, 0x6b7a
+ 146:	3174                	.insn	2, 0x3174
+ 148:	3070                	.insn	2, 0x3070
+ 14a:	7a5f 6276 3162      	.insn	6, 0x316262767a5f
+ 150:	3070                	.insn	2, 0x3070
+ 152:	7a5f 6276 3163      	.insn	6, 0x316362767a5f
+ 158:	3070                	.insn	2, 0x3070
+ 15a:	7a5f 6576 3233      	.insn	6, 0x323365767a5f
+ 160:	3166                	.insn	2, 0x3166
+ 162:	3070                	.insn	2, 0x3070
+ 164:	7a5f 6576 3233      	.insn	6, 0x323365767a5f
+ 16a:	3178                	.insn	2, 0x3178
+ 16c:	3070                	.insn	2, 0x3070
+ 16e:	7a5f 6576 3436      	.insn	6, 0x343665767a5f
+ 174:	3164                	.insn	2, 0x3164
+ 176:	3070                	.insn	2, 0x3070
+ 178:	7a5f 6576 3436      	.insn	6, 0x343665767a5f
+ 17e:	3166                	.insn	2, 0x3166
+ 180:	3070                	.insn	2, 0x3070
+ 182:	7a5f 6576 3436      	.insn	6, 0x343665767a5f
+ 188:	3178                	.insn	2, 0x3178
+ 18a:	3070                	.insn	2, 0x3070
+ 18c:	7a5f 6676 6662      	.insn	6, 0x666266767a5f
+ 192:	696d                	.insn	2, 0x696d
+ 194:	316e                	.insn	2, 0x316e
+ 196:	3070                	.insn	2, 0x3070
+ 198:	7a5f 6676 6662      	.insn	6, 0x666266767a5f
+ 19e:	31616d77          	.insn	4, 0x31616d77
+ 1a2:	3070                	.insn	2, 0x3070
+ 1a4:	7a5f 6b76 3162      	.insn	6, 0x31626b767a5f
+ 1aa:	3070                	.insn	2, 0x3070
+ 1ac:	7a5f 6b76 3167      	.insn	6, 0x31676b767a5f
+ 1b2:	3070                	.insn	2, 0x3070
+ 1b4:	7a5f 6b76 316e      	.insn	6, 0x316e6b767a5f
+ 1ba:	3070                	.insn	2, 0x3070
+ 1bc:	7a5f 6b76 636e      	.insn	6, 0x636e6b767a5f
+ 1c2:	7031                	.insn	2, 0x7031
+ 1c4:	5f30                	.insn	2, 0x5f30
+ 1c6:	767a                	.insn	2, 0x767a
+ 1c8:	64656e6b          	.insn	4, 0x64656e6b
+ 1cc:	7031                	.insn	2, 0x7031
+ 1ce:	5f30                	.insn	2, 0x5f30
+ 1d0:	767a                	.insn	2, 0x767a
+ 1d2:	31676e6b          	.insn	4, 0x31676e6b
+ 1d6:	3070                	.insn	2, 0x3070
+ 1d8:	7a5f 6b76 686e      	.insn	6, 0x686e6b767a5f
+ 1de:	3162                	.insn	2, 0x3162
+ 1e0:	3070                	.insn	2, 0x3070
+ 1e2:	7a5f 6b76 3174      	.insn	6, 0x31746b767a5f
+ 1e8:	3070                	.insn	2, 0x3070
+ 1ea:	7a5f 6c76 3231      	.insn	6, 0x32316c767a5f
+ 1f0:	6238                	.insn	2, 0x6238
+ 1f2:	7031                	.insn	2, 0x7031
+ 1f4:	5f30                	.insn	2, 0x5f30
+ 1f6:	767a                	.insn	2, 0x767a
+ 1f8:	336c                	.insn	2, 0x336c
+ 1fa:	6232                	.insn	2, 0x6232
+ 1fc:	7031                	.insn	2, 0x7031
+ 1fe:	5f30                	.insn	2, 0x5f30
+ 200:	767a                	.insn	2, 0x767a
+ 202:	366c                	.insn	2, 0x366c
+ 204:	6234                	.insn	2, 0x6234
+ 206:	7031                	.insn	2, 0x7031
+ 208:	5f30                	.insn	2, 0x5f30
+ 20a:	6e697673          	csrrci	x12,0x6e6,18
+ 20e:	6176                	.insn	2, 0x6176
+ 210:	316c                	.insn	2, 0x316c
+ 212:	3070                	.insn	2, 0x3070
+ 214:	0800                	.insn	2, 0x0800
+ 216:	0a01                	.insn	2, 0x0a01
+ 218:	0b                	.byte	0x0b

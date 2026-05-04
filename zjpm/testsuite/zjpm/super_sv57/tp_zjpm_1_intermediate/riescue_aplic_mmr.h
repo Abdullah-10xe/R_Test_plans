@@ -1,0 +1,8 @@
+#ifndef __RIESCUE_APLIC_MMR_H__
+#define __RIESCUE_APLIC_MMR_H__
+
+#define MAPLIC_MMR_BASE_ADDR 0x10800000
+#define SAPLIC_MMR_BASE_ADDR 0x20800000
+
+#endif
+

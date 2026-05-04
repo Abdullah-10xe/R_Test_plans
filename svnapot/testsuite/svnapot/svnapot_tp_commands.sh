@@ -1,0 +1,6 @@
+riescuec --mode tp --test_plan svnapot --print_rvcp_passed --print_rvcp_failed --test_paging_mode sv39 --test_priv_mode super --seed 1 --repeat_times 1 --cpuconfig ../custom_conf.json --run_dir testsuite/svnapot/super_sv39
+riescuec --mode tp --test_plan svnapot --print_rvcp_passed --print_rvcp_failed --test_paging_mode sv39 --test_priv_mode super --seed 2 --repeat_times 1 --cpuconfig ../custom_conf.json --run_dir testsuite/svnapot/super_sv39
+riescuec --mode tp --test_plan svnapot --print_rvcp_passed --print_rvcp_failed --test_paging_mode sv48 --test_priv_mode super --seed 1 --repeat_times 1 --cpuconfig ../custom_conf.json --run_dir testsuite/svnapot/super_sv48
+riescuec --mode tp --test_plan svnapot --print_rvcp_passed --print_rvcp_failed --test_paging_mode sv48 --test_priv_mode super --seed 2 --repeat_times 1 --cpuconfig ../custom_conf.json --run_dir testsuite/svnapot/super_sv48
+riescuec --mode tp --test_plan svnapot --print_rvcp_passed --print_rvcp_failed --test_paging_mode sv57 --test_priv_mode super --seed 1 --repeat_times 1 --cpuconfig ../custom_conf.json --run_dir testsuite/svnapot/super_sv57
+riescuec --mode tp --test_plan svnapot --print_rvcp_passed --print_rvcp_failed --test_paging_mode sv57 --test_priv_mode super --seed 2 --repeat_times 1 --cpuconfig ../custom_conf.json --run_dir testsuite/svnapot/super_sv57
